@@ -15,22 +15,16 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route for authenticated user - default to "/" */}
-        < Route
-          path="/"
-          element={currentUser ? <p>Welcome, {currentUser.email}</p> : <Navigate to="/signin" />}
-        />
-
-        {/* SignIn and SignUp Routes */}
-        {!currentUser && (
-          <>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-          </>
-        )}
-
-        {/* Catch-all route to redirect any unknown path */}
-        <Route path="*" element={<Navigate to="/" />} />
+        
+       {currentUser ?(
+        <>
+        <Route path="signin" element={<Navigate to="/" />}/>
+        <Route path="signup" element={<Navigate to="/"/>}/>
+        </>
+       ):(<>
+        <Route path="signin" element={<SignIn/>}/>
+        <Route path="signup" element={<SignUp />}/>
+        </>)}
       </Routes>
     </BrowserRouter>
   );
