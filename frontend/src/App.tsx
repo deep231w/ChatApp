@@ -1,6 +1,6 @@
 // src/App.tsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import {  Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useAuth } from "./context/authContext";
 import SignIn from "./auth/signin";
 import SignUp from "./auth/signup";
@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        
+
        {currentUser ?(
         <>
         <Route path="signin" element={<Navigate to="/" />}/>
