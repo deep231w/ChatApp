@@ -4,7 +4,7 @@ import {  Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useAuth } from "./context/authContext";
 import SignIn from "./auth/signin";
 import SignUp from "./auth/signup";
-
+import { Navbar } from "./components/Navbar";
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
 
@@ -13,9 +13,9 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter><Navbar/>
       <Routes>
-
+        
        {currentUser ?(
         <>
         <Route path="signin" element={<Navigate to="/" />}/>
