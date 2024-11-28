@@ -4,7 +4,7 @@ import {  Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useAuth } from "./context/authContext";
 import SignIn from "./auth/signin";
 import SignUp from "./auth/signup";
-import { Navbar } from "./components/Navbar";
+import { Home } from "./pages/home";
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
 
@@ -13,18 +13,18 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter><Navbar/>
+    <BrowserRouter>
       <Routes>
-        
        {currentUser ?(
         <>
-        <Route path="signin" element={<Navigate to="/" />}/>
-        <Route path="signup" element={<Navigate to="/"/>}/>
+          <Route path="signin" element={<Navigate to="/" />}/>
+          <Route path="signup" element={<Navigate to="/"/>}/>
         </>
-       ):(<>
-        <Route path="signin" element={<SignIn/>}/>
-        <Route path="signup" element={<SignUp />}/>
+            ):(<>
+          <Route path="signin" element={<SignIn/>}/>
+          <Route path="signup" element={<SignUp />}/>
         </>)}
+          <Route path="/" element={<Home/>}/>
       </Routes>
     </BrowserRouter>
   );
