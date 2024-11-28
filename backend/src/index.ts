@@ -1,9 +1,14 @@
 import express, { Request, Response } from "express";
 import useRoute from "./routes/userRoute"
 import cors from "cors"
-const app = express();
+import { createServer } from "http";
+import {Server} from "socket.io";
 
+const app = express();
 app.use(express.json());
+const server= createServer(app);
+const io=new Server(server);
+
 app.use(cors({
    origin: 'http://localhost:5173',
    methods:['POST','GET','DELETE','PUT'],
