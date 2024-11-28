@@ -5,6 +5,8 @@ import { useAuth } from "./context/authContext";
 import SignIn from "./auth/signin";
 import SignUp from "./auth/signup";
 import { Home } from "./pages/home";
+import {ProtectedRoute} from "./protectedroute"
+
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
 
@@ -24,7 +26,7 @@ const App: React.FC = () => {
           <Route path="signin" element={<SignIn/>}/>
           <Route path="signup" element={<SignUp />}/>
         </>)}
-          <Route path="/" element={<Home/>}/>
+          <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
       </Routes>
     </BrowserRouter>
   );
