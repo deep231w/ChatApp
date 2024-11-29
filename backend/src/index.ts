@@ -25,7 +25,8 @@ io.on("connection", (socket)=>{
     console.log("user connected", socket.id);
 
     socket.on("send_message",(message)=>{
-      io.emit(message);
+      console.log("backend message", message)
+      io.emit("message", message);
     })
     
     socket.on("disconnect",()=>{
