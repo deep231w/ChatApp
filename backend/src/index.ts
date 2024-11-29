@@ -14,12 +14,12 @@ const io=new Server(server,{
     credentials:true
   }
 });
-
 app.use(cors({
    origin: 'http://localhost:5173',
    methods:['POST','GET','DELETE','PUT'],
    credentials:true
 }))
+
 
 io.on("connection", (socket)=>{
     console.log("user connected", socket.id);
