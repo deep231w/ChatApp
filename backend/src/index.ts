@@ -40,7 +40,7 @@ io.on("connection", (socket)=>{
 })
 
 app.use("/api/user",useRoute);
-app.use("/message", messageRoutr);
+app.use("/api/message", messageRoutr);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
