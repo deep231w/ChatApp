@@ -1,11 +1,14 @@
 import express, { Request, Response } from "express";
 import useRoute from "./routes/userRoute"
+import messageRoutr from "./routes/messageRoute"
 import cors from "cors"
 import { createServer } from "http";
 import {Server} from "socket.io";
 
 const app = express();
 app.use(express.json());
+app.use(messageRoutr);
+
 const server= createServer(app);
 const io=new Server(server,{
   cors:{
@@ -37,7 +40,7 @@ io.on("connection", (socket)=>{
 })
 
 app.use("/api/user",useRoute);
-
+app.use("/message", messageRoutr);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
