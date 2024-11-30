@@ -53,3 +53,53 @@
 // };
 
 // export default protectRoute;
+
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import prisma from "../db/db";
+import { User } from "@prisma/client";
+interface DecodedToken extends JwtPayload{
+    userId:string
+} 
+declare global{
+namespace Express {
+    		export interface Request {
+     			user?:User
+               	}
+     	}
+    }
+const ProtectRoute= async(req:Request, res:Response, next:NextFunction)=>{
+   try{ const token= req.cookies.jwt;
+
+    if(!token){
+        res.status(400).json("authentication error jwt token not found");
+        return;
+
+    }
+
+    const decode= jwt.verify(token, process.env.JWT_TOKEN!) as DecodedToken
+    if(!decode){
+        res.status(400).json("middleware decode failed")
+        return;
+
+    }
+    const user= await prisma.user.findUnique({
+        where:{
+            id:parseInt(decode.userId)
+        }
+    })
+
+    if(!user){
+        res.status(400).json("user not found")
+        return;
+    }
+
+    req.user=user;
+    next();
+    }catch(e:any){
+        console.log("server error");
+        res.status(500).json("server error");
+    }
+}
+
+export default ProtectRoute;
