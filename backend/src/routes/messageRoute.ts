@@ -45,7 +45,8 @@ router.get("/message/:reciverid",async(req:Request, res:Response)=>{
             }) 
             res.status(200).json(result);
         }catch(e){
-
+            console.log("fetching message failed");
+            res.status(500).json("message sending failed ! probably server issue");
         }
 })
 
