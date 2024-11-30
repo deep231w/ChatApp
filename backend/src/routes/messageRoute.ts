@@ -4,7 +4,7 @@ import prisma from "../db/db";
 const router= express.Router();
 
 
-router.post("/message", async(req:Request, res:Response)=>{
+router.post("/send", async(req:Request, res:Response)=>{
     const {reciverId, senderId, message}= req.body;
     if(!reciverId || !senderId || !message){
          res.status(401).json("requier all fields ")
@@ -20,6 +20,7 @@ router.post("/message", async(req:Request, res:Response)=>{
             content:message       
          }   
         })
+        console.log("Message created:", result);
 
         res.send(message);
     }catch(e){
@@ -28,7 +29,7 @@ router.post("/message", async(req:Request, res:Response)=>{
     }
 })
 
-router.get("/message/:reciverid",async(req:Request, res:Response)=>{
+router.get("/history/:reciverid",async(req:Request, res:Response)=>{
         const {reciverId}=req.params;
         const senderId= req.user?.id;
 
