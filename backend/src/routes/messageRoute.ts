@@ -29,7 +29,7 @@ router.post("/send", async(req:Request, res:Response)=>{
     }
 })
 
-router.get("/history/:reciverid",async(req:Request, res:Response)=>{
+router.get("/history/:userid",async(req:Request, res:Response)=>{
         const {reciverId}=req.params;
         const senderId= req.user?.id;
 
