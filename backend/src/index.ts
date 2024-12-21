@@ -1,50 +1,38 @@
 import express, { Request, Response } from "express";
-import useRoute from "./routes/userRoute"
-import messageRoutr from "./routes/messageRoute"
-import cors from "cors"
+import cors from "cors";
 import { createServer } from "http";
-import {Server} from "socket.io";
+import { initializeSocket } from "./socket/socket";
+import useRoute from "./routes/userRoute";
+import messageRoute from "./routes/messageRoute";
 
 const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(messageRoutr);
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["POST", "GET", "DELETE", "PUT"],
+    credentials: true,
+  })
+);
 
-const server= createServer(app);
-const io=new Server(server,{
-  cors:{
-    origin:'http://localhost:5173',
-    methods:['POST','GET'],
-    credentials:true
-  }
-});
-app.use(cors({
-   origin: 'http://localhost:5173',
-   methods:['POST','GET','DELETE','PUT'],
-   credentials:true
-}))
+// Routes
+app.use("/api/user", useRoute);
+app.use("/api/message", messageRoute);
 
-
-io.on("connection", (socket)=>{
-    console.log("user connected", socket.id);
-
-    socket.on("send_message",(message)=>{
-      console.log("backend message", message)
-      io.emit("message", message);
-    })
-    
-    socket.on("disconnect",()=>{
-      console.log(`${socket.id} is disconnected`);
-
-    })
-
-})
-
-app.use("/api/user",useRoute);
-app.use("/api/message", messageRoutr);
+// Root Route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
 
+// Create HTTP Server
+const server = createServer(app);
+
+// Initialize Socket.IO
+initializeSocket(server);
+
+// Start Server
 server.listen(3000, () => {
   console.log("Server running on port 3000");
 });
