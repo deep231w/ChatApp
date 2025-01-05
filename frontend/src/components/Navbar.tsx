@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../context/authContext"; // Make sure the path is correct
 import { signOut } from "firebase/auth";
 import { auth } from "../context/firebase";
-
+import { Button } from "./components/ui/button";
 export const Navbar: React.FC = () => {
   const { currentUser,loading } = useAuth();
 
@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
         {currentUser ? (
           <>
             <span>{currentUser.displayName}</span> {/* Display user name */}
-            <button onClick={handleSignout}>Logout</button> {/* Implement logout logic here */}
+            <Button onClick={handleSignout}>Logout</Button> {/* Implement logout logic here */}
           </>
         ) : (
           <span>Guest</span>
