@@ -8,25 +8,25 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @unique @default(autoincrement())
-  firstName   String
-  lastName    String
-  email       String    @unique
-  password    String?
-  firebaseuid String?
-  messages    Message[]
-  sentMessage Message[] @relation("sentMessage")
-  recivedMessage Message[] @relation("recivedMessage")
+  id                Int         @id @unique @default(autoincrement())
+  firstName         String
+  lastName          String
+  email             String      @unique
+  password          String?
+  firebaseuid       String?
+  messages          Message[]
+  sentMessage       Message[]   @relation("sentMessage")
+  recivedMessage    Message[]   @relation("recivedMessage")
 }
 
 model Message {
-  id        Int      @id @unique @default(autoincrement())
-  content   String
-  createdAt DateTime @default(now())
-  userId    Int
-  sentId    Int
-  sender    User @relation("sentMessage",fields: [sentId], references: [id])
-  reciverId Int
-  reciver   User @relation("recivedMessage",fields: [reciverId],references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  id          Int       @id @unique @default(autoincrement())
+  content     String
+  createdAt   DateTime  @default(now())
+  userId      Int
+  sentId      Int
+  sender      User      @relation("sentMessage",fields: [sentId], references: [id])
+  reciverId   Int
+  reciver     User      @relation("recivedMessage",fields: [reciverId],references: [id])
+  user        User      @relation(fields: [userId], references: [id])
 }
