@@ -1,8 +1,17 @@
 import { Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import { object } from "zod";
 
-let io: SocketServer; // Exportable Socket.IO instance for future use
+let io: SocketServer;
+
+interface OnlineUsers {
+  [userId: string]: string;
+}
+
+interface PrivateMessage {
+  senderId: string;
+  reciverId: string;
+  message: string;
+}
 
 export const initializeSocket = (server: HttpServer) => {
   io = new SocketServer(server, {
@@ -12,47 +21,38 @@ export const initializeSocket = (server: HttpServer) => {
       credentials: true,
     },
   });
-  interface OnlineUsers{
-    [userid:string]:string;
-  }
-  const onlineusers:OnlineUsers={};
+
+  const onlineusers: OnlineUsers = {};
 
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
-    //register socket id
-    socket.on("register",(userId:string)=>{
-        onlineusers[userId]=socket.id;
-        console.log(`${userId}=${socket.id}`);
-    })
 
-    socket.on("private_message", ({senderId, reciverId, message})=>{
-        const reciverSocketid=onlineusers[reciverId];
-        if(reciverSocketid){
-            io.to(reciverSocketid).emit("recive_message",{
-                senderId,
-                message
-            })
-        }
-    })
-    socket.on("disconnect",()=>{
-        for(const [userId,socketId] of Object.entries(onlineusers)){
-            if(socketId==socket.id){
-                delete onlineusers[userId];
-                console.log(`${userId} disconnected`)
-                break;
-            }
-        }
-    })
-    // Handle send_message event
-    // socket.on("send_message", (message) => {
-    //   console.log("Backend message:", message);
-    //   io.emit("message", message); // Broadcast to all clients
-    // });
+    socket.on("register", (userId: string) => {
+      onlineusers[userId] = socket.id;
+      console.log(`${userId} registered with socket ID ${socket.id}`);
+    });
 
-    // Handle disconnection
-    // socket.on("disconnect", () => {
-    //   console.log(`${socket.id} disconnected`);
-    // });
+    socket.on("private_message", ({ senderId, reciverId, message }: PrivateMessage) => {
+      const reciverSocketid = onlineusers[reciverId];
+      if (reciverSocketid) {
+        io.to(reciverSocketid).emit("recive_message", {
+          senderId,
+          message,
+        });
+      } else {
+        console.log(`Recipient ${reciverId} is not online.`);
+      }
+    });
+
+    socket.on("disconnect", () => {
+      for (const [userId, socketId] of Object.entries(onlineusers)) {
+        if (socketId === socket.id) {
+          delete onlineusers[userId];
+          console.log(`${userId} disconnected`);
+          break;
+        }
+      }
+    });
   });
 
   console.log("Socket.IO initialized");
