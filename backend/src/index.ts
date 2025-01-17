@@ -7,11 +7,14 @@ import messageRoute from "./routes/messageRoute";
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+
 // Middleware
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: CLIENT_ORIGIN,
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   })
@@ -26,6 +29,12 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
 
+// Error Handling Middleware
+app.use((err: Error, req: Request, res: Response, next: Function) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 // Create HTTP Server
 const server = createServer(app);
 
@@ -33,6 +42,6 @@ const server = createServer(app);
 initializeSocket(server);
 
 // Start Server
-server.listen(3000, () => {
-  console.log("Server running on port 3000");
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
