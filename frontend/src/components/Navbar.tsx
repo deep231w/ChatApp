@@ -14,7 +14,7 @@ export const Navbar: React.FC = () => {
   }
   return (
     <nav>
-      <div>App Name</div>
+      <div>ChatApp</div>
       <div>
         {currentUser ? (
           <>

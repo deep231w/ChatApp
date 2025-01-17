@@ -7,10 +7,15 @@ interface OnlineUsers {
   [userId: string]: string;
 }
 
+const onlineusers: OnlineUsers={};
 interface PrivateMessage {
   senderId: string;
   reciverId: string;
   message: string;
+}
+
+const updateonlineUsers= ()=>{
+  io.emit("online_users", Object.keys(onlineusers))
 }
 
 export const initializeSocket = (server: HttpServer) => {
@@ -42,6 +47,9 @@ export const initializeSocket = (server: HttpServer) => {
       } else {
         console.log(`Recipient ${reciverId} is not online.`);
       }
+
+      updateonlineUsers();
+
     });
 
     socket.on("disconnect", () => {
@@ -52,6 +60,7 @@ export const initializeSocket = (server: HttpServer) => {
           break;
         }
       }
+      updateonlineUsers();
     });
   });
 
