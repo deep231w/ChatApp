@@ -6,9 +6,8 @@ import SignUp from "./auth/signup";
 import { io } from "socket.io-client";
 import { ProtectedRoute } from "./protectedroute";
 import { Navbar } from "./components/Navbar";
-import { Sidebar } from "./components/Sidebar";
-import { Chat } from "./components/Chat";
-
+import { Sidebar } from "./components/sidebar";
+import { Chat } from "./components/chat";
 // Initialize socket connection
 const socket = io("http://localhost:3000", { withCredentials: true });
 
