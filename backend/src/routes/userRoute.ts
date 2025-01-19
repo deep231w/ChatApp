@@ -127,7 +127,11 @@ router.post("/",async (req:Request, res:Response)=>{
                 lastName:true, 
                 email:true
             }
+            
         })
-    }catch(e){}
+    res.status(200).json(users);
+    }catch(e){
+        console.log("error in api/user route ", e);
+    }
 })
 export default router;
