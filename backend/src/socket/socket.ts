@@ -1,6 +1,6 @@
 import { Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
-
+import prisma from "../db/db";
 let io: SocketServer;
 
 interface OnlineUsers {

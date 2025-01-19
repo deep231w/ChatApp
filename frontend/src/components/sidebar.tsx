@@ -1,19 +1,31 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { data } from "react-router-dom";
 
 export const Sidebar = ({ socket ,className}: { socket: any, className?:string }) => {
   const [users, setUsers] = useState<string[]>([]);
 
-  useEffect(() => {
-    // Listen for updates to the online users list from the server
-    socket.on("online_users", (onlineUsers: string[]) => {
-      setUsers(onlineUsers);
-    });
+  useEffect(()=>{
+    const fetchallusers=async()=>{
+      try{
+      const response= await axios.get("http://localhost:3000/api/users")
+      setUsers(response.data)
+      }catch(e){
+        console.log("fetch error in sidebar.tsx", e);
+      }
+    }
+    fetchallusers();
+  },[])
 
-    // Clean up the socket listener on component unmount
-    return () => {
-      socket.off("online_users");
-    };
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("online_users", (onlineUsers: string[]) => {
+  //     setUsers(onlineUsers);
+  //   });
+
+  //   return () => {
+  //     socket.off("online_users");
+  //   };
+  // }, [socket]);
 
   return (
     <div className="h-screen w-64 bg-gray-100 border-r border-gray-200 shadow-sm">
@@ -37,5 +49,3 @@ export const Sidebar = ({ socket ,className}: { socket: any, className?:string }
     </div>
   );
 };
-
-//export default Sidebar;
