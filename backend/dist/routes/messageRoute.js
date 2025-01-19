@@ -38,7 +38,7 @@ router.post("/send", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(500).json("message failed");
     }
 }));
-router.get("/history/:userid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/:userid/:reciverId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { reciverId } = req.params;
     const senderId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
