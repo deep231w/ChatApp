@@ -5,8 +5,11 @@ import { initializeSocket } from "./socket/socket";
 import useRoute from "./routes/userRoute";
 import messageRoute from "./routes/messageRoute";
 import ProtectRoute from "./middleware/protectRoute";
+import dotenv from "dotenv";
+
 const app = express();
 
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 
@@ -20,7 +23,7 @@ app.use(
   })
 );
 
-app.use("/api/user",ProtectRoute,  useRoute);
+app.use("/api/user",  useRoute);
 app.use("/api/message", messageRoute);
 
 // Root Route
@@ -29,10 +32,10 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
-app.use((err: Error, req: Request, res: Response, next: Function) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
+// app.use((err: Error, req: Request, res: Response, next: Function) => {
+//   console.error(err.stack);
+//   res.status(500).send("Something broke!");
+// });
 
 
 const server = createServer(app);

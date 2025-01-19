@@ -113,4 +113,22 @@ router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).send("server error");
     }
 }));
+//fetch all user details
+router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield db_1.default.user.findMany({
+            select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true
+            }
+        });
+        res.status(200).json(users);
+    }
+    catch (e) {
+        console.log("error in api/user route ", e);
+        res.status(500).send("Server error  at api/user");
+    }
+}));
 exports.default = router;
