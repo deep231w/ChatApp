@@ -118,7 +118,7 @@ router.post("/signin",async(req:Request,res:Response)=>{
 
 //fetch all user details
 
-router.post("/",async (req:Request, res:Response)=>{
+router.get("/",async (req:Request, res:Response)=>{
     try{
         const users= await prisma.user.findMany({
             select:{
@@ -132,6 +132,8 @@ router.post("/",async (req:Request, res:Response)=>{
     res.status(200).json(users);
     }catch(e){
         console.log("error in api/user route ", e);
+        res.status(500).send("Server error  at api/user");
+
     }
 })
 export default router;
