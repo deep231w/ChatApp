@@ -4,7 +4,7 @@ import { createServer } from "http";
 import { initializeSocket } from "./socket/socket";
 import useRoute from "./routes/userRoute";
 import messageRoute from "./routes/messageRoute";
-
+import ProtectRoute from "./middleware/protectRoute";
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -20,8 +20,7 @@ app.use(
   })
 );
 
-// Routes
-app.use("/api/user", useRoute);
+app.use("/api/user",ProtectRoute,  useRoute);
 app.use("/api/message", messageRoute);
 
 // Root Route
@@ -29,19 +28,18 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
 
-// Error Handling Middleware
+
 app.use((err: Error, req: Request, res: Response, next: Function) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
-// Create HTTP Server
+
 const server = createServer(app);
 
-// Initialize Socket.IO
 initializeSocket(server);
 
-// Start Server
+
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
