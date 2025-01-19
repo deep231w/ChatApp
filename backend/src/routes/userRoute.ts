@@ -115,4 +115,19 @@ router.post("/signin",async(req:Request,res:Response)=>{
         res.status(500).send("server error");
     }
 })
+
+//fetch all user details
+
+router.post("/",async (req:Request, res:Response)=>{
+    try{
+        const users= await prisma.user.findMany({
+            select:{
+                id:true,
+                firstName:true,
+                lastName:true, 
+                email:true
+            }
+        })
+    }catch(e){}
+})
 export default router;
