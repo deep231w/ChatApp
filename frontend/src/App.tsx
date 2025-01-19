@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { useAuth } from "./context/authContext";
 import SignIn from "./auth/signin";
@@ -8,11 +8,10 @@ import { ProtectedRoute } from "./protectedroute";
 import { Navbar } from "./components/Navbar";
 import { Sidebar } from "./components/sidebar";
 import { Chat } from "./components/chat";
-// Initialize socket connection
-const socket = io("http://localhost:3000", { withCredentials: true });
 
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
+  const [selectUser, setSelectuser]=useState<null>(null);
 
   if (loading) {
     return <p>Loading...</p>; // Loading indicator while checking auth state
@@ -28,7 +27,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <div className="flex flex-1">
             {/* Sidebar */}
-            <Sidebar socket={socket} className="w-1/4 bg-gray-100" />
+            <Sidebar onSelectuser={setSelectuser} className="w-1/4 bg-gray-100" />
 
             {/* Chat Area */}
             <div className="flex-1 p-4">
@@ -37,7 +36,7 @@ const App: React.FC = () => {
                   path="/"
                   element={
                     <ProtectedRoute>
-                      <Chat />
+                     <Chat recivedId={selectUser}/>
                     </ProtectedRoute>
                   }
                 />
