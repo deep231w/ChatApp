@@ -29,26 +29,30 @@ router.post("/send", async(req:Request, res:Response)=>{
     }
 })
 
-router.get("/:userid/:reciverId",async(req:Request, res:Response)=>{
-        const {reciverId}=req.params;
-        const senderId= req.user?.id;
-
-        try{
-            const result= await prisma.message.findMany({
-                where:{
-                    OR:[
-                        {sentId:senderId, reciverId:parseInt(reciverId)},
-                        {sentId:parseInt(reciverId), reciverId:senderId}
-                    ],
-                   
-                },
-                orderBy: { createdAt: "asc" },
-            }) 
-            res.status(200).json(result);
-        }catch(e){
-            console.log("fetching message failed");
-            res.status(500).json("message sending failed ! probably server issue");
-        }
-})
-
+router.get("/:senderId/:reciverId", async (req: Request, res: Response) => {
+    const { senderId, reciverId } = req.params;
+  
+    if (!senderId || !reciverId) {
+      res.status(400).json("Sender and Receiver IDs are required");
+      return;
+    }
+  
+    try {
+      const result = await prisma.message.findMany({
+        where: {
+          OR: [
+            { sentId: parseInt(senderId), reciverId: parseInt(reciverId) },
+            { sentId: parseInt(reciverId), reciverId: parseInt(senderId) },
+          ],
+        },
+        orderBy: { createdAt: "asc" },
+      });
+  
+      res.status(200).json(result);
+    } catch (e) {
+      console.error("Fetching message failed:", e);
+      res.status(500).json("Error fetching messages");
+    }
+  });
+  
  export default router;
