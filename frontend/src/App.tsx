@@ -36,7 +36,7 @@ const App: React.FC = () => {
                   path="/"
                   element={
                     <ProtectedRoute>
-                     <Chat recivedId={selectUser}/>
+                     <Chat reciverId={selectUser}/>
                     </ProtectedRoute>
                   }
                 />
