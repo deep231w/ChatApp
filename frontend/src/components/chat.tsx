@@ -4,49 +4,52 @@ import { useAuth } from "../context/authContext";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
 import axios from "axios";
-
-export const Chat = ({ reciverId }: { reciverId: string }) => {
+export const Chat = ({reciverId}:{reciverId:string}) => {
   const { socket } = useSocket();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<any[]>([]);
-  const { currentUser } = useAuth();
+  const [messages, setMessages] = useState<string[]>([]);
+  const {currentUser}= useAuth();
 
   const handleSendMessage = () => {
     if (socket && message.trim()) {
-      console.log("Sending message:", message);
 
+      console.log("Sending message:", message);
+      
       socket.emit("send_message", {
-        senderId: currentUser?.uid,
+        senderId:currentUser?.uid,
         reciverId,
-        message,
+        message
       });
-      setMessage("");
+      setMessage(""); 
     }
   };
 
-  useEffect(() => {
-    if (currentUser?.uid && reciverId) {
-      const fetchMessages = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:3000/api/messages/${currentUser.uid}/${reciverId}`
-          );
-          setMessages(response.data);
-        } catch (e) {
-          console.log("Error fetching messages:", e);
-        }
-      };
-      fetchMessages();
-    }
-  }, [currentUser?.uid, reciverId]);
+  useEffect(()=>{
+    const fetchMessages= async()=>{
+      try{
+      const response = await axios.get(`http://localhost:3000/api/messges/${currentUser.uid}/${reciverId}`);
+      setMessages(response.data);
+
+      if(currentUser?.uid && reciverId){
+        fetchMessages();
+      }
+    }catch(e){
+      console.log("arror at chat.tsx ", e);
+    }}
+    
+  }, [currentUser?.uid, reciverId])
+
 
   useEffect(() => {
     if (socket) {
       console.log("Socket connected:", socket.id);
-      socket.on("message", (data: any) => {
+     socket.on("message", (data: string) => {
         console.log("Message received:", data);
-        setMessages((prevMessages) => [...prevMessages, data]);
+
+        setMessages(m=>[...m,data]);
       });
+
+      
     }
     return () => {
       socket?.off("message");
@@ -59,7 +62,7 @@ export const Chat = ({ reciverId }: { reciverId: string }) => {
         {messages.length > 0 ? (
           messages.map((msg, index) => (
             <p key={index} className="p-2 bg-gray-100 rounded-md mb-2 shadow-sm">
-              {msg.content}
+              {msg}
             </p>
           ))
         ) : (
