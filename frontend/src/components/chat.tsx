@@ -27,11 +27,12 @@ export const Chat = ({reciverId}:{reciverId:string}) => {
   useEffect(()=>{
     const fetchMessages= async()=>{
       try{
-      const response = await axios.get(`http://localhost:3000/api/messges/${currentUser.uid}/${reciverId}`);
+      const response = await axios.get(`http://localhost:3000/api/messge/${currentUser.uid}/${reciverId}`);
       setMessages(response.data);
-
+        console.log("outside fetchmessage call, the data=  ", response.data )
       if(currentUser?.uid && reciverId){
         fetchMessages();
+        console.log("after calling fetchMessage call,  the data= ", response.data)
       }
     }catch(e){
       console.log("arror at chat.tsx ", e);
