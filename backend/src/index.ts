@@ -23,8 +23,8 @@ app.use(
   })
 );
 
-app.use("/api/user",  useRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/user",ProtectRoute,  useRoute);
+app.use("/api/message",ProtectRoute, messageRoute);
 
 // Root Route
 app.get("/", (req: Request, res: Response) => {
