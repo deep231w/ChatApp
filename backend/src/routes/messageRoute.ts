@@ -38,11 +38,17 @@ router.get("/:senderId/:reciverId", async (req: Request, res: Response) => {
     }
   
     try {
+      const user= await prisma.user.findFirst({
+        where:{
+          firebaseuid:senderId
+        }
+      })
+
       const result = await prisma.message.findMany({
         where: {
           OR: [
-            { sentId: parseInt(senderId), reciverId: parseInt(reciverId) },
-            { sentId: parseInt(reciverId), reciverId: parseInt(senderId) },
+            { sentId: user?.id, reciverId: parseInt(reciverId) },
+            { sentId: parseInt(reciverId), reciverId: user?.id },
           ],
         },
         orderBy: { createdAt: "asc" },
