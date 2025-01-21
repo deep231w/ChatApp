@@ -45,11 +45,16 @@ router.get("/:senderId/:reciverId", (req, res) => __awaiter(void 0, void 0, void
         return;
     }
     try {
+        const user = yield db_1.default.user.findFirst({
+            where: {
+                firebaseuid: senderId
+            }
+        });
         const result = yield db_1.default.message.findMany({
             where: {
                 OR: [
-                    { sentId: parseInt(senderId), reciverId: parseInt(reciverId) },
-                    { sentId: parseInt(reciverId), reciverId: parseInt(senderId) },
+                    { sentId: user === null || user === void 0 ? void 0 : user.id, reciverId: parseInt(reciverId) },
+                    { sentId: parseInt(reciverId), reciverId: user === null || user === void 0 ? void 0 : user.id },
                 ],
             },
             orderBy: { createdAt: "asc" },
