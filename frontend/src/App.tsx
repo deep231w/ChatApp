@@ -11,7 +11,7 @@ import { Chat } from "./components/chat";
 
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
-  const [selectUser, setSelectuser]=useState<null>(null);
+  const [selectUser, setSelectuser]=useState<string | null>(null);
 
   if (loading) {
     return <p>Loading...</p>; // Loading indicator while checking auth state
@@ -27,7 +27,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <div className="flex flex-1">
             {/* Sidebar */}
-            <Sidebar onSelectuser={setSelectuser} className="w-1/4 bg-gray-100" />
+            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} className="w-1/4 bg-gray-100"/>
 
             {/* Chat Area */}
             <div className="flex-1 p-4">
