@@ -29,6 +29,7 @@ export const Chat = ({reciverId}:{reciverId:string}) => {
     const fetchMessages= async()=>{
       try{
       const response = await axios.get(`http://localhost:3000/api/message/${currentUser.uid}/${reciverId}`);
+      console.log("message",response.data )
       setMessages(response.data);
         console.log("outside fetchmessage call, the data=  ", response.data )
       
@@ -65,7 +66,7 @@ export const Chat = ({reciverId}:{reciverId:string}) => {
         key={msg.id}
         className="p-2 bg-gray-100 rounded-md mb-2 shadow-sm"
       >
-        {msg.content}
+        {msg.id}
       </p>
     ))
   ) : (
