@@ -2,34 +2,26 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 interface User {
-  id: string,
-  firstName:string,
-  lastName:string
+  id: string;
+  firstName: string;
+  lastName: string;
 }
-export const Sidebar = ({onSelectuser,className}: {onSelectuser:any, className?:string }) => {
+
+export const Sidebar = ({ onSelectuser, className }: { onSelectuser: (id: string) => void, className?: string }) => {
   const [users, setUsers] = useState<User[]>([]);
-  const [activeUser, setActiveuser]=useState<User | null>(null);
-  useEffect(()=>{
-    const fetchallusers=async()=>{
-      try{
-      const response= await axios.get("http://localhost:3000/api/user")
-      setUsers(response.data)
-      }catch(e){
-        console.log("fetch error in sidebar.tsx", e);
+  const [activeUser, setActiveuser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/user");
+        setUsers(response.data);
+      } catch (e) {
+        console.log("Fetch error in Sidebar.tsx", e);
       }
-    }
-    fetchallusers();
-  },[])
-
-  // useEffect(() => {
-  //   socket.on("online_users", (onlineUsers: string[]) => {
-  //     setUsers(onlineUsers);
-  //   });
-
-  //   return () => {
-  //     socket.off("online_users");
-  //   };
-  // }, [socket]);
+    };
+    fetchAllUsers();
+  }, []);
 
   return (
     <div className={`flex h-screen ${className}`}>
@@ -43,8 +35,13 @@ export const Sidebar = ({onSelectuser,className}: {onSelectuser:any, className?:
             users.map((user) => (
               <li
                 key={user.id}
-                onClick={() => setActiveuser(user)} // Set active user for chat
-                className="px-3 py-2 rounded-md bg-white text-gray-700 shadow-sm hover:bg-gray-200 cursor-pointer"
+                onClick={() => {
+                  setActiveuser(user);
+                  onSelectuser(user.id); // Corrected function call
+                }}
+                className={`px-3 py-2 rounded-md bg-white text-gray-700 shadow-sm hover:bg-gray-200 cursor-pointer ${
+                  activeUser?.id === user.id ? "bg-gray-300" : ""
+                }`}
               >
                 {user.firstName} {user.lastName}
               </li>

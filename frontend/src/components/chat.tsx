@@ -66,7 +66,7 @@ export const Chat = ({reciverId}:{reciverId:string}) => {
         key={msg.id}
         className="p-2 bg-gray-100 rounded-md mb-2 shadow-sm"
       >
-        {msg.id}
+        {msg.content}
       </p>
     ))
   ) : (
