@@ -52,6 +52,9 @@ router.get("/:senderId/:reciverId", async (req: Request, res: Response) => {
           ],
         },
         orderBy: { createdAt: "asc" },
+        include:{
+          sender:true
+        },
       });
   
       res.status(200).json(result);

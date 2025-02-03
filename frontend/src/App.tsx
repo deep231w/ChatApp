@@ -20,14 +20,14 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       {currentUser && (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen" >
           {/* Navbar */}
           <Navbar />
 
           {/* Main Content */}
-          <div className="flex flex-1">
+          <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} className="w-1/4 bg-gray-100"/>
+            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} />
 
             {/* Chat Area */}
             <div className="flex-1 p-4">

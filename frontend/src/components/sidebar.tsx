@@ -24,7 +24,7 @@ export const Sidebar = ({ onSelectuser, className }: { onSelectuser: (id: string
   }, []);
 
   return (
-    <div className={`flex h-screen ${className}`}>
+    <div className={`flex h-screen `}>
       {/* Sidebar */}
       <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm">
         <div className="p-4 border-b border-gray-300">
