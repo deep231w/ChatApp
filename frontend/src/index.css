@@ -64,3 +64,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Completely disables scrolling */
+  background-color: #fff; /* Ensure the background is white instead of black */
+}
