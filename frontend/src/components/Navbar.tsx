@@ -13,7 +13,7 @@ export const Navbar: React.FC = () => {
     return <div>loading...</div>
   }
   return (
-    <nav>
+    <nav className="flex justify-between items-center px-6 py-3">
       <div>ChatApp</div>
       <div>
         {currentUser ? (
