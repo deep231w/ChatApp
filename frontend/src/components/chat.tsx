@@ -21,7 +21,7 @@ type Message = {
 };
 
 
-export const Chat = ({ reciverId }: { reciverId: string }) => {
+export const Chat = ({ reciverId, userName }: { reciverId: string , userName:string}) => {
   const { socket } = useSocket();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message []>([]);
@@ -84,6 +84,7 @@ export const Chat = ({ reciverId }: { reciverId: string }) => {
   return (
     <div className="flex flex-col h-screen bg-gray-100">
   {/* Messages Container */}
+  <div>{userName}</div>
   <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
     {messages.length > 0 ? (
       messages.map((msg) => (

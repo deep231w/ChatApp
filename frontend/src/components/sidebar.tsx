@@ -7,7 +7,7 @@ interface User {
   lastName: string;
 }
 
-export const Sidebar = ({ onSelectuser, className }: { onSelectuser: (id: string) => void, className?: string }) => {
+export const Sidebar = ({ onSelectuser ,onRecivername}: { onSelectuser: (id: string) => void , onRecivername:(firstName:string)=>void}) => {
   const [users, setUsers] = useState<User[]>([]);
   const [activeUser, setActiveuser] = useState<User | null>(null);
 
@@ -37,7 +37,8 @@ export const Sidebar = ({ onSelectuser, className }: { onSelectuser: (id: string
                 key={user.id}
                 onClick={() => {
                   setActiveuser(user);
-                  onSelectuser(user.id); // Corrected function call
+                  onSelectuser(user.id);
+                  onRecivername(user.firstName) // Corrected function call
                 }}
                 className={`px-3 py-2 rounded-md bg-white text-gray-700 shadow-sm hover:bg-gray-200 cursor-pointer ${
                   activeUser?.id === user.id ? "bg-gray-300" : ""

@@ -12,7 +12,7 @@ import { Chat } from "./components/chat";
 const App: React.FC = () => {
   const { currentUser, loading } = useAuth();
   const [selectUser, setSelectuser]=useState<string | null>(null);
-
+  const [FirstUsername, setFirstUsername]= useState<string | null>();
   if (loading) {
     return <p>Loading...</p>; // Loading indicator while checking auth state
   }
@@ -27,7 +27,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} />
+            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} onRecivername={(username:string)=>setFirstUsername(username)} />
 
             {/* Chat Area */}
             <div className="flex-1 p-4">
@@ -36,7 +36,7 @@ const App: React.FC = () => {
                   path="/"
                   element={
                     <ProtectedRoute>
-                     <Chat reciverId={selectUser}/>
+                     <Chat reciverId={selectUser} userName={FirstUsername}/>
                     </ProtectedRoute>
                   }
                 />
