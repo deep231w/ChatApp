@@ -41,7 +41,7 @@ export const Sidebar = ({ onSelectuser ,onRecivername}: { onSelectuser: (id: str
                   onRecivername(user.firstName) // Corrected function call
                 }}
                 className={`px-3 py-2 rounded-md bg-white text-gray-700 shadow-sm hover:bg-gray-200 cursor-pointer ${
-                  activeUser?.id === user.id ? "bg-gray-300" : ""
+                  activeUser?.id === user.id ? "bg-gray-300" : "bg-gray-300"
                 }`}
               >
                 {user.firstName} {user.lastName}
