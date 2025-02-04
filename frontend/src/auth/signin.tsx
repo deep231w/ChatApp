@@ -54,7 +54,7 @@ const SignIn: React.FC = () => {
           Sign In
         </button>
         <br />
-        <ButtomWarning to={"/signup"} label={"click here to create account"} buttonText={"SignUp"}></ButtomWarning>
+        <ButtomWarning to={"/signup"} label={"Doesn't have account?"} buttonText={" SignUp"}></ButtomWarning>
       </form>
     </div>
   );
