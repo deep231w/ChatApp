@@ -13,7 +13,6 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 
-// Middleware
 app.use(express.json());
 app.use(
   cors({
@@ -26,17 +25,9 @@ app.use(
 app.use("/api/user",  useRoute);
 app.use("/api/message", messageRoute);
 
-// Root Route
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
 });
-
-
-// app.use((err: Error, req: Request, res: Response, next: Function) => {
-//   console.error(err.stack);
-//   res.status(500).send("Something broke!");
-// });
-
 
 const server = createServer(app);
 

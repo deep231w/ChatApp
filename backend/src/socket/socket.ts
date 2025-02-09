@@ -9,9 +9,9 @@ interface OnlineUsers {
 
 const onlineusers: OnlineUsers={};
 interface PrivateMessage {
-  senderId: string;
-  reciverId: string;
-  message: string;
+  sentId: number;
+  reciverId: number;
+  content: string;
 }
 
 const updateonlineUsers= ()=>{
@@ -37,18 +37,28 @@ export const initializeSocket = (server: HttpServer) => {
       console.log(`${userId} registered with socket ID ${socket.id}`);
     });
 
-    socket.on("private_message", ({ senderId, reciverId, message }: PrivateMessage) => {
+    socket.on("private_message", async ({ sentId, reciverId, content }: PrivateMessage) => {
       const reciverSocketid = onlineusers[reciverId];
-      if (reciverSocketid) {
-        io.to(reciverSocketid).emit("recive_message", {
-          senderId,
-          message,
-        });
-      } else {
-        console.log(`Recipient ${reciverId} is not online.`);
-      }
 
-      updateonlineUsers();
+    try{
+
+        const savedMessage= await prisma.message.create({
+          data:{
+            userId:sentId,
+            reciverId,
+            sentId,
+            content
+          }
+        })
+        console.log("message was sent",savedMessage );
+        if (reciverSocketid) {
+            io.to(reciverSocketid).emit("recive_message", savedMessage);
+            } else {
+                  console.log(`Recipient ${reciverId} is not online.`);
+            }
+        }catch(e){
+          console.log("error in socket.ts", e);
+        }
 
     });
 
