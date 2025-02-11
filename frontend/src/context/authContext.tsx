@@ -19,10 +19,20 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is logged in:", user);
+      } else {
+        console.log("No user logged in");
+      }
+
       setCurrentUser(user);
       setLoading(false);
     });
-    return unsubscribe; // Cleanup the subscription on unmount
+    return ()=>{
+      console.log(" Unsubscribing Auth Listener...");
+
+      unsubscribe();
+    } // Cleanup the subscription on unmount
   }, []);
 
   return (

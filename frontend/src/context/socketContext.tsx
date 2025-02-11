@@ -29,9 +29,8 @@ export const SocketProvider:React.FC<{children:React.ReactNode}>= ({children})=>
         }
     },[])
 
-    return<>
-    <socketContxt.Provider value={{socket}}>
-        {children}
-    </socketContxt.Provider>
-    </>
+    return  <socketContxt.Provider value={{socket}}>
+                {children}
+            </socketContxt.Provider>
+    
 }

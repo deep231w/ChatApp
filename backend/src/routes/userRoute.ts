@@ -125,7 +125,8 @@ router.get("/",async (req:Request, res:Response)=>{
                 id:true,
                 firstName:true,
                 lastName:true, 
-                email:true
+                email:true,
+                firebaseuid:true
             }
             
         })

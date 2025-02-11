@@ -39,16 +39,22 @@ export const initializeSocket = (server: HttpServer) => {
 
     socket.on("private_message", async ({ sentId, reciverId, content }: PrivateMessage) => {
       const reciverSocketid = onlineusers[reciverId];
-
+      console.log("all ids ", sentId,reciverId,content);
     try{
 
         const savedMessage= await prisma.message.create({
           data:{
-            userId:sentId,
-            reciverId,
+            content,
+            userId: sentId, // Assign userId properly
             sentId,
-            content
+            reciverId,
+
+          },
+          include: {
+            sender: true,
+            reciver: true
           }
+        
         })
         console.log("message was sent",savedMessage );
         if (reciverSocketid) {

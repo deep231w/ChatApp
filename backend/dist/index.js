@@ -12,9 +12,8 @@ const messageRoute_1 = __importDefault(require("./routes/messageRoute"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
-const PORT = process.env.PORT || 3000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
-// Middleware
+const PORT = 3000;
+const CLIENT_ORIGIN = "http://localhost:5173";
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
     origin: CLIENT_ORIGIN,
@@ -23,14 +22,9 @@ app.use((0, cors_1.default)({
 }));
 app.use("/api/user", userRoute_1.default);
 app.use("/api/message", messageRoute_1.default);
-// Root Route
 app.get("/", (req, res) => {
     res.send("Hello World");
 });
-// app.use((err: Error, req: Request, res: Response, next: Function) => {
-//   console.error(err.stack);
-//   res.status(500).send("Something broke!");
-// });
 const server = (0, http_1.createServer)(app);
 (0, socket_1.initializeSocket)(server);
 server.listen(PORT, () => {

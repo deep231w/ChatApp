@@ -121,7 +121,8 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 id: true,
                 firstName: true,
                 lastName: true,
-                email: true
+                email: true,
+                firebaseuid: true
             }
         });
         res.status(200).json(users);

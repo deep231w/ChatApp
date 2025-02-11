@@ -1,57 +1,36 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useUsersContext } from "../context/usersContext";
+import { useSelectedId } from "../context/selectedUserContext";
 
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-}
+export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: string) => void; onRecivername: (firstName: string) => void }) => {
+    const { users, loading, error } = useUsersContext();
+    const { selectedId, setSelectedUserId } = useSelectedId(); // Now correctly using the hook
 
-export const Sidebar = ({ onSelectuser ,onRecivername}: { onSelectuser: (id: string) => void , onRecivername:(firstName:string)=>void}) => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [activeUser, setActiveuser] = useState<User | null>(null);
+    if (error) return <p>Server failed</p>;
+    if (loading) return <p>Loading Please wait</p>;
+    if (!users) return <p>Failed Loading!</p>;
 
-  useEffect(() => {
-    const fetchAllUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/user");
-        setUsers(response.data);
-      } catch (e) {
-        console.log("Fetch error in Sidebar.tsx", e);
-      }
-    };
-    fetchAllUsers();
-  }, []);
-
-  return (
-    <div className={`flex h-screen `}>
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm">
-        <div className="p-4 border-b border-gray-300">
-          <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
+    return (
+        <div className={`flex h-screen`}>
+            <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm">
+                <div className="p-4 border-b border-gray-300">
+                    <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
+                </div>
+                <ul className="p-4 space-y-2">
+                    {users.length > 0 ? (
+                        users.map((user) => (
+                            <li
+                                key={user.id}
+                                onClick={() => setSelectedUserId(user.id)} // Now setting selected user
+                                className={`cursor-pointer ${selectedId === user.id ? "font-bold text-blue-500" : "text-gray-800"}`}
+                            >
+                                {user.firstName}
+                            </li>
+                        ))
+                    ) : (
+                        <li className="text-gray-500 italic">No users online</li>
+                    )}
+                </ul>
+            </div>
         </div>
-        <ul className="p-4 space-y-2">
-          {users.length > 0 ? (
-            users.map((user) => (
-              <li
-                key={user.id}
-                onClick={() => {
-                  setActiveuser(user);
-                  onSelectuser(user.id);
-                  onRecivername(user.firstName) // Corrected function call
-                }}
-                className={`px-3 py-2 rounded-md bg-white text-gray-700 shadow-sm hover:bg-gray-200 cursor-pointer ${
-                  activeUser?.id === user.id ? "bg-gray-300" : "bg-gray-300"
-                }`}
-              >
-                {user.firstName} {user.lastName}
-              </li>
-            ))
-          ) : (
-            <li className="text-gray-500 italic">No users online</li>
-          )}
-        </ul>
-      </div>
-    </div>
-  );
+    );
 };
