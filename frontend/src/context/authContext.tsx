@@ -17,7 +17,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [sentId, setSentId]= useState<string>("");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -26,23 +25,6 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
       } else {
         console.log("No user logged in");
       }
-
-      const fetchSentId= async ()=>{
-        try{
-          const response =await axios.get("http://localhost:3000/api/user/me",{
-            withCredentials:true,
-          })
-
-          const data=await response.data;
-
-          setSentId(data);
-          console.log("fetched cookie data", data);
-
-        }catch(e){
-          console.log("error cookie fetching", e)
-        }
-      }
-      if(user) fetchSentId();
 
       setCurrentUser(user);
       setLoading(false);
@@ -62,3 +44,31 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
     </AuthContext.Provider>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+// const fetchSentId= async ()=>{
+//   try{
+//     const response =await axios.get("http://localhost:3000/api/user/me",{
+//       withCredentials:true,
+//     })
+
+//     const data=await response.data;
+
+//     setSentId(data);
+//     console.log("fetched cookie data", data);
+
+//   }catch(e){
+//     console.log("error cookie fetching", e)
+//   }
+// }
+// if(user) fetchSentId();

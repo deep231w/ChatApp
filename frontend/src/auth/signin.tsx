@@ -3,6 +3,7 @@ import { auth } from "../context/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ButtomWarning } from "@/components/buttomWarning";
+import axios from "axios";
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,8 +12,19 @@ const SignIn: React.FC = () => {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/"); // Redirect to home after sign-in
+
+      const userCredentials= await signInWithEmailAndPassword(auth, email, password);
+      const user= userCredentials.user;
+
+      const token=await user.getIdToken();
+      await axios.post("http://localhost:3000/api/user/signin",{},{
+        headers:{Authorization:`Bearer ${token}`},
+        withCredentials:true
+      })
+      
+
+      navigate("/");
+
     } catch (error) {
       console.error("Error signing in:", error);
     }
