@@ -7,8 +7,9 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const http_1 = require("http");
 const socket_1 = require("./socket/socket");
-const userRoute_1 = __importDefault(require("./routes/userRoute"));
-const messageRoute_1 = __importDefault(require("./routes/messageRoute"));
+const messageHandler_1 = __importDefault(require("./routeHandler/messageHandler"));
+const userHandler_1 = __importDefault(require("./routeHandler/userHandler"));
+const protectRoute_1 = __importDefault(require("./middleware/protectRoute"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
@@ -20,8 +21,8 @@ app.use((0, cors_1.default)({
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
 }));
-app.use("/api/user", userRoute_1.default);
-app.use("/api/message", messageRoute_1.default);
+app.use("/api/user", protectRoute_1.default, userHandler_1.default);
+app.use("/api/message", protectRoute_1.default, messageHandler_1.default);
 app.get("/", (req, res) => {
     res.send("Hello World");
 });

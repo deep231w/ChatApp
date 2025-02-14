@@ -18,7 +18,7 @@ const Signin= async (req:Request, res:Response)=>{
         const decodedToken= await admin.auth().verifyIdToken(idToken);
         const {email}= decodedToken;
 
-        const userDetails= await prisma.user.findUnique({
+        const user= await prisma.user.findUnique({
             where:{
                 email:email
             }
@@ -31,15 +31,15 @@ const Signin= async (req:Request, res:Response)=>{
             path:"/"
         }))
         res.cookie("userData",JSON.stringify({
-            email:userDetails?.email,
-            firstName:userDetails?.firstName,
-            lastName:userDetails?.lastName,
-            id:userDetails?.id
+            email:user?.email,
+            firstName:user?.firstName,
+            lastName:user?.lastName,
+            id:user?.id
         }))
 
         res.status(200).json({
             message:"loggedin successfull!! ",
-            userDetails,
+            user,
             token:idToken
         })
 
