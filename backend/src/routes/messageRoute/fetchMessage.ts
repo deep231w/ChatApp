@@ -2,10 +2,6 @@ import { Request, Response } from "express";
 import z from "zod"
 import prisma from "../../db/db";
 
-const messageBody= z.object({
-    senderId:z.string(),
-    reciverId:z.string()
-})
 
 
 const fetchMessage= async(req:Request, res:Response)=>{

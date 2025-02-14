@@ -3,10 +3,7 @@ import admin from "../../firebaseAdmin/firebaseAdmin";
 import { z } from "zod";
 import prisma from "../../db/db";
 import cookie from "cookie"
-const signInBody= z.object({
-    email: z.string().email(),
-    firebaseuid: z.string()
-})
+
 
 const Signin= async (req:Request, res:Response)=>{
     try{
