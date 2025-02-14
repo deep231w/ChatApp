@@ -22,8 +22,8 @@ const SignUp: React.FC = () => {
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       }) 
-      
-      navigate("/"); // Redirect to home after sign-up
+
+      navigate("/"); 
     } catch (error) {
       console.error("Error signing up:", error);
     }
