@@ -1,8 +1,12 @@
 import admin from "firebase-admin";
-import serviceAccount from "../config/serviceAccountKey.json";
+import dotenv from  "dotenv"
+
+dotenv.config();
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS || "{}");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount), 
+  credential: admin.credential.cert(serviceAccount), 
   databaseURL: "https://chatapp-6a195-default-rtdb.firebaseio.com",
 });
 
