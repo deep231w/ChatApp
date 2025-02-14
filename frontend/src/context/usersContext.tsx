@@ -30,7 +30,8 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     useEffect(() => {
         if(loading) return;
         if (!currentUser) {
-            console.warn("⚠️ currentUser is NULL, skipping fetchUsers()");
+
+            console.warn(" currentUser is NULL, skipping fetchUsers()");
             return; // Don't fetch if no user is logged in
         }
         if(!loading){
@@ -44,17 +45,20 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
                 console.log("Fetched users:", response.data);
 
 
-                const matchedUser = response.data.find((user: User) => user.firebaseuid === currentUser?.uid);
-                setLoggedinUser(matchedUser || null);
+                const matchedUser = await response.data.find((user: User) => user.firebaseuid === currentUser?.uid);
+                
 
                 if (matchedUser) {
-                    console.log("✅ Logged-in user data:", matchedUser);
+                    setLoggedinUser(matchedUser.id);
+                    console.log("match user", matchedUser)
+                    console.log("Logged-in user data in usercontext= :", matchedUser.id);
                 } else {
-                    console.warn("⚠️ No matching user found in database.");
+                    setLoggedinUser(null);
+                    console.warn(" No matching user found in database.");
                 }
 
             } catch (e) {
-                console.error("❌ Error fetching users:", e);
+                console.error(" Error fetching users:", e);
                 setError("Server error");
             } finally {
                 setUserLoading(false);

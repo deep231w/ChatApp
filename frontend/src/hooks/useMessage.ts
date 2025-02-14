@@ -12,7 +12,7 @@ interface MessageType{
     reciverId: number;
 }
 export const useMessage =()=>{
-    const {currentUser}= useAuth();
+    const {currentUser,loading}= useAuth();
     const { selectedId } = useSelectedId();
     const [messages, setMessages]= useState<MessageType[]| undefined>(undefined);
     const [messageLoading, setMessageLoading]=useState(true);

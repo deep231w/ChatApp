@@ -4,7 +4,8 @@ import { createServer } from "http";
 import { initializeSocket } from "./socket/socket";
 import useRoute from "./routes/userRoute";
 import messageRoute from "./routes/messageRoute";
-import ProtectRoute from "./middleware/protectRoute";
+import cookieHandler from "./routeHandler/cookieHandler"
+
 import dotenv from "dotenv";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/api/user",cookieHandler);
 
 app.use("/api/user",  useRoute);
 app.use("/api/message", messageRoute);

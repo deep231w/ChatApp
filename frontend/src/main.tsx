@@ -7,15 +7,15 @@ import { AuthProvider } from './context/authContext.tsx'
 import { UserContextProvider } from './context/usersContext.tsx'
 import { SelectUserIdProvider } from './context/selectedUserContext.tsx'
 createRoot(document.getElementById('root')!).render(
- <AuthProvider>
-   <StrictMode>
-      <SelectUserIdProvider>
-        <UserContextProvider>
+  <StrictMode>
+    <AuthProvider>
+      <UserContextProvider>
+        <SelectUserIdProvider>
           <SocketProvider>
             <App />
           </SocketProvider>
-        </UserContextProvider>
-      </SelectUserIdProvider>        
-    </StrictMode>
-</AuthProvider>,
-)
+        </SelectUserIdProvider>
+      </UserContextProvider>
+    </AuthProvider>
+  </StrictMode>
+);
