@@ -6,7 +6,7 @@ import prisma from "../../db/db";
 const fetchMessage= async(req:Request, res:Response)=>{
     const {senderId, reciverId}= req.params;
 
-    if(!senderId || reciverId){
+    if(!senderId || !reciverId){
         res.status(300).send("incorect request");
         return;
     }

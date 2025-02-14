@@ -16,11 +16,11 @@ const Signin= async (req:Request, res:Response)=>{
         const idToken= authHeader.split("Bearer ")[1];
 
         const decodedToken= await admin.auth().verifyIdToken(idToken);
-        const {uid, email}= decodedToken;
+        const {email}= decodedToken;
 
         const userDetails= await prisma.user.findUnique({
             where:{
-                firebaseuid:uid
+                email:email
             }
         })
 
@@ -30,9 +30,17 @@ const Signin= async (req:Request, res:Response)=>{
             sameSite:"strict",
             path:"/"
         }))
+        res.cookie("userData",JSON.stringify({
+            email:userDetails?.email,
+            firstName:userDetails?.firstName,
+            lastName:userDetails?.lastName,
+            id:userDetails?.id
+        }))
+
         res.status(200).json({
             message:"loggedin successfull!! ",
-            userDetails
+            userDetails,
+            token:idToken
         })
 
 
