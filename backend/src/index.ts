@@ -2,10 +2,8 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { createServer } from "http";
 import { initializeSocket } from "./socket/socket";
-import useRoute from "./routes/userRoute";
-import messageRoute from "./routes/messageRoute";
-import cookieHandler from "./routeHandler/cookieHandler"
-
+import messageHandler from "./routeHandler/messageHandler"
+import userHandler from "./routeHandler/userHandler"
 import dotenv from "dotenv";
 
 const app = express();
@@ -22,10 +20,9 @@ app.use(
     credentials: true,
   })
 );
-app.use("/api/user",cookieHandler);
 
-app.use("/api/user",  useRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/user",  userHandler);
+app.use("/api/message", messageHandler);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");
