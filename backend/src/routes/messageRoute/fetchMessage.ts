@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import z from "zod"
 import prisma from "../../db/db";
 
 

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import admin from "../../firebaseAdmin/firebaseAdmin";
-import { z } from "zod";
 import prisma from "../../db/db";
 import cookie from "cookie"
 
