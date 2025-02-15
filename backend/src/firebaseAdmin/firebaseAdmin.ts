@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 //import serviceAccount from "./../config/serviceAccountKey.json";
- const serviceAccount = require("../config/serviceAccountKey");
+ const serviceAccount = require("../firebase-admin/serviceAccountKey");
 
 // import dotenv from "dotenv";
 
