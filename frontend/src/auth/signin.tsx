@@ -17,11 +17,14 @@ const SignIn: React.FC = () => {
       const user= userCredentials.user;
 
       const token=await user.getIdToken();
+      console.log("token after signin= ", token);
+
       await axios.post("http://localhost:3000/api/user/signin",{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
-      
+      console.log("Sending token in request:", `Bearer ${token}`);
+
 
       navigate("/");
 
