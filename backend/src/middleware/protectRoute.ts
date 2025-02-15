@@ -5,8 +5,11 @@ const firebaseVerifyToken=async (req:Request, res:Response, next:NextFunction)=>
    try{ 
     const authHeader= req.headers.authorization;
 
-    const token= authHeader?.split("Bearer ")[1];
+    console.log("token in middleware = ", authHeader);
 
+    const token= authHeader?.split("Bearer ")[1];
+    console.log("actual token after remove the Bearer= ", token);
+    
     if(!token){
         res.status(400).send("no token available");
         return;

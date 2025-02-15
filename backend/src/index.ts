@@ -6,6 +6,7 @@ import messageHandler from "./routeHandler/messageHandler"
 import userHandler from "./routeHandler/userHandler"
 import firebaseVerifyToken from "./middleware/protectRoute";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -19,8 +20,11 @@ app.use(
     origin: CLIENT_ORIGIN,
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+
   })
 );
+app.use(cookieParser());
 
 app.use("/api/user",firebaseVerifyToken,  userHandler);
 app.use("/api/message",firebaseVerifyToken, messageHandler);
