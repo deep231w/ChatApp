@@ -21,7 +21,7 @@ const UserContext = createContext<UserType | null>(null);
 export const useUsersContext = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const { currentUser ,loading} = useAuth();
+    const { currentUser ,loading,token} = useAuth();
     const [users, setUsers] = useState<User[]>([]);
     const [userLoading, setUserLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -40,7 +40,10 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
 
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/user");
+                const response = await axios.get("http://localhost:3000/api/user",{
+                    headers:{Authorization:`Bearer ${token}`},
+                    withCredentials:true
+                  });
                 setUsers(response.data);
                 console.log("Fetched users:", response.data);
 

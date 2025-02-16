@@ -12,7 +12,7 @@ interface MessageType{
     reciverId: number;
 }
 export const useMessage =()=>{
-    const {currentUser,loading}= useAuth();
+    const {currentUser,loading,token}= useAuth();
     const { selectedId } = useSelectedId();
     const [messages, setMessages]= useState<MessageType[]| undefined>(undefined);
     const [messageLoading, setMessageLoading]=useState(true);
@@ -21,7 +21,10 @@ export const useMessage =()=>{
     useEffect(()=>{
         async function FetchMessages (){
             if (!selectedId || !currentUser?.uid) return;
-            try{const res= await axios.get(`http://localhost:3000/api/message/${currentUser?.uid}/${selectedId}`)
+            try{const res= await axios.get(`http://localhost:3000/api/message/${currentUser?.uid}/${selectedId}`,{
+                headers:{Authorization:`Bearer ${token}`},
+                withCredentials:true
+            })
                 setMessages(res.data);
                 setMessageLoading(false);
             }catch(e){

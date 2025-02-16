@@ -8,24 +8,30 @@ import axios from "axios";
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  token:string | null;
 }
 
-const AuthContext = createContext<AuthContextType>({ currentUser: null, loading: true });
+const AuthContext = createContext<AuthContextType>({ currentUser: null, loading: true, token:null });
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken]=useState<string>("");
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async(user) => {
       if (user) {
         console.log("User is logged in:", user);
+
+        const newToken=await user.getIdToken();
+        setToken(newToken);
+        console.log("new token generated= ", newToken);
+
       } else {
         console.log("No user logged in");
       }
-
       setCurrentUser(user);
       setLoading(false);
     });
@@ -39,7 +45,7 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, loading }}>
+    <AuthContext.Provider value={{ currentUser, loading, token }}>
       {children}
     </AuthContext.Provider>
   );
