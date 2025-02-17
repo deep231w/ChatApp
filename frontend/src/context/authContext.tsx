@@ -9,9 +9,16 @@ interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
   token:string | null;
+  localstorageUser:LocalStoregeUser | null;
 }
 
-const AuthContext = createContext<AuthContextType>({ currentUser: null, loading: true, token:null });
+type LocalStoregeUser={
+  id:number,
+  firstName:string,
+  lastName:string,
+  email:string
+}
+const AuthContext = createContext<AuthContextType>({ currentUser: null, loading: true, token:null, localstorageUser:null });
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -19,8 +26,18 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken]=useState<string>("");
+  const [localstorageUser, setLocalStorageUser]= useState<LocalStoregeUser | null>(null);
 
   useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setLocalStorageUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Error parsing localStorage user:", e);
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async(user) => {
       if (user) {
         console.log("User is logged in:", user);
@@ -45,7 +62,7 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, loading, token }}>
+    <AuthContext.Provider value={{ currentUser, loading, token, localstorageUser }}>
       {children}
     </AuthContext.Provider>
   );
