@@ -61,7 +61,13 @@ const Signin= async (req:Request, res:Response)=>{
         
 
         res.status(200).json({
-            message:"loggedin successfull!! "
+            message:"loggedin successfull!! ",
+            user:{
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            }
         })
         return;
 
