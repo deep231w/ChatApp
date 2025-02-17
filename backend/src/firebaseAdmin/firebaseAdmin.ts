@@ -1,14 +1,7 @@
 import admin from "firebase-admin";
-//import serviceAccount from "./../config/serviceAccountKey.json";
- const serviceAccount = require("../firebase-admin/serviceAccountKey");
 
-// import dotenv from "dotenv";
+const serviceAccount = require("../firebase-admin/serviceAccountKey");
 
-// dotenv.config();
-
-// const serviceAccount= process.env.FIREBASE_ADMIN_CREDENTIALS; 
-
-console.log(serviceAccount);
 
 if(!serviceAccount){
   console.log("no service account key ");

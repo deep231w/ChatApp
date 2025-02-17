@@ -4,7 +4,7 @@ import prisma from "../../db/db";
 
 const SendMessage= async(req:Request, res:Response)=>{
     try{const {senderId, reciverId, message}= req.body;
-
+    console.log("credentials= ",senderId,reciverId,message)
     if(!senderId && !reciverId && !message){
         res.status(400).send("invalid credentials try again !!")
         return; 
@@ -12,9 +12,9 @@ const SendMessage= async(req:Request, res:Response)=>{
 
     const response= await prisma.message.create({
         data:{
-            sentId:senderId,
-            userId:senderId,
-            reciverId,
+            sentId:parseInt(senderId),
+            userId:parseInt(senderId),
+            reciverId:parseInt(reciverId),
             content:message,
         }
     })
@@ -24,6 +24,7 @@ const SendMessage= async(req:Request, res:Response)=>{
         message:"sent message successfully",
         response
     })
+    return ;
     
     }catch(e){
         console.log("server error at send message route = ",e);

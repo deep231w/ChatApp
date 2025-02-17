@@ -16,7 +16,7 @@ const fetchMessage= async(req:Request, res:Response)=>{
     try{
         const user= await prisma.user.findFirst({
             where:{
-                firebaseuid:senderId
+                id:parseInt(senderId)
             }
         })
 
