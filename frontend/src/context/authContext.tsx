@@ -30,6 +30,8 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    console.log("storedUser in local storage in useAuth = ",storedUser);
+
     if (storedUser) {
       try {
         setLocalStorageUser(JSON.parse(storedUser));
@@ -37,7 +39,7 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
         console.error("Error parsing localStorage user:", e);
       }
     }
-
+    console.log("final localStorage statevariable valuse= ", localstorageUser);
     const unsubscribe = onAuthStateChanged(auth, async(user) => {
       if (user) {
         console.log("User is logged in:", user);
@@ -67,31 +69,3 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
     </AuthContext.Provider>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-// const fetchSentId= async ()=>{
-//   try{
-//     const response =await axios.get("http://localhost:3000/api/user/me",{
-//       withCredentials:true,
-//     })
-
-//     const data=await response.data;
-
-//     setSentId(data);
-//     console.log("fetched cookie data", data);
-
-//   }catch(e){
-//     console.log("error cookie fetching", e)
-//   }
-// }
-// if(user) fetchSentId();

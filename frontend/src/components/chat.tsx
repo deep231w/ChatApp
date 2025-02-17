@@ -2,38 +2,43 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/authContext";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
-import { useMessage } from "../hooks/useMessage";
 import { useUsersContext } from "../context/usersContext";
 import { useChat } from "../hooks/useSocketChat";
 import { useSelectedId } from "../context/selectedUserContext";
 
 export const Chat = () => {
-  const { messages, messageError, messageLoading } = useMessage();
   const { users, loggedinUser, loading } = useUsersContext() ?? {};
   const { selectedId } = useSelectedId();
-  const { socketMessages, sendSocketMessage } = useChat(selectedId);
+  const { socketMessages, sendSocketMessage ,loadingMessage } = useChat(selectedId);
   const [inputMessage, setInputMessage] = useState<string>("");
 
-  useEffect(() => {
-    if (loading || !loggedinUser) return;
-    console.log("loggedin user id in chat.tsx=", loggedinUser);
-  }, [loading, loggedinUser]);
+  useEffect(()=>{
+    if(!loadingMessage){
+      console.log("fetch message iin chat component = ", socketMessages);
+    }
+  },[socketMessages])
+
+    console.log("fetch message in chat.tsx componrnt= ", socketMessages);
+  // useEffect(() => {
+  //   if (loading || !loggedinUser) return;
+  //   console.log("loggedin user id in chat.tsx=", loggedinUser);
+  // }, [loading, loggedinUser]);
 
   if (loading || !loggedinUser) {
     return <div>Loading chat...</div>;
   }
 
-  if (messageError) {
-    return <p>Server Error!</p>;
-  }
+  // if (socketMessages) {
+  //   return <p>Server Error!</p>;
+  // }
 
-  if (messageLoading) {
-    return <p>Message loading, please wait...</p>;
-  }
+  // if (messageLoading) {
+  //   return <p>Message loading, please wait...</p>;
+  // }
 
-  if (!messages) {
-    return <p>No messages... Start chatting</p>;
-  }
+  // if (!messages) {
+  //   return <p>No messages... Start chatting</p>;
+  // }
 
   const sendMessageFunction = () => {
     sendSocketMessage(inputMessage);
@@ -46,8 +51,8 @@ export const Chat = () => {
         {selectedId ? `Chat with ${selectedId}` : 'Select a user to chat'}
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
-        {messages.length > 0 ? (
-          messages.map((msg) => (
+        {socketMessages.length > 0 ? (
+          socketMessages.map((msg) => (
             <div key={msg.id}>
               {msg.content}
             </div>
