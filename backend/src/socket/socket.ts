@@ -8,6 +8,7 @@ interface OnlineUsers {
 }
 
 const onlineusers: OnlineUsers={};
+
 interface PrivateMessage {
   sentId: number;
   reciverId: number;
@@ -26,8 +27,6 @@ export const initializeSocket = (server: HttpServer) => {
       credentials: true,
     },
   });
-
-  const onlineusers: OnlineUsers = {};
 
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
