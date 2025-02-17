@@ -19,10 +19,16 @@ const SignIn: React.FC = () => {
       const token=await user.getIdToken();
       console.log("token after signin= ", token);
 
-      await axios.post("http://localhost:3000/api/user/signin",{},{
+      const response= await axios.post("http://localhost:3000/api/user/signin",{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
+      if(response.status === 200){
+        const {user}= response.data;
+        localStorage.setItem("user",JSON.stringify(user))
+        console.log("user detail after signin setup in localstorage= ", user);
+        
+      }
       console.log("Sending token in request:", `Bearer ${token}`);
 
 
