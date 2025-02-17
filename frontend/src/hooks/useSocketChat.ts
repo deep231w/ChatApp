@@ -86,9 +86,7 @@ export const useChat = (reciverId: string) => {
       }
       console.log("Sending message:", newMessage); // Debugging
 
-      socket.emit("private_message", {
-        newMessage
-      });
+      socket.emit("private_message", newMessage);
 
 
       setSocketMessages((prev) => [...prev, newMessage]);
