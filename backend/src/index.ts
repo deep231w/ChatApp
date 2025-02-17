@@ -27,7 +27,7 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api/user",firebaseVerifyToken,  userHandler);
-app.use("/api/message",firebaseVerifyToken, messageHandler);
+app.use("/api/message", messageHandler);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");

@@ -25,6 +25,8 @@ export const useMessage =()=>{
                 headers:{Authorization:`Bearer ${token}`},
                 withCredentials:true
             })
+            console.log("current user uid= ", currentUser?.uid);
+            console.log("selected user id= ", selectedId);
                 setMessages(res.data);
                 setMessageLoading(false);
             }catch(e){

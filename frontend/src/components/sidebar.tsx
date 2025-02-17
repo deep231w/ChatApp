@@ -8,7 +8,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     if (error) return <p>Server failed</p>;
     if (loading) return <p>Loading Please wait</p>;
     if (!users) return <p>Failed Loading!</p>;
-
+    console.log("selected user id in sidebar= ",selectedId)
     return (
         <div className={`flex h-screen`}>
             <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm">
@@ -21,6 +21,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                             <li
                                 key={user.id}
                                 onClick={() => setSelectedUserId(user.id)} // Now setting selected user
+                                
                                 className={`cursor-pointer ${selectedId === user.id ? "font-bold text-blue-500" : "text-gray-800"}`}
                             >
                                 {user.firstName}
