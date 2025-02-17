@@ -4,11 +4,12 @@ import prisma from "../../db/db";
 
 
 const fetchMessage= async(req:Request, res:Response)=>{
-    const {senderId, reciverId}= req.params;
-    console.log("senderId in fetch message route= ", senderId);
-    console.log("reciverId in fetch message route=", reciverId);
+    const {senderid, reciverid}= req.params;
+
+    console.log("senderId in fetch message route= ", senderid);
+    console.log("reciverId in fetch message route=", reciverid);
     
-    if(!senderId || !reciverId){
+    if(!senderid || !reciverid){
         res.status(300).send("incorect request");
         return;
     }
@@ -16,7 +17,7 @@ const fetchMessage= async(req:Request, res:Response)=>{
     try{
         const user= await prisma.user.findFirst({
             where:{
-                id:parseInt(senderId)
+                id:parseInt(senderid)
             }
         })
 
@@ -28,8 +29,8 @@ const fetchMessage= async(req:Request, res:Response)=>{
         const result = await prisma.message.findMany({
             where: {
               OR: [
-                { sentId: user?.id, reciverId: parseInt(reciverId) },
-                { sentId: parseInt(reciverId), reciverId: user?.id },
+                { sentId: user?.id, reciverId: parseInt(reciverid) },
+                { sentId: parseInt(reciverid), reciverId: user?.id },
               ],
             },
             orderBy: { createdAt: "asc" },
