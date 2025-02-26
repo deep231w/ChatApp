@@ -1,8 +1,8 @@
 import admin from "firebase-admin";
+import path from "path";
+// const serviceAccount = require(path.join(__dirname, "../../firebase-admin/serviceAccountKey.json"));
 
-const serviceAccount = require("../firebase-admin/serviceAccountKey");
-
-
+import serviceAccount from "../firebase-admin/serviceAccountKey.json"
 if(!serviceAccount){
   console.log("no service account key ");
 }
