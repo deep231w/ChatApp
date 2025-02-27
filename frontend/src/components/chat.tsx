@@ -19,26 +19,13 @@ export const Chat = () => {
   },[socketMessages])
 
     console.log("fetch message in chat.tsx componrnt= ", socketMessages);
-  // useEffect(() => {
-  //   if (loading || !loggedinUser) return;
-  //   console.log("loggedin user id in chat.tsx=", loggedinUser);
-  // }, [loading, loggedinUser]);
+
 
   if (loading || !loggedinUser) {
     return <div>Loading chat...</div>;
   }
 
-  // if (socketMessages) {
-  //   return <p>Server Error!</p>;
-  // }
 
-  // if (messageLoading) {
-  //   return <p>Message loading, please wait...</p>;
-  // }
-
-  // if (!messages) {
-  //   return <p>No messages... Start chatting</p>;
-  // }
 
   const sendMessageFunction = () => {
     sendSocketMessage(inputMessage);
