@@ -50,7 +50,6 @@ const signUp= async (req:Request, res:Response)=>{
         email:user.email
     }),{
         httpOnly:false,
-        //secure:true,
         sameSite:"strict"
     })
 
