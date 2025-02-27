@@ -3,8 +3,9 @@ import { useAuth } from "../context/authContext"; // Make sure the path is corre
 import { signOut } from "firebase/auth";
 import { auth } from "../context/firebase";
 import { Button } from "./components/ui/button";
+
 export const Navbar: React.FC = () => {
-  const { currentUser,loading } = useAuth();
+  const { currentUser,loading ,localstorageUser} = useAuth();
 
   const handleSignout= async()=>{
     await signOut(auth);
@@ -18,7 +19,7 @@ export const Navbar: React.FC = () => {
       <div>
         {currentUser ? (
           <>
-            <span>{currentUser.displayName}</span> {/* Display user name */}
+            <span className="text-white text-xl font-bold ">{localstorageUser.firstName}</span> {/* Display user name */}
             <Button onClick={handleSignout}>Logout</Button> {/* Implement logout logic here */}
           </>
         ) : (

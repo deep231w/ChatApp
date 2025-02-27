@@ -3,6 +3,7 @@ import { auth } from "../context/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { json } from "stream/consumers";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -18,11 +19,16 @@ const SignUp: React.FC = () => {
       const user = userCredentials.user;
       const token= user.getIdToken();
 
-      await axios.post("http://localhost:3000/api/user/signup",{},{
+      const response= await axios.post("http://localhost:3000/api/user/signup",{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       }) 
 
+      if(response.status===200){
+        const {user}= response.data;
+        localStorage.setItem("user",JSON.stringify(user))
+        console.log("user detail after signin setup in localstorage= ", user);
+      }
       navigate("/"); 
     } catch (error) {
       console.error("Error signing up:", error);
