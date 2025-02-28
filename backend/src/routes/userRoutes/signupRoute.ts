@@ -2,6 +2,7 @@ import {  Request, Response } from "express";
 import admin from "../../firebaseAdmin/firebaseAdmin";
 import prisma from "../../db/db";
 import jwt from "jsonwebtoken";
+
 const signUp= async (req:Request, res:Response)=>{
 
     try{
@@ -71,3 +72,5 @@ const signUp= async (req:Request, res:Response)=>{
 
     
 }
+
+export default signUp;

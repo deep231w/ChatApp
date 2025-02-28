@@ -27,7 +27,8 @@ const Signin= async (req:Request, res:Response)=>{
             }
         })
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+             res.status(404).json({ message: "User not found" });
+             return;
         }
         
         console.log("user in signin = ", user);
@@ -56,12 +57,7 @@ const Signin= async (req:Request, res:Response)=>{
 
         res.status(200).json({
             message:"loggedin successfull!! ",
-            user:{
-                id: user.id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email
-            }
+            user
         })
         return;
 
