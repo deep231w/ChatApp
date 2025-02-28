@@ -44,13 +44,7 @@ const Signin= async (req:Request, res:Response)=>{
             expiresIn: "7d"
         });
         console.log("jwt token= ", token);
-        // res.setHeader("Set-Cookie", cookie.serialize("authToken", token, {
-        //     httpOnly: true,
-        //     secure: process.env.NODE_ENV === "production", // Secure in production
-        //     sameSite: "strict",
-        //     maxAge: 60 * 60 * 24 * 7, // 7 days
-        //     path: "/"
-        // }));
+        
         res.cookie("authToken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
