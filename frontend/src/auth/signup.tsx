@@ -16,7 +16,9 @@ const SignUp: React.FC = () => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredentials.user;
-      const token= user.getIdToken();
+
+      const token=await user.getIdToken();
+
       console.log("token in frontend", token);
 
       const response= await axios.post("http://localhost:3000/api/user/signup",{},{
