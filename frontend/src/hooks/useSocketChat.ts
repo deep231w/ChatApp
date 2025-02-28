@@ -53,10 +53,13 @@ export const useChat = (reciverId: string) => {
 
 }, [reciverId]);
 
+//recieve message on real time
   useEffect(() => {
     if (!socket) return;
 
     const messageListener = (newMessage: Message) => {
+      console.log("new message", newMessage);
+
       setSocketMessages((prev) => [...prev, newMessage]);
     };
 
@@ -67,6 +70,7 @@ export const useChat = (reciverId: string) => {
     };
   }, [socket]);
 
+//send message
   const sendSocketMessage = async (content: string) => {
     if (loading || !loggedinUser) {
       console.warn("User not available yet!");
