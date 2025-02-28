@@ -9,6 +9,7 @@ const SignUp: React.FC = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -21,7 +22,11 @@ const SignUp: React.FC = () => {
 
       console.log("token in frontend", token);
 
-      const response= await axios.post("http://localhost:3000/api/user/signup",{},{
+      const response= await axios.post("http://localhost:3000/api/user/signup",{
+        firstName:firstName,
+        lastName:lastName,
+        email:email
+      },{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       }) 
