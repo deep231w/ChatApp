@@ -23,7 +23,7 @@ export const initializeSocket = (server: HttpServer) => {
   io = new SocketServer(server, {
     cors: {
       origin: "http://localhost:5173",
-      methods: ["POST", "GET"],
+      methods: ["POST", "GET"], 
       credentials: true,
     },
   });
@@ -31,9 +31,11 @@ export const initializeSocket = (server: HttpServer) => {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
-    socket.on("register", (userId: string) => {
+    socket.on("register", (userId: number) => {
       onlineusers[userId] = socket.id;
       console.log(`${userId} registered with socket ID ${socket.id}`);
+      console.log("Current online users:", onlineusers);
+      updateonlineUsers();
     });
 
     socket.on("private_message", async ({ sentId, reciverId, content }: PrivateMessage) => {
@@ -57,7 +59,8 @@ export const initializeSocket = (server: HttpServer) => {
         })
         console.log("message was sent",savedMessage );
         if (reciverSocketid) {
-            io.to(reciverSocketid).emit("recive_message", savedMessage);
+            io.to(reciverSocketid).emit("receive_message", savedMessage);
+            console.log("real time recieve message = ", savedMessage);
             } else {
                   console.log(`Recipient ${reciverId} is not online.`);
             }
