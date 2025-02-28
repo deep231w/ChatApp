@@ -21,7 +21,14 @@ const signUp= async (req:Request, res:Response)=>{
     }
 
     const tokenId= await admin.auth().verifyIdToken(actualToken);
-    const {uid, email, firstName, lastName}= tokenId;
+    const {uid, email}= tokenId;
+    const {firstName, lastName}= req.body;
+    if(!firstName && !lastName){
+        res.status(300).json({
+            message:"incorrect crdentials"
+        })
+        return;
+    }
 
     if(!email){
         res.status(400).send("incorrect credentials");
