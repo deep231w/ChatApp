@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
       <div>
         {currentUser ? (
           <>
-            <span className="text-white text-xl font-bold ">{localstorageUser.firstName}</span> {/* Display user name */}
+            <span className="text-white text-xl font-bold ">{localstorageUser?.firstName}</span> {/* Display user name */}
             <Button onClick={handleSignout}>Logout</Button> {/* Implement logout logic here */}
           </>
         ) : (
