@@ -1,7 +1,7 @@
 import {  Request, Response } from "express";
 import admin from "../../firebaseAdmin/firebaseAdmin";
 import prisma from "../../db/db";
-
+import jwt from "jsonwebtoken";
 const signUp= async (req:Request, res:Response)=>{
 
     try{
@@ -12,14 +12,14 @@ const signUp= async (req:Request, res:Response)=>{
         return;
     }
 
-    const token= authToken.split("Bearer ")[1];
+    const actualToken= authToken.split("Bearer ")[1];
 
-    if(!token){
+    if(!actualToken){
         res.status(400).send("no token available");
         return; 
     }
 
-    const tokenId= await admin.auth().verifyIdToken(token);
+    const tokenId= await admin.auth().verifyIdToken(actualToken);
     const {uid, email, firstName, lastName}= tokenId;
 
     if(!email){
@@ -43,14 +43,20 @@ const signUp= async (req:Request, res:Response)=>{
             }
         })
     }
-    res.cookie("userData",JSON.stringify({
+    const userPayload= {
         id:user.id,
         firstName:user.firstName,
         lastName:user.lastName,
         email:user.email
-    }),{
-        httpOnly:false,
-        sameSite:"strict"
+    }
+    const token= jwt.sign(userPayload, process.env.JWT_SECRET!);
+
+    res.cookie("userData",token,{
+        httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7,
+            path: "/"
     })
 
     res.status(200).json({
