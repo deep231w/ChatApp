@@ -3,7 +3,6 @@ import { auth } from "../context/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { json } from "stream/consumers";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -19,7 +18,7 @@ const SignUp: React.FC = () => {
       const user = userCredentials.user;
       const token= user.getIdToken();
       console.log("token in frontend", token);
-      
+
       const response= await axios.post("http://localhost:3000/api/user/signup",{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
