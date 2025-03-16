@@ -7,7 +7,7 @@ const router= express.Router();
 
 
 router.get("/:senderid/:reciverid",fetchMessage);
-
+ 
 router.post("/send",SendMessage);
 
 export default router; 
