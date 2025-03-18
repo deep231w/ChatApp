@@ -99,8 +99,14 @@ const SignUp: React.FC = () => {
           <br />
           <div><h1>OR</h1></div>
           <br />
-          <div>
-            <button>Google SignUp</button>
+          <div className="flex items-center justify-center">
+          <button
+            type="button"
+            onClick={googleSignup}
+            className="flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all"
+          >
+            SignUp with Google
+          </button>
           </div>
 
           <p className="text-center text-gray-600">
