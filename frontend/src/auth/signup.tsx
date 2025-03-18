@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../context/firebase";
+import { auth,googleAuth } from "../context/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,6 +41,13 @@ const SignUp: React.FC = () => {
       console.error("Error signing up:", error);
     }
   };
+  const googleSignup= async()=>{
+    try{
+
+    }catch(e){
+      console.log("error during signup= ", e);
+    }
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -89,6 +96,12 @@ const SignUp: React.FC = () => {
           >
             Sign Up
           </button>
+          <br />
+          <div><h1>OR</h1></div>
+          <br />
+          <div>
+            <button>Google SignUp</button>
+          </div>
 
           <p className="text-center text-gray-600">
             Already have an account?{" "}
