@@ -18,7 +18,6 @@ export const Navbar: React.FC = () => {
     if(socket){
       socket.disconnect();
     }
-    window.location.href = "/login";
   }
   if(loading){
     return <div>loading...</div>
