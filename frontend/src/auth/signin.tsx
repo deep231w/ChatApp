@@ -56,7 +56,7 @@ const SignIn: React.FC = () => {
         console.log("user cookie after signin with google- ", user);
       }
       navigate("/");
-      
+
     }catch(e){
       console.log("error during google signin",e)
     }
@@ -97,6 +97,15 @@ const SignIn: React.FC = () => {
           Sign In
         </button>
         <br />
+        <div className="flex items-center justify-center">
+          <h1>OR</h1>
+        </div>
+        <br />
+        <div className="flex items-center justify-center">
+          <button
+            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+          >SignIn with Google</button>
+        </div>
         <ButtomWarning to={"/signup"} label={"Doesn't have account?"} buttonText={" SignUp"}></ButtomWarning>
       </form>
     </div>
