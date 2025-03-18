@@ -96,11 +96,11 @@ const SignIn: React.FC = () => {
         >
           Sign In
         </button>
-        <br />
+      
         <div className="flex items-center justify-center">
           <h1>OR</h1>
         </div>
-        <br />
+        
         <div className="flex items-center justify-center">
           <button
             className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
