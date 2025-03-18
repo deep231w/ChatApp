@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { auth } from "../context/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, googleAuth } from "../context/firebase";
+import { signInWithEmailAndPassword ,signInWithPopup} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ButtomWarning } from "@/components/buttomWarning";
 import axios from "axios";
@@ -38,7 +38,29 @@ const SignIn: React.FC = () => {
       console.error("Error signing in:", error);
     }
   };
+  const handleGoogleSignin= async()=>{
+    try{
+      const userCredentials =await signInWithPopup(auth, googleAuth);
+      const user= userCredentials.user;
+      const token= await user.getIdToken();
+      console.log("token during googlre signin- ", token);
 
+      const response= await  axios.post("http://localhost:3000/api/user/signin",{},{
+        headers:{Authorization:`Bearer ${token}`},
+        withCredentials:true
+      })
+
+      if(response.status=== 200){
+        const {user}= response.data;
+        localStorage.setItem("user",JSON.stringify(user))
+        console.log("user cookie after signin with google- ", user);
+      }
+      navigate("/");
+      
+    }catch(e){
+      console.log("error during google signin",e)
+    }
+  }
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form 
