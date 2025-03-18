@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { auth,googleAuth } from "../context/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword ,  signInWithPopup} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -43,6 +43,18 @@ const SignUp: React.FC = () => {
   };
   const googleSignup= async()=>{
     try{
+      const userCredentials= await signInWithPopup(auth, googleAuth);
+      const user= userCredentials.user;
+      const token= await user.getIdToken();
+      console.log("google signin token- ", token);
+      const response= await axios.post("http://localhost:3000/api/user/signup", {
+        firstName:user.displayName?.split("")[0] || "",
+        lastName:user.displayName?.split("")[1] || "",
+        email:user.email
+      },{
+        headers:{Authorization:`Bearer ${token}`},
+        withCredentials:true
+      })
 
     }catch(e){
       console.log("error during signup= ", e);
