@@ -3,12 +3,22 @@ import { useAuth } from "../context/authContext"; // Make sure the path is corre
 import { signOut } from "firebase/auth";
 import { auth } from "../context/firebase";
 import { Button } from "./components/ui/button";
+import { useSocket } from "../context/socketContext";
 
 export const Navbar: React.FC = () => {
   const { currentUser,loading ,localstorageUser} = useAuth();
-
+  const {socket} =useSocket();
   const handleSignout= async()=>{
     await signOut(auth);
+    localStorage.clear();
+    sessionStorage.clear();
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  });
+    if(socket){
+      socket.disconnect();
+    }
+    window.location.href = "/login";
   }
   if(loading){
     return <div>loading...</div>
