@@ -20,20 +20,22 @@ export const useSocket= ():socketContextType =>{
 export const SocketProvider:React.FC<{children:React.ReactNode}>= ({children})=>{
     const [socket, setSocket]=useState<Socket | null>(null)
 
-    useEffect(()=>{
-        const newSocket= io("http://localhost:3000",{
+    useEffect(()=>{            
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+
+        if(storedUser){
+
+            const newSocket= io("http://localhost:3000",{
             withCredentials:true
-        });
-        newSocket.on("connect", ()=>{
-            const storedUser = JSON.parse(localStorage.getItem("user")!);
-            if(storedUser){
+                });
+            newSocket.on("connect", ()=>{
                 newSocket.emit("register",storedUser?.id);
-            }
-        })
+            })
         setSocket(newSocket);
 
         return ()=>{
             newSocket.close();
+        }
         }
     },[])
 
