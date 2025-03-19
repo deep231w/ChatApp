@@ -103,6 +103,7 @@ const SignIn: React.FC = () => {
         
         <div className="flex items-center justify-center">
           <button
+            onClick={handleGoogleSignin}
             className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
           >SignIn with Google</button>
         </div>
