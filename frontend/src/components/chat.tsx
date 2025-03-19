@@ -5,6 +5,7 @@ import { Input } from "./components/ui/input";
 import { useUsersContext } from "../context/usersContext";
 import { useChat } from "../hooks/useSocketChat";
 import { useSelectedId } from "../context/selectedUserContext";
+import DefaultBackground from "./ui/defaultBackground";
 
 export const Chat = () => {
   const { users, loggedinUser, loading } = useUsersContext() ?? {};
@@ -33,9 +34,11 @@ export const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold">
-        {selectedId ? `Chat with ${selectedId}` : 'Select a user to chat'}
+    <div>
+        {selectedId? (<>
+      <div className="flex flex-col h-screen bg-gray-100">
+        <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold">
+        {selectedId ? `Chat with ${selectedId}` : ''}
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
         {socketMessages.length > 0 ? (
@@ -64,6 +67,10 @@ export const Chat = () => {
           Send
         </Button>
       </div>
+      </div>
+      </>):(
+        <DefaultBackground/>
+      )}
     </div>
   );
 };
