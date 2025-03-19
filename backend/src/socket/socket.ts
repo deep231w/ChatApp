@@ -1,6 +1,7 @@
 import { Server as SocketServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import prisma from "../db/db";
+import { error } from "console";
 let io: SocketServer;
 
 interface OnlineUsers {
@@ -27,10 +28,17 @@ export const initializeSocket = (server: HttpServer) => {
       credentials: true,
     },
   });
+  io.use((socket,next)=>{
+    const userId= socket.handshake.auth?.userId;
+    if(!userId){
+      console.log("unauthorised connection attempt")
+      return next (new Error ("Authentication Error"))
 
+    }
+    next();
+  })
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
-
     socket.on("register", (userId: number) => {
       onlineusers[userId] = socket.id;
       console.log(`${userId} registered with socket ID ${socket.id}`);
