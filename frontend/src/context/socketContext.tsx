@@ -26,7 +26,10 @@ export const SocketProvider:React.FC<{children:React.ReactNode}>= ({children})=>
         if(storedUser){
 
             const newSocket= io("http://localhost:3000",{
-            withCredentials:true
+            withCredentials:true,
+            auth:{
+                userId:storedUser?.id
+            }
                 });
             newSocket.on("connect", ()=>{
                 newSocket.emit("register",storedUser?.id);
