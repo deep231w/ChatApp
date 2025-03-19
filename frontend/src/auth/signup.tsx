@@ -47,15 +47,25 @@ const SignUp: React.FC = () => {
       const user= userCredentials.user;
       const token= await user.getIdToken();
       console.log("google signin token- ", token);
+
+      const nameParts = user.displayName?.split(" ") || [];
+      const FirstName= nameParts[0] || "";
+      const LastName= nameParts[1] || "";
       const response= await axios.post("http://localhost:3000/api/user/signup", {
-        firstName:user.displayName?.split("")[0] || "",
-        lastName:user.displayName?.split("")[1] || "",
+        firstName:FirstName,
+        lastName:LastName,
         email:user.email
       },{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
 
+      if(response.status===200){
+        const {user}= response.data;
+        localStorage.setItem("user",JSON.stringify(user))
+        console.log("tpken after signup with google- " ,user);
+      }
+      navigate("/");
     }catch(e){
       console.log("error during signup= ", e);
     }
