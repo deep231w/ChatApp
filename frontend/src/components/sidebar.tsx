@@ -10,20 +10,20 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
     return (
-        <div className="flex flex-col h-full bg-gray-600 ">
+        <div className="flex flex-col h-full bg-gray-300 ">
 
             <div className="p-4 border-b border-gray-300">
-                <h2 className="text-lg font-semibold text-white">Available Users</h2>
+                <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
             </div>
 
-                <div className="flex-grow">
+                <div className="flex-grow p-2">
                     <ul className="space-y-2">
                         {users.length > 0 ? (
                             users.map((user) => (
                                 <li
                                     key={user.id}
                                     onClick={() => setSelectedUserId(user.id)}
-                                    className={`cursor-pointer ${selectedId === user.id ? "font-bold text-blue-500" : "text-gray-800"}`}
+                                    className={`cursor-pointer border border-solid border-purple-500 rounded-r-lg font-bold transition-all duration-200 ${selectedId === user.id ? "bg-purple-600 font-bold text-white p-1" : "text-gray-800 p-1"}`}
                                 >
                                     {user.firstName}
                                 </li>
