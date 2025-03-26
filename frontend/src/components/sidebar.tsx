@@ -10,10 +10,10 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
     return (
-        <div className="flex flex-col h-full bg-gray-100 ">
+        <div className="flex flex-col h-full bg-gray-600 ">
 
             <div className="p-4 border-b border-gray-300">
-                <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
+                <h2 className="text-lg font-semibold text-white">Available Users</h2>
             </div>
 
                 <div className="flex-grow">
