@@ -11,12 +11,12 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     console.log("selected user id in sidebar= ",selectedId)
     return (
         <div className={`flex h-screen`}>
-            <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm flex-1">
+            <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm flex flex-col h-screen">
                 <div className="p-4 border-b border-gray-300">
                     <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
                 </div>
                 <div>
-                    <ul className="p-4 space-y-2">
+                    <ul className="p-4 space-y-2 flex-1 overflow-y-auto">
                         {users.length > 0 ? (
                             users.map((user) => (
                                 <li
@@ -32,7 +32,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                         )}
                     </ul>
                 </div>
-                <div className="p-4 border-t border-gray-300 ">
+                <div className="p-4 border-t border-gray-300 flex-shrink-0">
                     <UserMenu/>
                 </div>
             </div>
