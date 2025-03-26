@@ -10,33 +10,51 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
     return (
-        <div className={`flex h-screen`}>
-            <div className="w-64 bg-gray-100 border-r border-gray-200 shadow-sm flex flex-col h-screen">
-                <div className="p-4 border-b border-gray-300">
-                    <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
-                </div>
-                <div>
-                    <ul className="p-4 space-y-2 flex-1 overflow-y-auto">
+        <div className="flex flex-col h-full bg-gray-100 ">
+
+            <div className="p-4 border-b border-gray-300">
+                <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
+            </div>
+
+                <div className="flex-grow">
+                    <ul className="space-y-2">
                         {users.length > 0 ? (
                             users.map((user) => (
                                 <li
                                     key={user.id}
-                                    onClick={() => setSelectedUserId(user.id)} // Now setting selected user
+                                    onClick={() => setSelectedUserId(user.id)}
                                     className={`cursor-pointer ${selectedId === user.id ? "font-bold text-blue-500" : "text-gray-800"}`}
                                 >
                                     {user.firstName}
                                 </li>
-                        ))
+                            ))
                         ) : (
-                        <li className="text-gray-500 italic">No users Available</li>
+                            <li className="text-gray-500 italic">No users Available</li>
                         )}
                     </ul>
                 </div>
-                <div className="p-4 border-t border-gray-300 flex-shrink-0">
-                    <UserMenu/>
+
+                <div className="p-4 border-t border-gray-300 bg-white w-full">
+                    <UserMenu />
                 </div>
             </div>
-            
-        </div>
     );
+    // return (
+    //     <div className="flex flex-col h-full w-1/4 bg-gray-100 p-4">
+    //         <div>
+    //             <h1>Available users</h1>
+    //         </div>
+    //         <div className="flex-grow">
+    //             <ul>
+    //                 <li>user 1</li>
+    //                 <li>user 2</li>
+    //                 <li>user 3</li>
+    //             </ul>
+    //         </div>
+    //         <div className="bg-red-500 text-white w-full text-center p-2">
+    //             user Menu
+    //         </div>
+    //     </div>
+    // );
+
 };
