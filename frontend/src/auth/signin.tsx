@@ -3,6 +3,7 @@ import { auth, googleAuth } from "../context/firebase";
 import { signInWithEmailAndPassword ,signInWithPopup} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ButtomWarning } from "@/components/buttomWarning";
+import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -102,10 +103,11 @@ const SignIn: React.FC = () => {
         </div>
         
         <div className="flex items-center justify-center">
-          <button
+          <GoogleAuthBtn onClick={handleGoogleSignin}/>
+          {/* <button
             onClick={handleGoogleSignin}
             className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
-          >SignIn with Google</button>
+          >SignIn with Google</button> */}
         </div>
         <ButtomWarning to={"/signup"} label={"Doesn't have account?"} buttonText={" SignUp"}></ButtomWarning>
       </form>

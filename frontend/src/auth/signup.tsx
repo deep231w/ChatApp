@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth,googleAuth } from "../context/firebase";
 import { createUserWithEmailAndPassword ,  signInWithPopup} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
 
 const SignUp: React.FC = () => {
@@ -122,13 +123,7 @@ const SignUp: React.FC = () => {
             <h1>OR</h1>
           </div>
           <div className="flex items-center justify-center">
-          <button
-            type="button"
-            onClick={googleSignup}
-            className="w-full flex items-center justify-center bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all"
-          >
-            SignUp with Google
-          </button>
+          <GoogleAuthBtn onClick={googleSignup} />
           </div>
 
           <p className="text-center text-gray-600">
