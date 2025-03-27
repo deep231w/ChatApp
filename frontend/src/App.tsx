@@ -26,7 +26,7 @@ const App: React.FC = () => {
           {/* Main Content */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <div className="p-4">
+            <div className="w-1/5 min-w-[200px] p-4">
               <Sidebar onSelectuser={(user: any) => setSelectuser(user)} onRecivername={(username:string)=>setFirstUsername(username)} />
             </div>
             {/* Chat Area */}

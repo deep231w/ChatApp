@@ -1,6 +1,8 @@
 import { useUsersContext } from "../context/usersContext";
 import { useSelectedId } from "../context/selectedUserContext";
 import UserMenu from "./userMenu";
+import BrandLogo from "./ui/brandLogo";
+import SearchComponent from "./searchComponent";
 export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: string) => void; onRecivername: (firstName: string) => void }) => {
     const { users, loading, error } = useUsersContext();
     const { selectedId, setSelectedUserId } = useSelectedId(); // Now correctly using the hook
@@ -13,10 +15,12 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     return (
         <div className=" pt-2 flex flex-col h-full bg-white rounded-xl shadow-lg">
 
-            <div className="p-4 border-b border-gray-300">
-                <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
+            <div className="p-4 ">
+                <BrandLogo/>
             </div>
-
+            <div>
+                <SearchComponent/>
+            </div>
                 <div className="flex-grow p-2">
                     <ul className="space-y-2">
                         {users.length > 0 ? (
@@ -35,7 +39,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                     </ul>
                 </div>
 
-                <div className="p-4 border-t bg-fuchsia-400 bg-white w-full">
+                <div className="p-4 border-t rounded-lg bg-fuchsia-400 bg-white w-full">
                     <UserMenu />
                 </div>
             </div>
