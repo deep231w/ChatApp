@@ -21,7 +21,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
             <div>
                 <SearchComponent/>
             </div>
-                <div className="flex-grow p-2">
+                <div className="flex-grow p-2 pt-4">
                     <ul className="space-y-2">
                         {users.length > 0 ? (
                             users.map((user) => (
