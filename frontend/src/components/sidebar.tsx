@@ -23,7 +23,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                                 <li
                                     key={user.id}
                                     onClick={() => setSelectedUserId(user.id)}
-                                    className={`cursor-pointer border border-solid border-purple-500 rounded-r-lg font-bold transition-all duration-200 ${selectedId === user.id ? "bg-purple-600 font-bold text-white p-1" : "text-gray-800 p-1"}`}
+                                    className={`cursor-pointer border border-solid border-purple-500 rounded-r-lg font-bold transition-all duration-200 hover:bg-purple-300  ${selectedId === user.id ? "bg-purple-600 font-bold text-white p-1" : "text-gray-800 p-1"}`}
                                 >
                                     {user.firstName}
                                 </li>
@@ -34,7 +34,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                     </ul>
                 </div>
 
-                <div className="p-4 border-t border-gray-300 bg-white w-full">
+                <div className="p-4 border-t bg-fuchsia-300 bg-white w-full">
                     <UserMenu />
                 </div>
             </div>
