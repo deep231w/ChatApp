@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
     return <div>loading...</div>
   }
   return (
-    <nav className="flex justify-between items-center px-6 py-3 bg-fuchsia-600 shadow-md">
+    <nav className="flex justify-between items-center px-6 py-3 bg-fuchsia-400 shadow-md">
       <div className="text-xl font-bold text-white">ChatApp</div>
       <div>
         {currentUser ? (

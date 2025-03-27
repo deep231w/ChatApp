@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/authContext";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
@@ -7,7 +7,11 @@ import { useChat } from "../hooks/useSocketChat";
 import { useSelectedId } from "../context/selectedUserContext";
 import DefaultBackground from "./ui/defaultBackground";
 
-export const Chat = () => {
+interface ChatProp{
+  reciverId:string | null
+  userName:string | null
+}
+export const Chat:React.FC<ChatProp> = ({reciverId,userName}) => {
   const { users, loggedinUser, loading } = useUsersContext() ?? {};
   const { selectedId } = useSelectedId();
   const { socketMessages, sendSocketMessage ,loadingMessage } = useChat(selectedId);
@@ -38,7 +42,7 @@ export const Chat = () => {
         {selectedId? (<>
       <div className="flex flex-col h-screen bg-gray-100">
         <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold">
-        {selectedId ? `Chat with ${selectedId}` : ''}
+        {selectedId ? `Chat with ${userName}` : ''}
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
         {socketMessages.length > 0 ? (

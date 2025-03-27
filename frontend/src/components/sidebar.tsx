@@ -9,8 +9,9 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     if (loading) return <p>Loading Please wait</p>;
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
+
     return (
-        <div className="flex flex-col h-full bg-gray-300 ">
+        <div className=" pt-2 flex flex-col h-full bg-white rounded-xl shadow-lg">
 
             <div className="p-4 border-b border-gray-300">
                 <h2 className="text-lg font-semibold text-gray-800">Available Users</h2>
@@ -34,7 +35,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                     </ul>
                 </div>
 
-                <div className="p-4 border-t bg-fuchsia-300 bg-white w-full">
+                <div className="p-4 border-t bg-fuchsia-400 bg-white w-full">
                     <UserMenu />
                 </div>
             </div>

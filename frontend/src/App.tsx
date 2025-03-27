@@ -20,15 +20,15 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       {currentUser && (
-        <div className="flex flex-col h-screen" >
-          {/* Navbar */}
-          <Navbar />
+        <div className="flex flex-col h-screen bg-gray-200" >
+          
 
           {/* Main Content */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <Sidebar onSelectuser={(user: any) => setSelectuser(user)} onRecivername={(username:string)=>setFirstUsername(username)} />
-
+            <div className="p-4">
+              <Sidebar onSelectuser={(user: any) => setSelectuser(user)} onRecivername={(username:string)=>setFirstUsername(username)} />
+            </div>
             {/* Chat Area */}
             <div className="flex-1 p-4">
               <Routes>
