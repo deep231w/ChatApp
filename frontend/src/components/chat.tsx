@@ -29,6 +29,7 @@ export const Chat:React.FC<ChatProp> = ({reciverId,userName}) => {
   if (loading || !loggedinUser) {
     return <div>Loading chat...</div>;
   }
+  const selectedUser = users.find(user => user.id == selectedId); 
 
 
 
@@ -36,13 +37,13 @@ export const Chat:React.FC<ChatProp> = ({reciverId,userName}) => {
     sendSocketMessage(inputMessage);
     setInputMessage("");
   };
-
+  console.log("selected userid in chat.tsx:",selectedId);
   return (
     <div>
         {selectedId? (<>
       <div className="flex flex-col h-screen bg-gray-100">
         <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold">
-        {selectedId ? `Chat with ${userName}` : ''}
+        {selectedId ? `${selectedUser.firstName}` : ''}
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
         {socketMessages.length > 0 ? (

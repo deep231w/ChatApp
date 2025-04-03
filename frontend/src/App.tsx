@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [selectUser, setSelectuser]=useState<string | null>(null);
   const [FirstUsername, setFirstUsername]= useState<string | null>();
   if (loading) {
-    return <p>Loading...</p>; // Loading indicator while checking auth state
+    return <p>Loading...</p>; 
   }
 
   return (
