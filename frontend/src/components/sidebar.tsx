@@ -3,10 +3,12 @@ import { useSelectedId } from "../context/selectedUserContext";
 import UserMenu from "./userMenu";
 import BrandLogo from "./ui/brandLogo";
 import SearchComponent from "./searchComponent";
+import { useAuth } from "../context/authContext";
 export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: string) => void; onRecivername: (firstName: string) => void }) => {
     const { users, loading, error } = useUsersContext();
     const { selectedId, setSelectedUserId } = useSelectedId(); // Now correctly using the hook
-
+    const {localstorageUser}=useAuth();
+    
     if (error) return <p>Server failed</p>;
     if (loading) return <p>Loading Please wait</p>;
     if (!users) return <p>Failed Loading!</p>;
@@ -19,12 +21,15 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                 <BrandLogo/>
             </div>
             <div>
+                
                 <SearchComponent/>
             </div>
                 <div className="flex-grow p-2 pt-4">
                     <ul className="space-y-2">
                         {users.length > 0 ? (
-                            users.map((user) => (
+                            users
+                            .filter(user=>String(user.id) != String(localstorageUser?.id))
+                            .map((user) => (
                                 <li
                                     key={user.id}
                                     onClick={() => setSelectedUserId(user.id)}
@@ -44,22 +49,5 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                 </div>
             </div>
     );
-    // return (
-    //     <div className="flex flex-col h-full w-1/4 bg-gray-100 p-4">
-    //         <div>
-    //             <h1>Available users</h1>
-    //         </div>
-    //         <div className="flex-grow">
-    //             <ul>
-    //                 <li>user 1</li>
-    //                 <li>user 2</li>
-    //                 <li>user 3</li>
-    //             </ul>
-    //         </div>
-    //         <div className="bg-red-500 text-white w-full text-center p-2">
-    //             user Menu
-    //         </div>
-    //     </div>
-    // );
 
 };
