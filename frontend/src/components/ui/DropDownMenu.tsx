@@ -32,8 +32,8 @@ import {
 import { ReactNode } from "react";
   
   type DropdownMenuOProps = {
-    children: ReactNode; // ✅ Accept children
-  };
+    children: ReactNode; 
+  }
 
   export function DropdownMenuO({children}:DropdownMenuOProps) {
     return (
