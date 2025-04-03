@@ -5,7 +5,6 @@ import SignIn from "./auth/signin";
 import SignUp from "./auth/signup";
 import { io } from "socket.io-client";
 import { ProtectedRoute } from "./protectedroute";
-import { Navbar } from "./components/Navbar";
 import { Sidebar } from "./components/sidebar";
 import { Chat } from "./components/chat";
 
