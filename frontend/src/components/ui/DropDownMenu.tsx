@@ -30,12 +30,24 @@ import {
     DropdownMenuTrigger,
   } from "../components/ui/dropdown-menu"
 import { ReactNode } from "react";
-  
-  type DropdownMenuOProps = {
-    children: ReactNode; 
-  }
+import { signOut } from "firebase/auth";
+import { auth } from "../../context/firebase";
+import { useSocket } from "../../context/socketContext";
+  export function DropdownMenuO() {
+    const {socket}=useSocket();
 
-  export function DropdownMenuO({children}:DropdownMenuOProps) {
+    const handleSignout= async()=>{
+        await signOut(auth);
+        localStorage.clear();
+        sessionStorage.clear();
+        document.cookie.split(";").forEach((c) => {
+          document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+        if(socket){
+          socket.disconnect();
+        }
+      }
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -60,8 +72,8 @@ import { ReactNode } from "react";
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           
-          <DropdownMenuItem>
-            <LogOut />
+          <DropdownMenuItem onClick={handleSignout}>
+            <LogOut/>
             <span>Log out</span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

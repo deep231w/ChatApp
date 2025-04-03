@@ -1,6 +1,5 @@
 import { User } from "lucide-react";
 import { DropdownMenuO } from "./ui/DropDownMenu";
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { useAuth } from "../context/authContext";
 export default function UserMenu() {
     console.log("UserMenu is rendering!");
@@ -11,14 +10,7 @@ export default function UserMenu() {
                 {localstorageUser.firstName}
             </div>
             <div>
-            <DropdownMenuO>
-                <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenuO>
+            <DropdownMenuO />
             </div>
         </div>
     );
