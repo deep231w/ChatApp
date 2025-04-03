@@ -40,8 +40,8 @@ export const Chat:React.FC<ChatProp> = ({reciverId,userName}) => {
   return (
     <div>
         {selectedId? (<>
-      <div className="flex flex-col h-screen bg-gray-100">
-        <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold">
+      <div className="flex flex-col h-screen bg-gray-100 rounded-2xl shadow-lg">
+        <div className="border rounded-md bg-white text-blue-800 p-3 px-4 text-xl font-bold roundex-2xl">
         {selectedId ? `${selectedUser.firstName}` : ''}
       </div>
       <div className="flex-1 overflow-y-auto p-4 bg-white shadow-inner border rounded-md">
@@ -56,7 +56,7 @@ export const Chat:React.FC<ChatProp> = ({reciverId,userName}) => {
         )}
       </div>
 
-      <div className="sticky bottom-0 left-0 w-full bg-white p-3 border-t flex items-center space-x-2">
+      <div className="sticky bottom-0 left-0 w-full bg-white p-3 border-t flex items-center space-x-2 rounded-2xl">
         <Input
           type="text"
           placeholder="Type a message..."
