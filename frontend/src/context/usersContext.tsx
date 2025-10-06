@@ -27,8 +27,10 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     const [error, setError] = useState<string | null>(null);
 
     const [loggedinUser, setLoggedinUser]=useState<User | null>(null);
+    console.log('current user in usercontext- ',currentUser, loading)
     useEffect(() => {
-        if(loading) return;
+        console.log('inside useEffect')
+        //if(loading) return;
         if (!currentUser) {
 
             console.warn(" currentUser is NULL, skipping fetchUsers()");
@@ -41,12 +43,13 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         const fetchUsers = async () => {
             try {
                 const response = await axios.get("http://localhost:3000/api/user",{
+                    
                     headers:{Authorization:`Bearer ${token}`},
                     withCredentials:true
                   });
+                  
+                console.log("Fetched users:", response);
                 setUsers(response.data);
-                console.log("Fetched users:", response.data);
-
 
                 const matchedUser = await response.data.find((user: User) => user.firebaseuid === currentUser?.uid);
                 
@@ -69,7 +72,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         };
 
         fetchUsers();
-    }, [currentUser, loading]); // Depend on `currentUser` to ensure it's available
+    }, [currentUser]); // Depend on `currentUser` to ensure it's available
 
     return (
         <UserContext.Provider value={{ users, loading, error, loggedinUser }}>

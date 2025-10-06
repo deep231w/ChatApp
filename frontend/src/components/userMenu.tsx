@@ -7,7 +7,7 @@ export default function UserMenu() {
     return (
         <div className="flex items-center justify-between">
             <div className="text-lg font-bold text-blue-500">
-                {localstorageUser.firstName}
+                {localstorageUser?.firstName}
             </div>
             <div>
             <DropdownMenuO />

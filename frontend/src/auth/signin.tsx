@@ -46,7 +46,7 @@ const SignIn: React.FC = () => {
       const token= await user.getIdToken();
       console.log("token during googlre signin- ", token);
 
-      const response= await  axios.post("http://localhost:3000/api/user/signin",{},{
+      const response= await  axios.post("http://localhost:3000/api/user/loginWithGoogle",{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
