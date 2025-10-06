@@ -12,7 +12,7 @@ const allUsers= async (req:Request, res:Response)=>{
                 firebaseuid:true,
             }
         })
-
+        console.log("users- ", response)
         res.status(200).send(response);
 
     }catch(e){

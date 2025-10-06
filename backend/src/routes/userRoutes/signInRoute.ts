@@ -8,7 +8,7 @@ const Signin= async (req:Request, res:Response)=>{
     try{
         const authHeader= req.headers.authorization;
 
-        console.log("auth header in signin route", authHeader);
+        console.log("auth header in signin route=====", authHeader);
         if(!authHeader || !authHeader.startsWith("Bearer ")){
             res.status(400).send("No token found");
             return ;
