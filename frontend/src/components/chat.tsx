@@ -5,6 +5,9 @@ import { useUsersContext } from "../context/usersContext";
 import { useChat } from "../hooks/useSocketChat";
 import { useSelectedId } from "../context/selectedUserContext";
 import DefaultBackground from "./ui/defaultBackground";
+import { FiSmile } from "react-icons/fi";
+import EmojiPicker from "emoji-picker-react";
+
 
 interface ChatProp {
   reciverId: string | null;
@@ -16,11 +19,17 @@ export const Chat: React.FC<ChatProp> = ({ reciverId, userName }) => {
   const { selectedId } = useSelectedId();
   const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedId);
   const [inputMessage, setInputMessage] = useState<string>("");
+  const [showPicker, setShowPicker] = useState<boolean>(false);
 
-  // ✅ Get logged-in user from localStorage
+
   const storedUser = typeof window !== "undefined" ? localStorage.getItem("user") : null;
   const parsedUser = storedUser ? JSON.parse(storedUser) : null;
   const loggedInUserId = parsedUser?.id;
+
+  // Called when an emoji is clicked
+  const onEmojiClick = (emojiData, event) => {
+    setInputMessage((prev) => prev + emojiData.emoji);
+  };
 
   useEffect(() => {
     if (!loadingMessage) {
@@ -89,6 +98,12 @@ export const Chat: React.FC<ChatProp> = ({ reciverId, userName }) => {
                 className="flex-1 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <Button
+                onClick={() => setShowPicker(!showPicker)}
+                className="bg-gray-100 hover:bg-gray-200 text-white px-4 py-2 rounded-lg shadow-md"
+              >
+                <FiSmile size={24} color="black"/>
+              </Button>
+              <Button
                 onClick={sendMessageFunction}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md"
               >
@@ -99,6 +114,22 @@ export const Chat: React.FC<ChatProp> = ({ reciverId, userName }) => {
         </>
       ) : (
         <DefaultBackground />
+      )}
+
+      {/* Emoji picker popup */}
+      {showPicker && (
+        <div 
+          style={{
+            position: "absolute",
+            bottom: "50px",
+            left: "50%",      
+            transform: "translateX(-50%)",
+            zIndex: 1000,
+          }}
+
+        >
+          <EmojiPicker onEmojiClick={onEmojiClick} />
+        </div>
       )}
     </div>
   );
