@@ -6,8 +6,8 @@ export default function UserMenu() {
     const {localstorageUser}=useAuth();
     return (
         <div className="flex items-center justify-between">
-            <div className="text-lg font-bold text-blue-500">
-                {localstorageUser?.firstName}
+            <div className="text-l font-bold text-blue-500">
+                {`${localstorageUser?.firstName} ${localstorageUser?.lastName}` }
             </div>
             <div>
             <DropdownMenuO />

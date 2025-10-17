@@ -4,7 +4,7 @@ import { Input } from "./components/ui/input";
 import { useUsersContext } from "../context/usersContext";
 import { useChat } from "../hooks/useSocketChat";
 import { useSelectedId } from "../context/selectedUserContext";
-import DefaultBackground from "./ui/defaultBackground";
+import DefaultBackground from "./defaultBackground/DefaultBackground";
 import { FiSmile } from "react-icons/fi";
 import EmojiPicker from "emoji-picker-react";
 
@@ -49,7 +49,7 @@ export const Chat: React.FC<ChatProp> = ({ reciverId, userName }) => {
   };
 
   return (
-    <div>
+    <div >
       {selectedId ? (
         <>
           <div className="flex flex-col h-screen bg-gray-100 rounded-2xl shadow-lg">
@@ -113,7 +113,10 @@ export const Chat: React.FC<ChatProp> = ({ reciverId, userName }) => {
           </div>
         </>
       ) : (
-        <DefaultBackground />
+        <div className="flex items-center justify-center w-full h-screen">
+          <DefaultBackground />
+        </div>
+        
       )}
 
       {/* Emoji picker popup */}
