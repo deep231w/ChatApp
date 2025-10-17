@@ -1,7 +1,6 @@
 generator client {
-  provider = "prisma-client-js" 
+  provider      = "prisma-client-js"
   binaryTargets = ["native"]
-
 }
 
 datasource db {
@@ -10,24 +9,32 @@ datasource db {
 }
 
 model User {
-  id                Int         @id @unique @default(autoincrement())
-  firstName         String
-  lastName          String
-  email             String      @unique
-  firebaseuid       String      @unique
-  messages          Message[]
-  sentMessage       Message[]   @relation("sentMessage")
-  recivedMessage    Message[]   @relation("recivedMessage")
+  id             Int       @id @unique @default(autoincrement())
+  firstName      String
+  lastName       String
+  email          String    @unique
+  firebaseuid    String?   @unique
+  password       String?
+  messages       Message[]
+  sentMessage    Message[] @relation("sentMessage")
+  recivedMessage Message[] @relation("recivedMessage")
+  authType       AuthType  @default(PASSWORD)
+  createdAt      DateTime  @default(now())
+}
+
+enum AuthType {
+  GOOGLE
+  PASSWORD
 }
 
 model Message {
-  id          Int       @id @unique @default(autoincrement())
-  content     String
-  createdAt   DateTime  @default(now())
-  userId      Int
-  sentId      Int
-  sender      User      @relation("sentMessage",fields: [sentId], references: [id])
-  reciverId   Int
-  reciver     User      @relation("recivedMessage",fields: [reciverId],references: [id])
-  user        User      @relation(fields: [userId], references: [id])
+  id        Int      @id @unique @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  sentId    Int
+  sender    User     @relation("sentMessage", fields: [sentId], references: [id])
+  reciverId Int
+  reciver   User     @relation("recivedMessage", fields: [reciverId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }

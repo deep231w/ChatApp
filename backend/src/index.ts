@@ -4,7 +4,8 @@ import { createServer } from "http";
 import { initializeSocket } from "./socket/socket";
 import messageHandler from "./routeHandler/messageHandler"
 import userHandler from "./routeHandler/userHandler"
-import firebaseVerifyToken from "./middleware/protectRoute";
+// import firebaseVerifyToken from "./middleware/protectRoute";
+import authMiddleware from "./middleware/protectRoute";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
@@ -26,8 +27,8 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use("/api/user",firebaseVerifyToken,  userHandler);
-app.use("/api/message",firebaseVerifyToken, messageHandler);
+app.use("/api/user",authMiddleware,  userHandler);
+app.use("/api/message",authMiddleware, messageHandler);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World");

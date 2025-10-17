@@ -1,17 +1,19 @@
 import express, { Request, Response } from "express";
 import Signin from "../routes/userRoutes/signInRoute";
-//import Signin from "../routes/userRoutes/signInRoute"
 import allUsers from "../routes/userRoutes/userFetch";
-import Signup from "../routes/userRoutes/signupRoute"
+import GoogleSignUp from "../routes/userRoutes/googleSignupRoute";
 import LoginWithGoogle from "../routes/userRoutes/loginWithGoogle";
+import passwordSignUp from "../routes/userRoutes/signupWithPassword";
 
 const router= express.Router();
 
 router.post("/signin",Signin);
 
-router.post("/signup",Signup);
+router.post("/googlesignup",GoogleSignUp);
 
 router.post("/loginWithGoogle",LoginWithGoogle);
+
+router.post('/passwordsignup',passwordSignUp)
 
 router.get("/", allUsers );
 
