@@ -13,6 +13,7 @@ const SignUp: React.FC = () => {
 
   const navigate = useNavigate();
 
+  //manual signup
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -23,7 +24,7 @@ const SignUp: React.FC = () => {
 
       console.log("token in frontend", token);
 
-      const response= await axios.post("http://localhost:3000/api/user/signup",{
+      const response= await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/signup`,{
         firstName:firstName,
         lastName:lastName,
         email:email
@@ -42,6 +43,8 @@ const SignUp: React.FC = () => {
       console.error("Error signing up:", error);
     }
   };
+
+  //google signup
   const googleSignup= async()=>{
     try{
       const userCredentials= await signInWithPopup(auth, googleAuth);
@@ -52,7 +55,7 @@ const SignUp: React.FC = () => {
       const nameParts = user.displayName?.split(" ") || [];
       const FirstName= nameParts[0] || "";
       const LastName= nameParts[1] || "";
-      const response= await axios.post("http://localhost:3000/api/user/signup", {
+      const response= await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/googlesignup`, {
         firstName:FirstName,
         lastName:LastName,
         email:user.email
