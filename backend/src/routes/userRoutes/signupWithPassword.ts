@@ -67,7 +67,8 @@ const passwordSignUp= async(req:Request, res:Response)=>{
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 email: newUser.email
-            }
+            },
+            token:token
         });
         return;
 

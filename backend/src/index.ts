@@ -8,6 +8,7 @@ import userHandler from "./routeHandler/userHandler"
 import authMiddleware from "./middleware/protectRoute";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import customUser from './routeHandler/userCustomCreate';
 
 const app = express();
 
@@ -27,7 +28,13 @@ app.use(
 );
 app.use(cookieParser());
 
+//for custom user signup / signin
+app.use("/api/user",customUser);
+
+
+//google signup/signin
 app.use("/api/user",authMiddleware,  userHandler);
+
 app.use("/api/message",authMiddleware, messageHandler);
 
 app.get("/", (req: Request, res: Response) => {
