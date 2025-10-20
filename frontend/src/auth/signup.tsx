@@ -17,28 +17,32 @@ const SignUp: React.FC = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredentials.user;
+      // const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      // const user = userCredentials.user;
 
-      const token=await user.getIdToken();
+      // const token=await user.getIdToken();
 
-      console.log("token in frontend", token);
+      // console.log("token in frontend", token);
 
-      const response= await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/signup`,{
+      const response= await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/passwordsignup`,{
         firstName:firstName,
         lastName:lastName,
-        email:email
-      },{
-        headers:{Authorization:`Bearer ${token}`},
-        withCredentials:true
+        email:email,
+        password
       }) 
 
-      if(response.status===200){
+      if(response.status===201){
+        console.log("response of password signup=- ", response);
+        
         const {user}= response.data;
-        localStorage.setItem("user",JSON.stringify(user))
+        const {token}=response.data;
+        localStorage.setItem("user",JSON.stringify(user));
+        localStorage.setItem('token',token);
         console.log("user detail after signin setup in localstorage= ", user);
+        navigate("/");
       }
-      navigate("/"); 
+      
+
     } catch (error) {
       console.error("Error signing up:", error);
     }

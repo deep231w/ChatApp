@@ -8,8 +8,10 @@ import { ProtectedRoute } from "./protectedroute";
 import { Sidebar } from "./components/sidebar";
 import { Chat } from "./components/chat";
 
+
+
 const App: React.FC = () => {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, loading ,localstorageUser} = useAuth();
   const [selectUser, setSelectuser]=useState<string | null>(null);
   const [FirstUsername, setFirstUsername]= useState<string | null>();
   if (loading) {
@@ -18,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      {currentUser && (
+      {(currentUser || localstorageUser) && (
         <div className="flex flex-col h-screen bg-gray-200" >
           
 
@@ -48,7 +50,7 @@ const App: React.FC = () => {
       )}
 
       {/* If not authenticated, show auth routes */}
-      {!currentUser && (
+      {!currentUser  && !localstorageUser && (
         <Routes>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />

@@ -1,82 +1,110 @@
+// src/context/usersContext.tsx
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./authContext";
 
 interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    firebaseuid: string;
+  id: number | string;
+  firstName: string;
+  lastName: string;
+  firebaseuid?: string | null;
+  email?: string;
 }
 
 interface UserType {
-    users: User[];
-    error: string | null;
-    loading: boolean;
-    loggedinUser:User |null
+  users: User[];
+  error: string | null;
+  loading: boolean;
+  loggedinUser: User | null;
 }
 
 const UserContext = createContext<UserType | null>(null);
 
 export const useUsersContext = () => useContext(UserContext);
 
-export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const { currentUser ,loading,token} = useAuth();
-    const [users, setUsers] = useState<User[]>([]);
-    const [userLoading, setUserLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { currentUser, loading: authLoading, token, localstorageUser } = useAuth();
 
-    const [loggedinUser, setLoggedinUser]=useState<User | null>(null);
-    console.log('current user in usercontext- ',currentUser, loading)
-    useEffect(() => {
-        console.log('inside useEffect')
-        //if(loading) return;
-        if (!currentUser) {
+  const [users, setUsers] = useState<User[]>([]);
+  const [userLoading, setUserLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [loggedinUser, setLoggedinUser] = useState<User | null>(null);
 
-            console.warn(" currentUser is NULL, skipping fetchUsers()");
-            return; // Don't fetch if no user is logged in
+  useEffect(() => {
+    // Wait until auth finishes initializing
+    if (authLoading) {
+      return;
+    }
+
+    // If neither Firebase user nor local user present, nothing to do
+    if (!currentUser && !localstorageUser) {
+      setUsers([]);
+      setLoggedinUser(null);
+      setUserLoading(false);
+      return;
+    }
+
+    // token should be present for either case (firebase token or custom JWT)
+    if (!token) {
+      // token might be set shortly after; set loader and wait for token change
+      setUserLoading(true);
+      return;
+    }
+
+    let cancelled = false;
+
+    const fetchUsers = async () => {
+      try {
+        setUserLoading(true);
+        setError(null);
+
+        const res = await axios.get<User[]>("http://localhost:3000/api/user", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+
+        if (cancelled) return;
+
+        const fetchedUsers = res.data || [];
+        setUsers(fetchedUsers);
+
+        // Find currently logged-in user among fetched users:
+        let matched: User | null = null;
+
+        if (currentUser) {
+          // Firebase user: match by firebaseuid
+          matched = fetchedUsers.find((u) => u.firebaseuid && u.firebaseuid === currentUser.uid) ?? null;
         }
-        if(!loading){
-            console.log("current user = ",currentUser.uid)
+
+        if (!matched && localstorageUser) {
+          // Local (manual) user: match by id
+          matched =
+            fetchedUsers.find((u) => String(u.id) === String(localstorageUser.id)) ??
+            null;
         }
 
-        const fetchUsers = async () => {
-            try {
-                const response = await axios.get("http://localhost:3000/api/user",{
-                    
-                    headers:{Authorization:`Bearer ${token}`},
-                    withCredentials:true
-                  });
-                  
-                console.log("Fetched users:", response);
-                setUsers(response.data);
+        setLoggedinUser(matched);
+      } catch (err) {
+        console.error("Error fetching users:", err);
+        if (!cancelled) setError("Server error");
+      } finally {
+        if (!cancelled) setUserLoading(false);
+      }
+    };
 
-                const matchedUser = await response.data.find((user: User) => user.firebaseuid === currentUser?.uid);
-                
+    fetchUsers();
 
-                if (matchedUser) {
-                    setLoggedinUser(matchedUser.id);
-                    console.log("match user", matchedUser)
-                    console.log("Logged-in user data in usercontext= :", matchedUser.id);
-                } else {
-                    setLoggedinUser(null);
-                    console.warn(" No matching user found in database.");
-                }
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser, localstorageUser, token, authLoading]);
 
-            } catch (e) {
-                console.error(" Error fetching users:", e);
-                setError("Server error");
-            } finally {
-                setUserLoading(false);
-            }
-        };
+  const value: UserType = {
+    users,
+    error,
+    loading: userLoading,
+    loggedinUser,
+  };
 
-        fetchUsers();
-    }, [currentUser]); // Depend on `currentUser` to ensure it's available
-
-    return (
-        <UserContext.Provider value={{ users, loading, error, loggedinUser }}>
-            {children}
-        </UserContext.Provider>
-    );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
