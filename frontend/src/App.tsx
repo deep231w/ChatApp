@@ -41,8 +41,8 @@ const App: React.FC = () => {
                     </ProtectedRoute>
                   }
                 />
-                <Route path="signin" element={<Navigate to="/" />} />
-                <Route path="signup" element={<Navigate to="/" />} />
+                <Route path="/signin" element={<SignIn/>} />
+                <Route path="/signup" element={<SignUp/>} />
               </Routes>
             </div>
           </div>
@@ -52,9 +52,9 @@ const App: React.FC = () => {
       {/* If not authenticated, show auth routes */}
       {!currentUser  && !localstorageUser && (
         <Routes>
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="*" element={<Navigate to="signin" />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<Navigate to="/signin" />} />
         </Routes>
       )}
     </BrowserRouter>

@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [localstorageUser, setLocalStorageUser] = useState<LocalStoregeUser | null>(null);
 
   useEffect(() => {
+    setLoading(true);
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
 
@@ -45,8 +46,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const firebaseToken = await user.getIdToken();
         setToken(firebaseToken); // ✅ Firebase users get token from Firebase
         setCurrentUser(user);
-      }
-      setLoading(false);
+      }else
+        {
+          localStorage.removeItem("user");
+          setLocalStorageUser(null);
+          setToken(null);
+          setCurrentUser(null);
+        }
+        setLoading(false);
+
     });
 
     return () => unsubscribe();

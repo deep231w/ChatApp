@@ -33,12 +33,14 @@ import { ReactNode } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../context/firebase";
 import { useSocket } from "../../context/socketContext";
+import { useNavigate } from "react-router-dom";
   export function DropdownMenuO() {
     const {socket}=useSocket();
 
+    const navigate= useNavigate();
     const handleSignout= async()=>{
         await signOut(auth);
-        localStorage.clear();
+        localStorage.removeItem('user');
         sessionStorage.clear();
         document.cookie.split(";").forEach((c) => {
           document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
@@ -46,6 +48,10 @@ import { useSocket } from "../../context/socketContext";
         if(socket){
           socket.disconnect();
         }
+        setTimeout(() => {
+            navigate("/signin");
+        }, 50);
+
       }
 
     return (
