@@ -13,15 +13,15 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
        return;
     }
 
-    // Try JWT first (password users)
     try {
+      console.log("inside password based verification")
       const decoded = jwt.verify(token, process.env.JWT_SECRET!);
       (req as any).user = decoded;
        next();
        return;
     } catch (jwtError) {
-      // If JWT fails, try Firebase token (Google users)
       try {
+        console.log("inside firebase token based verification")
         const decodedFirebase = await admin.auth().verifyIdToken(token);
         (req as any).user = decodedFirebase;
          next();
