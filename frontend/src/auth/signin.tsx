@@ -51,12 +51,15 @@ const SignIn: React.FC = () => {
         withCredentials:true
       })
 
+      console.log("response of google signin -" ,response);
+
       if(response.status=== 200){
         const {user}= response.data;
         localStorage.setItem("user",JSON.stringify(user))
         console.log("user cookie after signin with google- ", user);
+        navigate("/");
       }
-      navigate("/");
+      
 
     }catch(e){
       console.log("error during google signin",e)

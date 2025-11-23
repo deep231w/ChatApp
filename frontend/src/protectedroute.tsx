@@ -7,6 +7,7 @@ export const ProtectedRoute:React.FC<{children:React.ReactElement}> =({children}
     const {currentUser, localstorageUser}= useAuth();
     console.log("current user in protected route- ", currentUser);
     
+    
     if(!currentUser && !localstorageUser){
         return <Navigate to={"/signin"}/>;
     }

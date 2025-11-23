@@ -10,7 +10,6 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     const {localstorageUser}=useAuth();
     
     if (error) return <p>Server failed</p>;
-    if (loading) return <p>Loading Please wait</p>;
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
 
