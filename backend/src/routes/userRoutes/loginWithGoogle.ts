@@ -18,18 +18,36 @@ const LoginWithGoogle= async (req:Request, res:Response)=>{
 
         const decodedToken= await admin.auth().verifyIdToken(idToken);
         console.log("decode token in signin route= ", decodedToken)
-        const {email}= decodedToken;
-        console.log("email in signin route", email);
 
-        const user= await prisma.user.findUnique({
+
+
+        const { email, uid, name } = decodedToken;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email not found in token" });
+        }
+
+        // Split name safely
+        const [firstName = "", lastName = ""] = (name || "").split(" ");
+
+
+
+        let user= await prisma.user.findFirst({
             where:{
                 email:email
             }
         })
         console.log("user - - -", user)
+
         if (!user) {
-             res.status(404).json({ message: "User not found" });
-             return;
+            user=await  prisma.user.create({
+                data:{
+                    firebaseuid:decodedToken.uid,
+                    firstName,
+                    lastName,
+                    email
+                }
+            })
         }
         
         console.log("user in signin = ", user);
