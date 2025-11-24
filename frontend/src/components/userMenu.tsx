@@ -4,10 +4,11 @@ import { useAuth } from "../context/authContext";
 export default function UserMenu() {
     console.log("UserMenu is rendering!");
     const {localstorageUser}=useAuth();
+    const lUser= JSON.parse(localStorage.getItem("user"));
     return (
         <div className="flex items-center justify-between">
             <div className="text-l font-bold text-blue-500">
-                {`${localstorageUser?.firstName} ${localstorageUser?.lastName}` }
+                {`${lUser?.firstName} ${lUser?.lastName}` }
             </div>
             <div>
             <DropdownMenuO />

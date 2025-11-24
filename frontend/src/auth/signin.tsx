@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { ButtomWarning } from "@/components/buttomWarning";
 import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
+import { useAuth } from "../context/authContext";
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const {setLocalStorageUser}=useAuth();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,13 +30,15 @@ const SignIn: React.FC = () => {
       if(response.status === 200){
         const {user}= response.data;
         localStorage.setItem("user",JSON.stringify(user))
+        setLocalStorageUser(JSON.parse(user));
+
         console.log("user detail after signin setup in localstorage= ", user);
-        
+        navigate("/");
       }
       console.log("Sending token in request:", `Bearer ${token}`);
 
 
-      navigate("/");
+      
 
     } catch (error) {
       console.error("Error signing in:", error);
@@ -106,7 +111,7 @@ const SignIn: React.FC = () => {
         </div>
         
         <div className="flex items-center justify-center">
-          <GoogleAuthBtn onClick={handleGoogleSignin}/>
+          <GoogleAuthBtn onClick={handleGoogleSignin} placeholder={'SignIn with google'}/>
           {/* <button
             onClick={handleGoogleSignin}
             className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"

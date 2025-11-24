@@ -8,10 +8,14 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     const { users, loading, error } = useUsersContext();
     const { selectedId, setSelectedUserId } = useSelectedId(); // Now correctly using the hook
     const {localstorageUser}=useAuth();
+
+    const lUser= JSON.parse(localStorage.getItem("user"));
     
     if (error) return <p>Server failed</p>;
     if (!users) return <p>Failed Loading!</p>;
     console.log("selected user id in sidebar= ",selectedId)
+
+
 
     return (
         <div className=" pt-2 flex flex-col h-full bg-white rounded-xl shadow-lg">
@@ -27,7 +31,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                     <ul className="space-y-2">
                         {users.length > 0 ? (
                             users
-                            .filter(user=>String(user.id) != String(localstorageUser?.id))
+                            .filter(user=>String(user.id) != String(lUser?.id))
                             .map((user) => (
                                 <li
                                     key={user.id}

@@ -72,8 +72,8 @@ const SignUp: React.FC = () => {
         const {user}= response.data;
         localStorage.setItem("user",JSON.stringify(user))
         console.log("tpken after signup with google- " ,user);
+        navigate("/");
       }
-      navigate("/");
     }catch(e){
       console.log("error during signup= ", e);
     }
@@ -130,7 +130,7 @@ const SignUp: React.FC = () => {
             <h1>OR</h1>
           </div>
           <div className="flex items-center justify-center">
-          <GoogleAuthBtn onClick={googleSignup} />
+          <GoogleAuthBtn onClick={googleSignup} placeholder={'SignUp with google'}/>
           </div>
 
           <p className="text-center text-gray-600">
