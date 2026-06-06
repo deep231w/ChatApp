@@ -13,7 +13,8 @@ import customUser from './routeHandler/userCustomCreate';
 const app = express();
 
 dotenv.config();
-const PORT =  3000;
+const PORT = process.env.PORT || 3000;
+
 const CLIENT_ORIGIN =  "http://localhost:5173";
 
 app.use(express.json());
