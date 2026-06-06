@@ -15,7 +15,10 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 
-const CLIENT_ORIGIN =  "http://localhost:5173";
+const CLIENT_ORIGIN =
+  process.env.NODE_ENV === "production"
+    ? "https://chat-app-delta-steel.vercel.app"
+    : "http://localhost:5173";
 
 app.use(express.json());
 app.use(
