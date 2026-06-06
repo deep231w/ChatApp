@@ -20,7 +20,16 @@ interface UserType {
 
 const UserContext = createContext<UserType | null>(null);
 
-export const useUsersContext = () => useContext(UserContext);
+// export const useUsersContext = () => useContext(UserContext);
+export const useUsersContext = () => {
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error("useUsersContext must be used within UserContextProvider");
+  }
+
+  return context;
+};
 
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser, loading: authLoading, token, localstorageUser } = useAuth();

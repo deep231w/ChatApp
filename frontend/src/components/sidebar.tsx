@@ -9,7 +9,9 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
     const { selectedId, setSelectedUserId } = useSelectedId(); // Now correctly using the hook
     const {localstorageUser}=useAuth();
 
-    const lUser= JSON.parse(localStorage.getItem("user"));
+    const storedUser = localStorage.getItem("user");
+
+    const lUser = storedUser ? JSON.parse(storedUser) : null;
     
     if (error) return <p>Server failed</p>;
     if (!users) return <p>Failed Loading!</p>;
@@ -35,7 +37,7 @@ export const Sidebar = ({ onSelectuser, onRecivername }: { onSelectuser: (id: st
                             .map((user) => (
                                 <li
                                     key={user.id}
-                                    onClick={() => setSelectedUserId(user.id)}
+                                    onClick={() => setSelectedUserId(String(user.id))}
                                     className={`cursor-pointer border border-solid border-purple-500 rounded-r-lg font-bold transition-all duration-200 hover:bg-purple-300  ${selectedId === user.id ? "bg-purple-600 font-bold text-white p-1" : "text-gray-800 p-1"}`}
                                 >
                                     {user.firstName} {user.lastName}

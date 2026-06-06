@@ -1,16 +1,33 @@
+// {
+//   "compilerOptions": {
+//     "allowImportingTsExtensions": true,
+//     "jsx": "react-jsx",
+//     "moduleResolution": "bundler",
+//     "module": "esnext",  // Make sure this is set to esnext or es2015
+//     "noEmit": true,
+//     "baseUrl": ".",  // Ensures the root directory is the base
+//     "paths": {
+//       "@/components/*": ["src/components/*"],
+//       "@/lib/*": ["src/lib/*"],
+//       "@/utils/*": ["src/utils/*"],
+//       "@/*":["*"]
+//     }
+//   }
+// }
+
 {
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "module": "esnext",  // Make sure this is set to esnext or es2015
+    "module": "esnext",
     "noEmit": true,
-    "baseUrl": ".",  // Ensures the root directory is the base
+    "strict": false,
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/lib/*": ["src/lib/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/*":["*"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   }
 }
