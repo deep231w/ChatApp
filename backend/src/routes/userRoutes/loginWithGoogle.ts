@@ -24,7 +24,8 @@ const LoginWithGoogle= async (req:Request, res:Response)=>{
         const { email, uid, name } = decodedToken;
 
         if (!email) {
-            return res.status(400).json({ message: "Email not found in token" });
+             res.status(400).json({ message: "Email not found in token" });
+             return
         }
 
         // Split name safely

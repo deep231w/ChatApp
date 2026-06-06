@@ -2,7 +2,17 @@ import admin from "firebase-admin";
 import path from "path";
 // const serviceAccount = require(path.join(__dirname, "../../firebase-admin/serviceAccountKey.json"));
 
-import serviceAccount from "../firebase-admin/serviceAccountKey.json"
+// import serviceAccount from "../firebase-admin/serviceAccountKey.json"
+
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT!
+);
+
+console.log(
+  "Firebase env exists:",
+  !!process.env.FIREBASE_SERVICE_ACCOUNT
+);
+
 if(!serviceAccount){
   console.log("no service account key ");
 }
