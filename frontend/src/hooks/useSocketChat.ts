@@ -36,7 +36,7 @@ export const useChat = (reciverId: string) => {
                   return;
                 }
 
-              const res= await axios.get(`http://localhost:3000/api/message/${localstorageUser.id}/${reciverId}`,{
+              const res= await axios.get(`${import.meta.env.VITE_API_URL}/api/message/${localstorageUser.id}/${reciverId}`,{
                 headers:{Authorization:`Bearer ${token}`},
                 withCredentials:true
               })

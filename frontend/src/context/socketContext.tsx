@@ -25,7 +25,7 @@ export const SocketProvider:React.FC<{children:React.ReactNode}>= ({children})=>
 
         if(storedUser){
 
-            const newSocket= io("http://localhost:3000",{
+            const newSocket= io(`${import.meta.env.VITE_API_URL}`,{
             withCredentials:true,
             auth:{
                 userId:storedUser?.id

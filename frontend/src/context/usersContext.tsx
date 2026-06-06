@@ -67,7 +67,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         setUserLoading(true);
         setError(null);
 
-        const res = await axios.get<User[]>("http://localhost:3000/api/user", {
+        const res = await axios.get<User[]>(`${import.meta.env.VITE_API_URL}/api/user`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

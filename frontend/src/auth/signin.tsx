@@ -23,7 +23,7 @@ const SignIn: React.FC = () => {
       const token=await user.getIdToken();
       console.log("token after signin= ", token);
 
-      const response= await axios.post("http://localhost:3000/api/user/signin",{},{
+      const response= await axios.post(`${import.meta.env.VITE_API_URL}/api/user/signin`,{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
@@ -51,7 +51,7 @@ const SignIn: React.FC = () => {
       const token= await user.getIdToken();
       console.log("token during googlre signin- ", token);
 
-      const response= await  axios.post("http://localhost:3000/api/user/loginWithGoogle",{},{
+      const response= await  axios.post(`${import.meta.env.VITE_API_URL}/api/user/loginWithGoogle`,{},{
         headers:{Authorization:`Bearer ${token}`},
         withCredentials:true
       })
