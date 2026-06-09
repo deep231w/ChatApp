@@ -1,29 +1,7 @@
 import SearchSec from "./NewComponents/SearchSec"
+import UsersSec from "./NewComponents/UsersSec"
 
 export default function NewHome(){
-
-    const users = [
-        {
-            id:1,
-            name:"deep"
-        },
-        {
-            id:2,
-            name:"seep"
-        },
-        {
-            id:3,
-            name:"reep"
-        },
-        {
-            id:4,
-            name:"jeep"
-        }
-        ,{
-            id:5,
-            name:"beep"
-        }
-    ]
 
     return(
         <div className="flex flex-row h-screen w-screen gap-2">
@@ -45,11 +23,7 @@ export default function NewHome(){
                 </div>
                 {/* users list */}
                 <div>
-                    {users.map((u)=>(
-                        <div key={u.id}>
-                            <p>{u.name}</p>
-                        </div>
-                    ))}
+                    <UsersSec/>
                 </div>
 
             </div>
