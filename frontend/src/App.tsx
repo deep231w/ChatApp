@@ -13,6 +13,7 @@ import { Sidebar } from "./components/sidebar";
 import { Chat } from "./components/chat";
 
 import Loader from "./components/ui/Loader";
+import NewHome from "./NewPage/NewHome";
 
 function MainLayout({ selectUser, FirstUsername, setSelectuser, setFirstUsername }) {
   return (
@@ -82,6 +83,20 @@ const App: React.FC = () => {
                 FirstUsername={FirstUsername}
                 setSelectuser={setSelectuser}
                 setFirstUsername={setFirstUsername}
+              />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/newhome"
+          element={
+            <ProtectedRoute>
+              <NewHome
+                // selectUser={selectUser}
+                // FirstUsername={FirstUsername}
+                // setSelectuser={setSelectuser}
+                // setFirstUsername={setFirstUsername}
               />
             </ProtectedRoute>
           }
