@@ -5,7 +5,7 @@ export default function UserSettings(){
         <div
             className=" 
                 h-[70px] rounded-t-xl bg-gray-400
-                flex flex-row justify-between items-center ml-3 mr-2 p-3
+                flex flex-row justify-between items-center ml-3 mr-3 p-3
             "
         >
             <div
