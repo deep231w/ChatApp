@@ -4,8 +4,18 @@ export default function ConversationSec(){
             className="flex flex-col justify-between h-full ml-3 mr-3"
         >
             <div 
-                className="bg-gray-100 h-[70px] w-full rounded-b-xl"
+                className="bg-gray-100 h-[70px] w-full rounded-b-xl flex items-center p-2 gap-2"
             >
+                {/* avatar */}
+                <div
+                    className="w-[40px] h-[40px] bg-gray-500 rounded-[50%]"
+                >
+
+                </div>
+                {/* user name */}
+                <div>
+                    <h2>John Doe</h2>
+                </div>
 
             </div>
 
