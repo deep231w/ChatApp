@@ -14,7 +14,9 @@ export default function ConversationSec(){
                 </div>
                 {/* user name */}
                 <div>
-                    <h2>John Doe</h2>
+                    <h2
+                        className="text-xl text-gray-700 text-bold"
+                    >John Doe</h2>
                 </div>
 
             </div>
