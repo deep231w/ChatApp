@@ -60,7 +60,9 @@ export default function UsersSec(){
                                 {u.name[0].toUpperCase()}
                                 {/* online status */}
                                 <div
-                                    className=" fixed border border-gray-100 rounded-[50%] h-[10px] w-[10px] bg-green-800 mt-7 ml-6"
+                                    className={`fixed border border-gray-100 rounded-[50%] h-[10px] w-[10px] mt-7 ml-6
+                                    ${u.status? "bg-green-500":"bg-gray-600"}    
+                                    `}
                                 >
 
                                 </div>
