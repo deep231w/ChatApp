@@ -1,11 +1,29 @@
+import { Settings2Icon, SettingsIcon } from "lucide-react";
+
 export default function UserSettings(){
     return (
         <div
-            className="border h-[70px] rounded-t-xl bg-slate-800"
+            className=" 
+                h-[70px] rounded-t-xl bg-gray-400
+                flex flex-row justify-between items-center ml-3 mr-2 p-3
+            "
         >
-            <p>
-                User settings
-            </p>
+            <div
+                className="flex flex-row gap-1 items-center"
+            >
+                <div
+                    className="h-[40px] w-[40px] bg-gray-300 rounded-[50%]"
+                >
+
+                </div>
+                <h2>Deepak Kumar </h2>
+            </div>
+
+            <button 
+                className="text-gray-600"
+            >
+                <SettingsIcon/>
+            </button>
         </div>
     )
 }
