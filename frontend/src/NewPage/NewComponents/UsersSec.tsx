@@ -30,7 +30,7 @@ export default function UsersSec(){
             {users.map((u)=>(
                         <button
                             key={u.id}
-                            className="relative flex items-center justify-start  align-middle border rounded-xl h-[70px] pl-4 text-white font-bold text-2xl"
+                            className="relative flex items-center justify-start  align-middle h-[70px] pl-4 text-white font-bold text-xl"
                         >
                             <p
                                 className="pl-[50px]"

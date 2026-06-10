@@ -1,13 +1,14 @@
 import SearchSec from "./NewComponents/SearchSec"
+import UserSettings from "./NewComponents/UserSettings"
 import UsersSec from "./NewComponents/UsersSec"
 
 export default function NewHome(){
 
     return(
-        <div className="flex flex-row h-screen w-screen gap-2">
-
+        <div className="flex flex-row h-screen w-screen">
+            {/* left sidebar */}
             <div
-                className="w-1/4 bg-fuchsia-950 flex flex-col"
+                className="w-1/5 bg-slate-800 flex flex-col relative"
             >
                 {/* logo */}
                 <div
@@ -26,10 +27,18 @@ export default function NewHome(){
                     <UsersSec/>
                 </div>
 
+                {/* Loggedin user settings  */}
+                <div 
+                    className="absolute bottom-0 left-0 right-0 "
+                >
+                    <UserSettings/>
+                </div>
+
             </div>
 
+            {/* chat sec */}
             <div
-                className="w-3/4  bg-zinc-300"
+                className="w-4/5  bg-zinc-300"
             >
                 
             </div>
