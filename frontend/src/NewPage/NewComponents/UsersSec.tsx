@@ -2,23 +2,28 @@ export default function UsersSec(){
         const users = [
         {
             id:1,
-            name:"deep"
+            name:"deep",
+            status:true
         },
         {
             id:2,
-            name:"seep"
+            name:"seep",
+            status:true
         },
         {
             id:3,
-            name:"reep"
+            name:"reep",
+            status:false
         },
         {
             id:4,
-            name:"jeep"
+            name:"jeep",
+            status:true
         }
         ,{
             id:5,
-            name:"beep"
+            name:"beep",
+            status:false
         }
     ]
 
@@ -30,7 +35,7 @@ export default function UsersSec(){
             {users.map((u)=>(
                         <button
                             key={u.id}
-                            className="relative flex items-center justify-start  align-middle h-[70px] pl-4 text-white font-bold text-xl"
+                            className="relative flex items-center justify-start  align-middle h-[70px] pl-4 text-white font-bold text-l"
                         >
                             <p
                                 className="pl-[50px]"
@@ -38,11 +43,19 @@ export default function UsersSec(){
                                 {u.name.charAt(0).toUpperCase()+ u.name.slice(1)}
                             </p>
 
+                            {/* avatar */}
                             <div
                                 className="absolute border h-[40px] w-[40px] rounded-[50%] bg-gray-200 text-black flex items-center justify-center"
                             >
                                 {u.name[0].toUpperCase()}
+                                <div
+                                    className=" fixed border border-gray-100 rounded-[50%] h-[10px] w-[10px] bg-green-800 mt-7 ml-6"
+                                >
+
+                                </div>
                             </div>
+                            {/* online status */}
+                            
                         </button>
                     ))}
         </div>
