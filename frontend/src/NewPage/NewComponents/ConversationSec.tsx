@@ -1,3 +1,6 @@
+import { SendIcon } from "lucide-react";
+import { FiSmile } from "react-icons/fi";
+
 export default function ConversationSec(){
     return (
         <div
@@ -30,8 +33,16 @@ export default function ConversationSec(){
                     placeholder="Type Message ....." 
                 />
 
-                <button>
-                    Send
+                <button
+                    className="bg-yellow-300 hover:bg-yellow-200 text-gray-600 px-4 py-2 rounded-lg shadow-md"
+                >
+                    <FiSmile size={24} />
+                </button>
+
+                <button
+                    className="bg-blue-400 hover:bg-blue-300 text-gray-600 px-4 py-2 rounded-lg shadow-md"
+                >
+                    <SendIcon/>
                 </button>
             </div>
         </div>
