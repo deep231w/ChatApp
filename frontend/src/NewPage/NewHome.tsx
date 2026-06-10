@@ -1,3 +1,4 @@
+import ConversationSec from "./NewComponents/ConversationSec"
 import SearchSec from "./NewComponents/SearchSec"
 import UserSettings from "./NewComponents/UserSettings"
 import UsersSec from "./NewComponents/UsersSec"
@@ -40,7 +41,7 @@ export default function NewHome(){
             <div
                 className="w-4/5  bg-zinc-300"
             >
-                
+                <ConversationSec/>   
             </div>
         </div>
     )
