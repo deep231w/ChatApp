@@ -24,11 +24,26 @@ export default function UsersSec(){
 
 
     return(
-        <div>
+        <div
+            className="flex flex-col gap-2 m-3"
+        >
             {users.map((u)=>(
-                        <div key={u.id}>
-                            <p>{u.name}</p>
-                        </div>
+                        <button
+                            key={u.id}
+                            className="relative flex items-center justify-start  align-middle border rounded-xl h-[70px] pl-4 text-white font-bold text-2xl"
+                        >
+                            <p
+                                className="pl-[50px]"
+                            >
+                                {u.name.charAt(0).toUpperCase()+ u.name.slice(1)}
+                            </p>
+
+                            <div
+                                className="absolute border h-[40px] w-[40px] rounded-[50%] bg-gray-200 text-black flex items-center justify-center"
+                            >
+                                {u.name[0].toUpperCase()}
+                            </div>
+                        </button>
                     ))}
         </div>
     )
