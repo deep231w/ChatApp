@@ -67,6 +67,13 @@
   }
 }
 
+@theme {
+  --breakpoint-xs: 30rem;
+  --breakpoint-md: 51.25rem;
+  --breakpoint-2xl: 100rem;
+  --breakpoint-3xl: 120rem;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
 }

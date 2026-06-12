@@ -9,7 +9,7 @@ export default function NewHome(){
         <div className="flex flex-row h-screen w-screen">
             {/* left sidebar */}
             <div
-                className="w-1/5 bg-slate-800 flex flex-col relative"
+                className="w-1/5 bg-slate-800 flex flex-col relative hidden md:block"
             >
                 {/* logo */}
                 <div
@@ -39,7 +39,7 @@ export default function NewHome(){
 
             {/* chat sec */}
             <div
-                className="w-4/5  bg-zinc-300"
+                className="w-full md:w-4/5  bg-zinc-300 "
             >
                 <ConversationSec/>   
             </div>
