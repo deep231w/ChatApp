@@ -1,6 +1,11 @@
 import { useState } from "react"
 
-export default function UsersSec(){
+type props={
+    setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function UsersSec({setSideBarOpen}:props){
+
 
     const [selectedUid , setSelectedUid]=useState<string | Number | null>(null)
 
@@ -40,7 +45,10 @@ export default function UsersSec(){
             {users.map((u)=>(
                         <button
                             key={u.id}
-                            onClick={()=>setSelectedUid(u.id)}
+                            onClick={()=>{
+                                setSelectedUid(u.id)
+                                setSideBarOpen(false)
+                            }}
                             className={`relative flex items-center justify-start  align-middle h-[70px] text-white font-bold text-l
                                 ${selectedUid === u.id?
                                 "bg-slate-700":""
