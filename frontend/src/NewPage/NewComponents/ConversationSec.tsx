@@ -1,4 +1,4 @@
-import { SendIcon } from "lucide-react";
+import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-react";
 import { FiSmile } from "react-icons/fi";
 
 export default function ConversationSec(){
@@ -73,6 +73,12 @@ export default function ConversationSec(){
                 <div 
                     className="bg-gray-100 h-[70px] w-full rounded-b-xl flex items-center p-2 gap-2"
                 >
+                    {/* back arrow button */}
+                    <button
+                        className="md:hidden"
+                    >
+                        <ArrowLeftIcon/>
+                    </button>
                     {/* avatar */}
                     <div
                         className="w-[40px] h-[40px] bg-gray-500 rounded-[50%]"
