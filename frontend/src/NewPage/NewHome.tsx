@@ -1,3 +1,4 @@
+import { useState } from "react"
 import ConversationSec from "./NewComponents/ConversationSec"
 import SearchSec from "./NewComponents/SearchSec"
 import UserSettings from "./NewComponents/UserSettings"
@@ -5,11 +6,15 @@ import UsersSec from "./NewComponents/UsersSec"
 
 export default function NewHome(){
 
+    const [sideBarOpen, setSideBarOpen]=useState<boolean>(false);
+
     return(
         <div className="flex flex-row h-screen w-screen">
             {/* left sidebar */}
             <div
-                className="w-1/5 bg-slate-800 flex flex-col relative hidden md:block"
+                className={`w-1/5 bg-slate-800 flex flex-col relative md:block
+                        ${sideBarOpen ? "block":"hidden"}
+                    `}
             >
                 {/* logo */}
                 <div
@@ -32,7 +37,7 @@ export default function NewHome(){
                 <div 
                     className="absolute bottom-0 left-0 right-0 "
                 >
-                    <UserSettings/>
+                    <UserSettings  />
                 </div>
 
             </div>
@@ -41,7 +46,7 @@ export default function NewHome(){
             <div
                 className="w-full md:w-4/5  bg-zinc-300 "
             >
-                <ConversationSec/>   
+                <ConversationSec setSideBarOpen={setSideBarOpen}/>   
             </div>
         </div>
     )

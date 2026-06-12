@@ -1,7 +1,11 @@
 import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-react";
+import React from "react";
 import { FiSmile } from "react-icons/fi";
 
-export default function ConversationSec(){
+type props={
+    setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function ConversationSec({setSideBarOpen}:props){
 
     const messages=[
         {
@@ -76,6 +80,7 @@ export default function ConversationSec(){
                     {/* back arrow button */}
                     <button
                         className="md:hidden"
+                        onClick={()=>setSideBarOpen(true)}
                     >
                         <ArrowLeftIcon/>
                     </button>
