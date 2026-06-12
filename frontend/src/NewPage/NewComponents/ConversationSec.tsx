@@ -91,7 +91,7 @@ export default function ConversationSec(){
                     <div
                         key={i}
                         className={`flex 
-                            ${m.role==="reciever"?
+                            ${m.role==="sender"?
                                         "justify-end ":
                                         "justify-start"
                             }    
