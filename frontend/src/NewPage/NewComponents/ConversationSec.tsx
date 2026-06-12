@@ -85,13 +85,29 @@ export default function ConversationSec(){
             {/* conversation */}
 
             <div
-                className="pt-[80px]"
+                className="flex flex-col mt-[80px] gap-3"
             >
                 {messages.map((m ,i)=>(
                     <div
                         key={i}
+                        className={`flex 
+                            ${m.role==="reciever"?
+                                        "justify-end ":
+                                        "justify-start"
+                            }    
+                        `}
                     >
-                        {m.message}
+                        <div
+                            className={`border p-2 rounded-lg w-auto max-w-xl
+
+                                    ${m.role==="reciever"?
+                                                "bg-slate-800 text-gray-400 justify-end":
+                                                "bg-white text-gray-700 justify-end"
+                                    }
+                                `}
+                        >
+                            {m.message}
+                        </div>
                     </div>
                 ))}
             </div>
