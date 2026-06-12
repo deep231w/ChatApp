@@ -31,15 +31,44 @@ export default function ConversationSec(){
         {
             role:"reciever",
             message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
+        },
+        {
+            role:"sender",
+            message:"Hi"
+        },
+        {
+            role:"reciever",
+            message:"Heloo"
+        },
+        {
+            role:"sender",
+            message:"YO WASSUP"
+        },
+        {
+            role:"reciever",
+            message:"You asked for a big paragraph, and that is exactly what we are going to build. At its core, an effective large paragraph is an exploration of a single controlling idea that weaves through an interconnected chain of thought. If you let your mind wander and explore the details, a simple concept organically blossoms into something complex and deeply immersive."
+        },
+        {
+            role:"sender",
+            message:"Take, for instance, the evolution of the modern digital landscape. What began decades ago as a localized, clunky network of static information has rapidly mutated into a sprawling, hyper-connected global web that dictates nearly every aspect of our daily routines. We rely on these virtual infrastructures not just to consume endless streams of content, but to work, to socialize, and to navigate our physical environments. As these digital ecosystems expand, they continuously demand more of our attention, fundamentally altering how we process information and creating an environment where deep, uninterrupted focus has become a rare and highly sought-after commodity."
+        },
+        {
+            role:"sender",
+            message:"Hi"
+        },
+        {
+            role:"reciever",
+            message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
         }
     ]
     return (
         <div
-            className="relative flex flex-col justify-between h-full ml-3 mr-3"
+            className="relative flex flex-col justify-between h-screen ml-3 mr-3"
         >
-            <div
+            {/* <div
                 className="absolute h-full w-full flex flex-col justify-between"
-            >
+            > */}
+
                 {/* top bar */}
                 <div 
                     className="bg-gray-100 h-[70px] w-full rounded-b-xl flex items-center p-2 gap-2"
@@ -58,6 +87,37 @@ export default function ConversationSec(){
                     </div>
 
                 </div>
+
+                {/* conversation */}
+
+                <div
+                    className="flex flex-1 flex-col p-2 gap-3 overflow-y-auto"
+                >
+                    {messages.map((m ,i)=>(
+                        <div
+                            key={i}
+                            className={`flex 
+                                ${m.role==="sender"?
+                                            "justify-end ":
+                                            "justify-start"
+                                }    
+                            `}
+                        >
+                            <div
+                                className={`border p-2 rounded-lg w-auto max-w-xl
+
+                                        ${m.role==="reciever"?
+                                                    "bg-slate-800 text-gray-400 justify-end":
+                                                    "bg-white text-gray-700 justify-end"
+                                        }
+                                    `}
+                            >
+                                {m.message}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                
                 {/* Bottom bar */}
                 <div
                     className="bg-gray-100 h-[70px] w-full rounded-t-xl flex flex-row p-3 gap-2"
@@ -80,37 +140,9 @@ export default function ConversationSec(){
                         <SendIcon/>
                     </button>
                 </div>
-            </div>
+            {/* </div> */}
 
-            {/* conversation */}
-
-            <div
-                className="flex flex-col mt-[80px] gap-3"
-            >
-                {messages.map((m ,i)=>(
-                    <div
-                        key={i}
-                        className={`flex 
-                            ${m.role==="sender"?
-                                        "justify-end ":
-                                        "justify-start"
-                            }    
-                        `}
-                    >
-                        <div
-                            className={`border p-2 rounded-lg w-auto max-w-xl
-
-                                    ${m.role==="reciever"?
-                                                "bg-slate-800 text-gray-400 justify-end":
-                                                "bg-white text-gray-700 justify-end"
-                                    }
-                                `}
-                        >
-                            {m.message}
-                        </div>
-                    </div>
-                ))}
-            </div>
+            
         </div>
     )
 }
