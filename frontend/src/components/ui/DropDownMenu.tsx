@@ -9,6 +9,7 @@ import {
     Plus,
     PlusCircle,
     Settings,
+    SettingsIcon,
     User,
     UserPlus,
     Users,
@@ -55,19 +56,21 @@ import { useNavigate } from "react-router-dom";
       }
 
     return (
-      <DropdownMenu>
+      <DropdownMenu >
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">⚙️</Button>
+          <Button variant="outline" className="bg-transparent border-transparent hover:bg-transparent border-transparent h-10 w-10">
+            <SettingsIcon className="size-10" />
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               <User />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             
             <DropdownMenuItem>
               <Settings />

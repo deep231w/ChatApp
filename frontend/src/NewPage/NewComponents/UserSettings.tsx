@@ -1,6 +1,12 @@
-import { Settings2Icon, SettingsIcon } from "lucide-react";
+import { Button } from "@/components/components/ui/button";
+import { DropdownMenuShortcut } from "@/components/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { LogOut, Settings2Icon, SettingsIcon, User } from "lucide-react";
+import Settings from "./Settings";
+import { DropdownMenuO } from "@/components/ui/DropDownMenu";
 
 export default function UserSettings(){
+    
     return (
         <div
             className=" 
@@ -19,11 +25,12 @@ export default function UserSettings(){
                 <h2>Deepak Kumar </h2>
             </div>
 
-            <button 
+            {/* <button 
                 className="text-gray-600"
             >
                 <SettingsIcon/>
-            </button>
+            </button> */}
+            <DropdownMenuO/>
         </div>
     )
 }
