@@ -75,6 +75,7 @@ export default function UserSettings(){
 
                 <Modal
                     open={modalOpen}
+                    onClose={()=>setModalOpen(false)}
                 >
                    <Box
                         sx={{
