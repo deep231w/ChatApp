@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import { SettingsIcon } from "lucide-react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const style = {
   position: 'absolute',
@@ -20,7 +22,14 @@ const style = {
 export default function UserSettings(){
     
     const [modalOpen ,  setModalOpen]=useState<boolean>(false)
+    const [menuOpen, setMenuOpen]=useState<boolean>(false)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+
+    const handleOPenMenu=(event: React.MouseEvent<HTMLButtonElement>)=>{
+        setAnchorEl(event.currentTarget);
+        setMenuOpen(!menuOpen)
+    }
     return (
         <div
             className=" 
@@ -39,20 +48,29 @@ export default function UserSettings(){
                 <h2>Deepak Kumar </h2>
             </div>
 
-            {/* <button 
-                className="text-gray-600"
-            >
-                <SettingsIcon/>
-            </button> */}
             <Button
                 sx={{
                     color:"black"
                 }}
-                onClick={()=>setModalOpen(!modalOpen)}
-
+                onClick={handleOPenMenu}
             >
                 <SettingsIcon/>
             </Button>
+
+            <Menu
+                open={menuOpen}
+                anchorEl={anchorEl}
+                onClose={()=>setMenuOpen(false)}
+            >
+                <MenuItem onClick={()=>{
+                    setModalOpen(!modalOpen) 
+                    setMenuOpen(false)}}
+                >
+                    Account Settings
+                </MenuItem>
+
+                <MenuItem>Log Out</MenuItem>
+            </Menu>
             {modalOpen && 
 
                 <Modal
@@ -72,10 +90,10 @@ export default function UserSettings(){
                         }}
                     >
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
+                            Text in a modal
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                         </Typography>
                     </Box>
 
