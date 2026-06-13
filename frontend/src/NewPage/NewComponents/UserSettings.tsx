@@ -1,12 +1,26 @@
-import { Button } from "@/components/components/ui/button";
-import { DropdownMenuShortcut } from "@/components/components/ui/dropdown-menu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { LogOut, Settings2Icon, SettingsIcon, User } from "lucide-react";
-import Settings from "./Settings";
-import { DropdownMenuO } from "@/components/ui/DropDownMenu";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { SettingsIcon } from "lucide-react";
+import { useState } from "react";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function UserSettings(){
     
+    const [modalOpen ,  setModalOpen]=useState<boolean>(false)
+
     return (
         <div
             className=" 
@@ -30,7 +44,42 @@ export default function UserSettings(){
             >
                 <SettingsIcon/>
             </button> */}
-            <DropdownMenuO/>
+            <Button
+                sx={{
+                    color:"black"
+                }}
+                onClick={()=>setModalOpen(!modalOpen)}
+
+            >
+                <SettingsIcon/>
+            </Button>
+            {modalOpen && 
+
+                <Modal
+                    open={modalOpen}
+                >
+                   <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            border: '2px solid #000',
+                            boxShadow: 24,
+                            p: 4,
+                        }}
+                    >
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+
+                </Modal>}
         </div>
     )
 }
