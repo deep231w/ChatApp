@@ -6,6 +6,7 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import AccountSettings from "./AccountSettings";
 
 const style = {
   position: 'absolute',
@@ -77,7 +78,7 @@ export default function UserSettings(){
                     open={modalOpen}
                     onClose={()=>setModalOpen(false)}
                 >
-                   <Box
+                   {/* <Box
                         sx={{
                             position: 'absolute',
                             top: '50%',
@@ -96,8 +97,8 @@ export default function UserSettings(){
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                         </Typography>
-                    </Box>
-
+                    </Box> */}
+                    <AccountSettings/>
                 </Modal>}
         </div>
     )
