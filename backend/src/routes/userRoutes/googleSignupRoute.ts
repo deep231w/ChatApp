@@ -47,7 +47,8 @@ const GoogleSignUp= async (req:Request, res:Response)=>{
                 firebaseuid:uid,
                 email:email,
                 firstName,
-                lastName
+                lastName,
+                authType:'GOOGLE'
             }
         })
     }
