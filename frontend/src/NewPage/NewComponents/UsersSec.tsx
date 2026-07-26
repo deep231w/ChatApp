@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 
 type props={
     setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
+    setSelectedUser:React.Dispatch<React.SetStateAction<string>>
 }
 
 type user={
@@ -11,7 +12,7 @@ type user={
     email:string,
     firebaseId:string
 }
-export default function UsersSec({setSideBarOpen}:props){
+export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
 
     const {users}= useUsersContext()
 
@@ -42,6 +43,7 @@ export default function UsersSec({setSideBarOpen}:props){
                             onClick={()=>{
                                 setSelectedUid(u.id)
                                 setSideBarOpen(false)
+                                setSelectedUser(u.id)
                             }}
                             className={`relative flex items-center justify-start  align-middle h-[70px] text-white font-bold text-l
                                 ${selectedUid === u.id?

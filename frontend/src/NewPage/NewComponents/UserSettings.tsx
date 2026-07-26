@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountSettings from "./AccountSettings";
+import { useAuth } from "@/context/authContext";
 
 const style = {
   position: 'absolute',
@@ -25,12 +26,14 @@ export default function UserSettings(){
     const [modalOpen ,  setModalOpen]=useState<boolean>(false)
     const [menuOpen, setMenuOpen]=useState<boolean>(false)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const {currentUser, localstorageUser}= useAuth();
 
-
+    console.log("cr= ", currentUser , localstorageUser)
     const handleOPenMenu=(event: React.MouseEvent<HTMLButtonElement>)=>{
         setAnchorEl(event.currentTarget);
         setMenuOpen(!menuOpen)
     }
+
     return (
         <div
             className=" 
@@ -46,7 +49,7 @@ export default function UserSettings(){
                 >
 
                 </div>
-                <h2>Deepak Kumar </h2>
+                <h2>{localstorageUser.displayName}</h2>
             </div>
 
             <Button

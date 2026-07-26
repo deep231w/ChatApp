@@ -13,10 +13,15 @@ interface AuthContextType {
 }
 
 type LocalStoregeUser = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
+  // id: number;
+  // firstName: string;
+  // lastName: string;
+  // email: string;
+    displayName:string
+    email:string
+    emailVerified:boolean
+    photoUrl:string
+    uid:string
 };
 
 const AuthContext = createContext<AuthContextType>({

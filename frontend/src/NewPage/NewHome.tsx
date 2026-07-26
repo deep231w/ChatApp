@@ -7,6 +7,7 @@ import UsersSec from "./NewComponents/UsersSec"
 export default function NewHome(){
 
     const [sideBarOpen, setSideBarOpen]=useState<boolean>(false);
+    const [isSelectedUser, setIsSelectedUser]=useState<string>("");
 
     return(
         <div className="flex flex-row h-screen w-screen">
@@ -40,7 +41,7 @@ export default function NewHome(){
                 </div>
                 {/* users list */}
                 <div>
-                    <UsersSec setSideBarOpen={setSideBarOpen}/>
+                    <UsersSec setSideBarOpen={setSideBarOpen} setSelectedUser={setIsSelectedUser}/>
                 </div>
 
                 {/* Loggedin user settings  */}
@@ -53,12 +54,18 @@ export default function NewHome(){
             </div>
 
             {/* chat sec */}
-            <div
-                className={`w-full md:w-4/5  bg-zinc-300
-                    `} 
-            >
-                <ConversationSec setSideBarOpen={setSideBarOpen}/>   
-            </div>
+            {isSelectedUser ? 
+                <div
+                    className={`w-full md:w-4/5  bg-zinc-300`} 
+                >
+                    <ConversationSec setSideBarOpen={setSideBarOpen}/>   
+                </div>:
+                <div>
+                    <div>
+                        not selected 
+                    </div>
+                </div>    
+            }
         </div>
     )
 }
