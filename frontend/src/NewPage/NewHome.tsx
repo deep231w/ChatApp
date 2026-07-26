@@ -1,14 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ConversationSec from "./NewComponents/ConversationSec"
 import SearchSec from "./NewComponents/SearchSec"
 import UserSettings from "./NewComponents/UserSettings"
 import UsersSec from "./NewComponents/UsersSec"
 
+type SelectedUser={
+    firebaseuid:string | null
+    firstName:string
+    id:string | number
+    lastName:string
+}
 export default function NewHome(){
 
     const [sideBarOpen, setSideBarOpen]=useState<boolean>(false);
-    const [isSelectedUser, setIsSelectedUser]=useState<string>("");
+    const [isSelectedUser, setIsSelectedUser]=useState<SelectedUser>();
 
+    useEffect(()=>{
+        console.log("selected user for convo --" , isSelectedUser)
+    },[isSelectedUser])
     return(
         <div className="flex flex-row h-screen w-screen">
             {/* left sidebar */}
@@ -58,7 +67,7 @@ export default function NewHome(){
                 <div
                     className={`w-full md:w-4/5  bg-zinc-300`} 
                 >
-                    <ConversationSec setSideBarOpen={setSideBarOpen} selectedId={isSelectedUser}/>   
+                    <ConversationSec setSideBarOpen={setSideBarOpen} selectedUser={isSelectedUser}/>   
                 </div>:
                 <div className="w-full md:w-4/5 bg-zinc-100 flex items-center justify-center">
                     <div className="text-center max-w-sm">

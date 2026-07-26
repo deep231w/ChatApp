@@ -13,7 +13,7 @@ interface Message {
     reciverId: number;
 }
 
-export const useChat = (reciverId: string) => {
+export const useChat = (reciverId: string | number) => {
   const { socket } = useSocket();
   const [socketMessages, setSocketMessages] = useState<Message[]>([]);
   const { loggedinUser, loading } = useUsersContext() ?? {};

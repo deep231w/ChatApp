@@ -3,15 +3,22 @@ import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-
 import React, { useEffect } from "react";
 import { FiSmile } from "react-icons/fi";
 
+type SelectedUser={
+    firebaseuid:string | null
+    firstName:string
+    id:string | number
+    lastName:string
+}
+
 type props={
     setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
-    selectedId:string
+    selectedUser:SelectedUser
 }
-export default function ConversationSec({setSideBarOpen,selectedId}:props){
-    const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedId);
+export default function ConversationSec({setSideBarOpen,selectedUser}:props){
+    const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id);
 
     useEffect(()=>{
-        console.log("messages  of user= ", selectedId , socketMessages);
+        console.log("messages  of user= ", selectedUser , socketMessages);
         
     },[socketMessages ,loadingMessage])
     const messages=[

@@ -1,16 +1,17 @@
 import { useUsersContext } from "@/context/usersContext"
 import { useEffect, useState } from "react"
 
-type props={
-    setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
-    setSelectedUser:React.Dispatch<React.SetStateAction<string>>
+type user={
+    firebaseuid:string | null
+    firstName:string
+    id:string | number
+    lastName:string
+
 }
 
-type user={
-    id:string | number,
-    name:string,
-    email:string,
-    firebaseId:string
+type props={
+    setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
+    setSelectedUser:React.Dispatch<React.SetStateAction<user | undefined>>
 }
 export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
 
@@ -19,13 +20,15 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
     const {users}= useUsersContext()
 
     const [availableUsers, setAvailableUsers]=useState<user[]>([]);
-
+    
     useEffect(()=>{
+        console.log("ull-=" , users);
+        
         const usersList= users.map((u)=>({
+            firebaseuid:u.firebaseuid,
+            firstName:u.firstName,
             id:u.id,
-            name:u.firstName+" "+u.lastName,
-            email:u.email,
-            firebaseId:u.firebaseuid
+            lastName:u.lastName
         }))
 
         setAvailableUsers(usersList);
@@ -47,7 +50,7 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
                             onClick={()=>{
                                 setSelectedUid(u.id)
                                 setSideBarOpen(false)
-                                setSelectedUser(u.id)
+                                setSelectedUser(u)
                             }}
                             className={`relative flex items-center justify-start  align-middle h-[70px] text-white font-bold text-l
                                 ${selectedUid === u.id?
@@ -58,14 +61,14 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
                             <p
                                 className="pl-[60px]"
                             >
-                                {u.name.charAt(0).toUpperCase()+ u.name.slice(1)}
+                                {u.firstName} {u.lastName}
                             </p>
 
                             {/* avatar */}
                             <div
                                 className="absolute border h-[40px] w-[40px] rounded-[50%] bg-gray-200 text-black flex items-center justify-center m-2"
                             >
-                                {u.name[0].toUpperCase()}
+                                {u.firstName[0].toUpperCase()}
                                 {/* online status */}
                                 <div
                                     className={`fixed border border-gray-100 rounded-[50%] h-[10px] w-[10px] mt-7 ml-6
