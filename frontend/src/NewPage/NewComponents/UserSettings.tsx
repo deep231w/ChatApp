@@ -8,6 +8,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountSettings from "./AccountSettings";
 import { useAuth } from "@/context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: 'absolute',
@@ -28,12 +29,17 @@ export default function UserSettings(){
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const {currentUser, localstorageUser}= useAuth();
 
+    const navigate=useNavigate()
     console.log("cr= ", currentUser , localstorageUser)
     const handleOPenMenu=(event: React.MouseEvent<HTMLButtonElement>)=>{
         setAnchorEl(event.currentTarget);
         setMenuOpen(!menuOpen)
     }
 
+    const handleLogout = ()=>{
+        localStorage.removeItem("user");
+        navigate('/signin')
+    }
     return (
         <div
             className=" 
@@ -73,7 +79,9 @@ export default function UserSettings(){
                     Account Settings
                 </MenuItem>
 
-                <MenuItem>Log Out</MenuItem>
+                <MenuItem
+                    onClick={()=>handleLogout()}
+                >Log Out</MenuItem>
             </Menu>
             {modalOpen && 
 
