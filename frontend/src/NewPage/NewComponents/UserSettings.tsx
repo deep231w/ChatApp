@@ -55,7 +55,7 @@ export default function UserSettings(){
                 >
 
                 </div>
-                <h2>{localstorageUser.displayName}</h2>
+                <h2>{localstorageUser.firstName + " "+localstorageUser.lastName}</h2>
             </div>
 
             <Button

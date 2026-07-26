@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
 
       // console.log("token in frontend", token);
 
-      const response= await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/passwordsignup`,{
+      const response= await axios.post(`${import.meta.env.VITE_API_URL}/api/user/passwordsignup`,{
         firstName:firstName,
         lastName:lastName,
         email:email,

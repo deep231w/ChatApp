@@ -14,6 +14,8 @@ type user={
 }
 export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
 
+    const storedUser = localStorage.getItem("user");
+    const lUser = storedUser ? JSON.parse(storedUser) : null;
     const {users}= useUsersContext()
 
     const [availableUsers, setAvailableUsers]=useState<user[]>([]);
@@ -37,7 +39,9 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
         <div
             className="flex flex-col gap-2"
         >
-            {availableUsers.map((u:any)=>(
+            {availableUsers.
+            filter((u)=>String(u.id) != String(lUser.id)).
+            map((u:any)=>(
                         <button
                             key={u.id}
                             onClick={()=>{

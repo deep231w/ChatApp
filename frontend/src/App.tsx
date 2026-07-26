@@ -73,8 +73,8 @@ const App: React.FC = () => {
           }
         />
 
-        {/* PROTECTED HOME */}
-        <Route
+        {/* PROTECTED HOME || OLD HOME PAGE */}
+        {/* <Route
           path="/"
           element={
             <ProtectedRoute>
@@ -86,10 +86,10 @@ const App: React.FC = () => {
               />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
-          path="/newhome"
+          path="/"
           element={
             <ProtectedRoute>
               <NewHome

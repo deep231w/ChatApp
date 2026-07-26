@@ -88,7 +88,7 @@ export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         if (!matched && localstorageUser) {
           // Local (manual) user: match by id
           matched =
-            fetchedUsers.find((u) => String(u.id) === String(localstorageUser.uid)) ??
+            fetchedUsers.find((u) => String(u.id) === String(localstorageUser.id)) ??
             null;
         }
 

@@ -17,11 +17,18 @@ type LocalStoregeUser = {
   // firstName: string;
   // lastName: string;
   // email: string;
-    displayName:string
+    // displayName:string
+    // email:string
+    // emailVerified:boolean
+    // photoUrl:string
+    // uid:string
+    authType:string
+    createdAt:string
     email:string
-    emailVerified:boolean
-    photoUrl:string
-    uid:string
+    firebaseuid:string
+    firstName:string
+    id:string | number
+    lastName:string
 };
 
 const AuthContext = createContext<AuthContextType>({

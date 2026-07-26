@@ -58,7 +58,7 @@ export default function NewHome(){
                 <div
                     className={`w-full md:w-4/5  bg-zinc-300`} 
                 >
-                    <ConversationSec setSideBarOpen={setSideBarOpen}/>   
+                    <ConversationSec setSideBarOpen={setSideBarOpen} selectedId={isSelectedUser}/>   
                 </div>:
                 <div className="w-full md:w-4/5 bg-zinc-100 flex items-center justify-center">
                     <div className="text-center max-w-sm">

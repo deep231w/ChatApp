@@ -1,12 +1,19 @@
+import { useChat } from "@/hooks/useSocketChat";
 import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiSmile } from "react-icons/fi";
 
 type props={
     setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
+    selectedId:string
 }
-export default function ConversationSec({setSideBarOpen}:props){
+export default function ConversationSec({setSideBarOpen,selectedId}:props){
+    const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedId);
 
+    useEffect(()=>{
+        console.log("messages  of user= ", selectedId , socketMessages);
+        
+    },[socketMessages ,loadingMessage])
     const messages=[
         {
             role:"sender",
