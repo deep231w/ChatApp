@@ -60,11 +60,21 @@ export default function NewHome(){
                 >
                     <ConversationSec setSideBarOpen={setSideBarOpen}/>   
                 </div>:
-                <div>
-                    <div>
-                        not selected 
+                <div className="w-full md:w-4/5 bg-zinc-100 flex items-center justify-center">
+                    <div className="text-center max-w-sm">
+                        <div className="mx-auto h-24 w-24 rounded-full bg-gray-300 flex items-center justify-center text-4xl text-gray-600">
+                            💬
+                        </div>
+
+                        <h1 className="mt-6 text-3xl font-bold text-gray-800">
+                            Welcome to Pingify
+                        </h1>
+
+                        <p className="mt-3 text-gray-500">
+                            Choose a conversation from the sidebar to start messaging.
+                        </p>
                     </div>
-                </div>    
+                </div>
             }
         </div>
     )
