@@ -1,48 +1,42 @@
-import { useState } from "react"
+import { useUsersContext } from "@/context/usersContext"
+import { useEffect, useState } from "react"
 
 type props={
     setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
 }
 
+type user={
+    id:string | number,
+    name:string,
+    email:string,
+    firebaseId:string
+}
 export default function UsersSec({setSideBarOpen}:props){
 
+    const {users}= useUsersContext()
+
+    const [availableUsers, setAvailableUsers]=useState<user[]>([]);
+
+    useEffect(()=>{
+        const usersList= users.map((u)=>({
+            id:u.id,
+            name:u.firstName+" "+u.lastName,
+            email:u.email,
+            firebaseId:u.firebaseuid
+        }))
+
+        setAvailableUsers(usersList);
+
+    },[users])
 
     const [selectedUid , setSelectedUid]=useState<string | Number | null>(null)
-
-        const users = [
-        {
-            id:1,
-            name:"deep",
-            status:true
-        },
-        {
-            id:2,
-            name:"seep",
-            status:true
-        },
-        {
-            id:3,
-            name:"reep",
-            status:false
-        },
-        {
-            id:4,
-            name:"jeep",
-            status:true
-        }
-        ,{
-            id:5,
-            name:"beep",
-            status:false
-        }
-    ]
 
 
     return(
         <div
             className="flex flex-col gap-2"
         >
-            {users.map((u)=>(
+            {availableUsers.map((u:any)=>(
                         <button
                             key={u.id}
                             onClick={()=>{
