@@ -9,6 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AccountSettings from "./AccountSettings";
 import { useAuth } from "@/context/authContext";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "@/context/firebase";
 
 const style = {
   position: 'absolute',
@@ -27,7 +29,7 @@ export default function UserSettings(){
     const [modalOpen ,  setModalOpen]=useState<boolean>(false)
     const [menuOpen, setMenuOpen]=useState<boolean>(false)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {currentUser, localstorageUser}= useAuth();
+    const {currentUser, localstorageUser ,setCurrentUser}= useAuth();
 
     const navigate=useNavigate()
     console.log("cr= ", currentUser , localstorageUser)
@@ -36,8 +38,12 @@ export default function UserSettings(){
         setMenuOpen(!menuOpen)
     }
 
-    const handleLogout = ()=>{
+    const handleLogout =async ()=>{
+        await signOut(auth);
+
         localStorage.removeItem("user");
+        localStorage.removeItem('token');
+        setCurrentUser(null);
         navigate('/signin')
     }
     return (
@@ -55,7 +61,7 @@ export default function UserSettings(){
                 >
 
                 </div>
-                <h2>{localstorageUser.firstName + " "+localstorageUser.lastName}</h2>
+                <h2>{localstorageUser?.firstName + " "+localstorageUser?.lastName}</h2>
             </div>
 
             <Button

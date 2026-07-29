@@ -58,7 +58,7 @@ const SignIn: React.FC = () => {
 
       console.log("response of google signin -" ,response);
 
-      if(response.status=== 200){
+      if(response.status){
         const {user}= response.data;
         localStorage.setItem("user",JSON.stringify(user))
         console.log("user cookie after signin with google- ", user);

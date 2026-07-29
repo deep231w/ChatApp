@@ -1,4 +1,6 @@
 import { useChat } from "@/hooks/useSocketChat";
+import Modal from "@mui/material/Modal";
+import EmojiPicker from "emoji-picker-react";
 import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, Loader2, LoaderCircle, SendIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FiSmile } from "react-icons/fi";
@@ -17,6 +19,7 @@ type props={
 export default function ConversationSec({setSideBarOpen,selectedUser}:props){
     const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id);
     const [inputMessage , setInputMessage]=useState("");
+    const [showPicker, setShowPicker] = useState<boolean>(false);
 
     const [loggedInUserId] = useState(() => {
         const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -39,6 +42,9 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
         setInputMessage("");
     };
 
+    const onEmojiClick = (emojiData, event) => {
+        setInputMessage((prev) => prev + emojiData.emoji);
+    };
     // const messages=[
     //     {
     //         role:"sender",
@@ -187,6 +193,8 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                     />
 
                     <button
+                        onClick={() => setShowPicker(!showPicker)}
+                        
                         className="bg-yellow-300 hover:bg-yellow-200 text-gray-600 px-4 py-2 rounded-lg shadow-md"
                     >
                         <FiSmile size={24} />
@@ -201,7 +209,22 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                 </div>
             {/* </div> */}
 
-            
+            {showPicker && (
+            <Modal
+                open={showPicker}
+                onClose={() => setShowPicker(false)}
+            >
+                <div
+                    style={{
+                    position: "absolute",
+                    bottom: "80px",
+                    right: "20px",
+                    }}
+                >
+                    <EmojiPicker onEmojiClick={onEmojiClick} />
+                </div>
+            </Modal>
+            )}
         </div>
     )
 }

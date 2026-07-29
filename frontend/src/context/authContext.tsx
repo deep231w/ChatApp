@@ -10,6 +10,7 @@ interface AuthContextType {
   token: string | null;
   localstorageUser: LocalStoregeUser | null;
   setLocalStorageUser: (user:LocalStoregeUser | null)=>void;
+  setCurrentUser:(user:User | null)=>void
 }
 
 type LocalStoregeUser = {
@@ -36,7 +37,8 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   token: null,
   localstorageUser: null,
-  setLocalStorageUser:null
+  setLocalStorageUser:()=>{},
+  setCurrentUser:()=>{}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -76,7 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, loading, token, localstorageUser ,setLocalStorageUser}}>
+    <AuthContext.Provider value={{ currentUser, loading, token, localstorageUser ,setLocalStorageUser ,setCurrentUser}}>
       {children}
     </AuthContext.Provider>
   );

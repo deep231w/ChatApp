@@ -43,12 +43,12 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
             className="flex flex-col gap-2"
         >
             {availableUsers.
-            filter((u)=>String(u.id) != String(lUser.id)).
+            filter((u)=>String(u.id) != String(lUser?.id)).
             map((u:any)=>(
                         <button
                             key={u.id}
                             onClick={()=>{
-                                setSelectedUid(u.id)
+                                setSelectedUid(u?.id)
                                 setSideBarOpen(false)
                                 setSelectedUser(u)
                             }}
@@ -61,7 +61,7 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
                             <p
                                 className="pl-[60px]"
                             >
-                                {u.firstName} {u.lastName}
+                                {u?.firstName} {u?.lastName}
                             </p>
 
                             {/* avatar */}
@@ -78,7 +78,7 @@ export default function UsersSec({setSideBarOpen,setSelectedUser}:props){
 
                                 </div>
                             </div>
-                            {selectedUid === u.id &&
+                            {selectedUid === u?.id &&
                             <div
                                 className="absolute h-full w-[3px] bg-gray-200"
                             >
