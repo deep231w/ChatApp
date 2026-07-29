@@ -17,18 +17,20 @@ const SignUp: React.FC = () => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      // const user = userCredentials.user;
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredentials.user;
 
-      // const token=await user.getIdToken();
+      const token=await user.getIdToken();
 
-      // console.log("token in frontend", token);
+      console.log("token in frontend", token);
 
       const response= await axios.post(`${import.meta.env.VITE_API_URL}/api/user/passwordsignup`,{
         firstName:firstName,
         lastName:lastName,
-        email:email,
-        password
+      },{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
       }) 
 
       if(response.status===201){
