@@ -7,8 +7,8 @@ import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 const SignIn: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test-ac@mail.com");
+  const [password, setPassword] = useState("123456");
   const navigate = useNavigate();
 
   const {setLocalStorageUser}=useAuth();
