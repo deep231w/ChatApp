@@ -108,7 +108,7 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                     <div>
                         <h2
                             className="text-xl text-gray-700 text-bold"
-                        >John Doe</h2>
+                        >{selectedUser.firstName} {selectedUser.lastName}</h2>
                     </div>
 
                 </div>
