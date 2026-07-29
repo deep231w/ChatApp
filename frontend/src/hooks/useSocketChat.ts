@@ -30,7 +30,7 @@ export const useChat = (reciverId: string | number) => {
       async function fetchMessage () {
 
         try{ 
-              
+              setLoadingMessage(true)
               if(!reciverId || !localstorageUser.id){
                   console.log("invalid credentials,  try again! / user unavailable !!")
                   return;
@@ -43,12 +43,15 @@ export const useChat = (reciverId: string | number) => {
 
               console.log("fetch messages in usesocket hook= ", res.data);
               setSocketMessages(res.data);
-              setLoadingMessage(false);
+              
       }catch(e){
 
       console.log("error during message fetching in useSocketMessage hook- ", e);
       return;
-    }}
+    }finally{
+      setLoadingMessage(false);
+    }
+  }
     fetchMessage();
 
 }, [reciverId]);

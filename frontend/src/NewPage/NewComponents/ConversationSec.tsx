@@ -1,5 +1,5 @@
 import { useChat } from "@/hooks/useSocketChat";
-import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-react";
+import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, Loader2, LoaderCircle, SendIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FiSmile } from "react-icons/fi";
 
@@ -17,6 +17,17 @@ type props={
 export default function ConversationSec({setSideBarOpen,selectedUser}:props){
     const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id);
     const [inputMessage , setInputMessage]=useState("");
+
+    const [loggedInUserId] = useState(() => {
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        return user.id;
+    });
+    const [messages, setMessages] = useState(socketMessages);
+
+    useEffect(() => {
+        setMessages(socketMessages);
+    }, [socketMessages]);
+
     useEffect(()=>{
         console.log("messages  of user= ", selectedUser , socketMessages);
         
@@ -28,64 +39,64 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
         setInputMessage("");
     };
 
-    const messages=[
-        {
-            role:"sender",
-            message:"Hi"
-        },
-        {
-            role:"reciever",
-            message:"Heloo"
-        },
-        {
-            role:"sender",
-            message:"YO WASSUP"
-        },
-        {
-            role:"reciever",
-            message:"You asked for a big paragraph, and that is exactly what we are going to build. At its core, an effective large paragraph is an exploration of a single controlling idea that weaves through an interconnected chain of thought. If you let your mind wander and explore the details, a simple concept organically blossoms into something complex and deeply immersive."
-        },
-        {
-            role:"sender",
-            message:"Take, for instance, the evolution of the modern digital landscape. What began decades ago as a localized, clunky network of static information has rapidly mutated into a sprawling, hyper-connected global web that dictates nearly every aspect of our daily routines. We rely on these virtual infrastructures not just to consume endless streams of content, but to work, to socialize, and to navigate our physical environments. As these digital ecosystems expand, they continuously demand more of our attention, fundamentally altering how we process information and creating an environment where deep, uninterrupted focus has become a rare and highly sought-after commodity."
-        },
-        {
-            role:"sender",
-            message:"Hi"
-        },
-        {
-            role:"reciever",
-            message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
-        },
-        {
-            role:"sender",
-            message:"Hi"
-        },
-        {
-            role:"reciever",
-            message:"Heloo"
-        },
-        {
-            role:"sender",
-            message:"YO WASSUP"
-        },
-        {
-            role:"reciever",
-            message:"You asked for a big paragraph, and that is exactly what we are going to build. At its core, an effective large paragraph is an exploration of a single controlling idea that weaves through an interconnected chain of thought. If you let your mind wander and explore the details, a simple concept organically blossoms into something complex and deeply immersive."
-        },
-        {
-            role:"sender",
-            message:"Take, for instance, the evolution of the modern digital landscape. What began decades ago as a localized, clunky network of static information has rapidly mutated into a sprawling, hyper-connected global web that dictates nearly every aspect of our daily routines. We rely on these virtual infrastructures not just to consume endless streams of content, but to work, to socialize, and to navigate our physical environments. As these digital ecosystems expand, they continuously demand more of our attention, fundamentally altering how we process information and creating an environment where deep, uninterrupted focus has become a rare and highly sought-after commodity."
-        },
-        {
-            role:"sender",
-            message:"Hi"
-        },
-        {
-            role:"reciever",
-            message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
-        }
-    ]
+    // const messages=[
+    //     {
+    //         role:"sender",
+    //         message:"Hi"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"Heloo"
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"YO WASSUP"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"You asked for a big paragraph, and that is exactly what we are going to build. At its core, an effective large paragraph is an exploration of a single controlling idea that weaves through an interconnected chain of thought. If you let your mind wander and explore the details, a simple concept organically blossoms into something complex and deeply immersive."
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"Take, for instance, the evolution of the modern digital landscape. What began decades ago as a localized, clunky network of static information has rapidly mutated into a sprawling, hyper-connected global web that dictates nearly every aspect of our daily routines. We rely on these virtual infrastructures not just to consume endless streams of content, but to work, to socialize, and to navigate our physical environments. As these digital ecosystems expand, they continuously demand more of our attention, fundamentally altering how we process information and creating an environment where deep, uninterrupted focus has become a rare and highly sought-after commodity."
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"Hi"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"Hi"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"Heloo"
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"YO WASSUP"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"You asked for a big paragraph, and that is exactly what we are going to build. At its core, an effective large paragraph is an exploration of a single controlling idea that weaves through an interconnected chain of thought. If you let your mind wander and explore the details, a simple concept organically blossoms into something complex and deeply immersive."
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"Take, for instance, the evolution of the modern digital landscape. What began decades ago as a localized, clunky network of static information has rapidly mutated into a sprawling, hyper-connected global web that dictates nearly every aspect of our daily routines. We rely on these virtual infrastructures not just to consume endless streams of content, but to work, to socialize, and to navigate our physical environments. As these digital ecosystems expand, they continuously demand more of our attention, fundamentally altering how we process information and creating an environment where deep, uninterrupted focus has become a rare and highly sought-after commodity."
+    //     },
+    //     {
+    //         role:"sender",
+    //         message:"Hi"
+    //     },
+    //     {
+    //         role:"reciever",
+    //         message:"A long paragraph typically exceeds 8 to 15 sentences or roughly 200 to 300 words. In writing, paragraphs should generally cover only one main idea; long paragraphs often indicate that multiple ideas "
+    //     }
+    // ]
     return (
         <div
             className="relative flex flex-col justify-between h-screen ml-3 mr-3"
@@ -122,34 +133,47 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
 
                 {/* conversation */}
 
+                {loadingMessage? 
+                <div
+                    className="flex justify-center items-center h-screen"
+                >
+                    <Loader2 className="w-12 h-12 animate-spin text-blue-800" />
+                </div>:
                 <div
                     className="flex flex-1 flex-col p-2 gap-3 overflow-y-auto"
                 >
-                    {messages.map((m ,i)=>(
-                        <div
-                            key={i}
-                            className={`flex 
-                                ${m.role==="sender"?
-                                            "justify-end ":
-                                            "justify-start"
-                                }    
-                            `}
-                        >
-                            <div
-                                className={`border p-2 rounded-lg w-auto max-w-xl
+                    {messages.length > 0 ? (
+                        messages.map((msg) => {
+                            const isSentByLoggedInUser = msg.userId === loggedInUserId;
 
-                                        ${m.role==="reciever"?
-                                                    "bg-slate-800 text-gray-400 justify-end":
-                                                    "bg-white text-gray-700 justify-end"
-                                        }
-                                    `}
-                            >
-                                {m.message}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                
+                            return (
+                                <div
+                                    key={msg.id}
+                                    className={`flex ${
+                                        isSentByLoggedInUser
+                                            ? "justify-end"
+                                            : "justify-start"
+                                    }`}
+                                >
+                                    <div
+                                        className={`border p-2 rounded-lg w-auto max-w-xl break-words ${
+                                            isSentByLoggedInUser
+                                                ? "bg-white text-gray-700"
+                                                : "bg-slate-800 text-gray-400"
+                                        }`}
+                                    >
+                                        {msg.content}
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <p className="text-gray-500 text-center">
+                            No messages yet...
+                        </p>
+                    )}
+                </div>}
+
                 {/* Bottom bar */}
                 <div
                     className="bg-gray-100 h-[70px] w-full rounded-t-xl flex flex-row p-3 gap-2"
