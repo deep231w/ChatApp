@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import prisma from "../../db/db";
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import admin from "../../firebaseAdmin/firebaseAdmin";
 
 interface PasswordSignupBody {
   firstName: string;
@@ -14,11 +14,20 @@ interface PasswordSignupBody {
 
 const passwordSignUp= async(req:Request, res:Response)=>{
     try{
-        const {firstName, lastName, email, password}=req.body as PasswordSignupBody;
+        const authHeader = req.headers.authorization;
+
+        if (!authHeader?.startsWith("Bearer ")) {
+            res.status(401).json({ message: "Unauthorized" });
+            return;
+        }
+
+        const idToken = authHeader.split("Bearer ")[1];
+        const decoded = await admin.auth().verifyIdToken(idToken);
+        const {firstName, lastName}=req.body as PasswordSignupBody;
 
         const existingUser =await prisma.user.findUnique({
             where:{
-                email:email
+                email:decoded.email
             }
         })
 
@@ -36,14 +45,12 @@ const passwordSignUp= async(req:Request, res:Response)=>{
             return;
         }
 
-        const hashedPassword=await bcrypt.hash(password, 10)
-
         const newUser= await prisma.user.create({
             data:{
+                firebaseuid:decoded.uid,
                 firstName,
                 lastName,
-                email,
-                password:hashedPassword,
+                email:decoded.email!,
                 authType:'PASSWORD'
             }
         })
