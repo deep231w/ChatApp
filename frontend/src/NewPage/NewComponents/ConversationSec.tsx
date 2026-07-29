@@ -1,6 +1,6 @@
 import { useChat } from "@/hooks/useSocketChat";
 import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, SendIcon } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSmile } from "react-icons/fi";
 
 type SelectedUser={
@@ -16,11 +16,18 @@ type props={
 }
 export default function ConversationSec({setSideBarOpen,selectedUser}:props){
     const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id);
-
+    const [inputMessage , setInputMessage]=useState("");
     useEffect(()=>{
         console.log("messages  of user= ", selectedUser , socketMessages);
         
     },[socketMessages ,loadingMessage])
+
+    const sendMessageFunction = () => {
+        if(!inputMessage) return
+        sendSocketMessage(inputMessage);
+        setInputMessage("");
+    };
+
     const messages=[
         {
             role:"sender",
@@ -148,6 +155,8 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                     className="bg-gray-100 h-[70px] w-full rounded-t-xl flex flex-row p-3 gap-2"
                 >
                     <input 
+                        value={inputMessage}
+                        onChange={(e)=>setInputMessage(e.target.value)}
                         className="w-full rounded-xl bg-gray-300 text-black p-2 "
                         type="text"
                         placeholder="Type Message ....." 
@@ -160,6 +169,7 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                     </button>
 
                     <button
+                        onClick={()=>sendMessageFunction()}
                         className="bg-blue-400 hover:bg-blue-300 text-gray-600 px-4 py-2 rounded-lg shadow-md"
                     >
                         <SendIcon/>
