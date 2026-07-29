@@ -5,7 +5,9 @@ import { Navigate } from "react-router-dom";
 
 export const ProtectedRoute:React.FC<{children:React.ReactElement}> =({children})=>{
     const {currentUser, localstorageUser}= useAuth();
-    console.log("current user in protected route- ", currentUser);
+    console.log("current user in protected route- ", currentUser );
+    console.log("current localstore user in protected routr -", localstorageUser);
+    
     
     
     if(!currentUser && !localstorageUser){

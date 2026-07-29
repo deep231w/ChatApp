@@ -30,7 +30,7 @@ const SignIn: React.FC = () => {
       if(response.status === 200){
         const {user}= response.data;
         localStorage.setItem("user",JSON.stringify(user))
-        setLocalStorageUser(JSON.parse(user));
+        setLocalStorageUser(user);
 
         console.log("user detail after signin setup in localstorage= ", user);
         navigate("/");
@@ -58,10 +58,12 @@ const SignIn: React.FC = () => {
 
       console.log("response of google signin -" ,response);
 
-      if(response.status){
-        const {user}= response.data;
-        localStorage.setItem("user",JSON.stringify(user))
-        console.log("user cookie after signin with google- ", user);
+      if (response.status === 200) {
+        const { user } = response.data;
+
+        localStorage.setItem("user", JSON.stringify(user));
+        setLocalStorageUser(user);
+
         navigate("/");
       }
       
