@@ -122,7 +122,8 @@ export default function ConversationSec({setSideBarOpen,selectedUser}:props){
                     )}
                 </div>}
 
-                {/* Bottom bar */}
+               if (!inputMessage.trim()) return;
+ {/* Bottom bar */}
                 <div
                     className="bg-gray-100 h-[70px] w-full rounded-t-xl flex flex-row p-3 gap-2"
                 >
