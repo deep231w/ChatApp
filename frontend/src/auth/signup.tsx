@@ -5,19 +5,26 @@ import { useNavigate } from "react-router-dom";
 import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
 import AuthComponent from "./authComponent";
+import { Loader2 } from "lucide-react";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading , setLoading]=useState<boolean>(false);
 
   const navigate = useNavigate();
 
   //manual signup
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(!firstName || !lastName || !email || !password){
+      alert("Please fill the credentials!!")
+      return;
+    }
     try {
+      setLoading(true)
       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredentials.user;
 
@@ -48,6 +55,8 @@ const SignUp: React.FC = () => {
 
     } catch (error) {
       console.error("Error signing up:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -124,12 +133,20 @@ const SignUp: React.FC = () => {
               className="px-4 py-2 border border-gray-300 rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-all"
+            <button 
+              disabled={loading}
+              type="submit" 
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
             >
-              Sign Up
+              {loading ? 
+                <div
+                    className="flex justify-center items-center"
+                  >
+                    <Loader2 className="w-5 h-5 animate-spin text-gray-800" />
+                </div>:
+                "Sign Up"}
             </button>
+          
             <div className="flex items-center justify-center">
               <h1>OR</h1>
             </div>

@@ -7,17 +7,18 @@ import GoogleAuthBtn from "@/components/ui/SignupWithGoogleBtn";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 import AuthComponent from "./authComponent";
+import { Loader2 } from "lucide-react";
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("test-ac@mail.com");
   const [password, setPassword] = useState("123456");
   const navigate = useNavigate();
-
+  const [loading , setLoading]=useState<boolean>(false);
   const {setLocalStorageUser}=useAuth();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-
+      setLoading(true)
       const userCredentials= await signInWithEmailAndPassword(auth, email, password);
       const user= userCredentials.user;
 
@@ -43,6 +44,8 @@ const SignIn: React.FC = () => {
 
     } catch (error) {
       console.error("Error signing in:", error);
+    }finally{
+      setLoading(false)
     }
   };
   const handleGoogleSignin= async()=>{
@@ -104,10 +107,18 @@ const SignIn: React.FC = () => {
             />
           </div>
           <button 
+            disabled={loading}
             type="submit" 
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
           >
-            Sign In
+            {loading ? 
+           <div
+              
+              className="flex justify-center items-center"
+            >
+              <Loader2 className="w-5 h-5 animate-spin text-gray-800" />
+            </div>:
+            "Sign In"}
           </button>
         
           <div className="flex items-center justify-center">
