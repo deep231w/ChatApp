@@ -14,6 +14,7 @@ import { Chat } from "./components/chat";
 
 import Loader from "./components/ui/Loader";
 import NewHome from "./NewPage/NewHome";
+import AuthComponent from "./auth/authComponent";
 
 function MainLayout({ selectUser, FirstUsername, setSelectuser, setFirstUsername }) {
   return (
