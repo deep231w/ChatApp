@@ -8,7 +8,7 @@ export default function AuthComponent({children}:AuthComponentProps) {
 
   return (
     <div className="flex h-screen">
-      <div className="w-2/5 bg-gray-100 flex justify-center items-center">
+      <div className="w-full md:w-2/5 bg-gray-100 flex justify-center items-center">
         <div className="fixed top-0 left-0 right-0 p-8">
             <h1 className="flex items-center gap-3 text-2xl font-bold text-black">
                 <img src="/chat.png" alt="Chat" width={70} height={70} />
@@ -17,7 +17,7 @@ export default function AuthComponent({children}:AuthComponentProps) {
         </div>
         {children}
       </div>
-      <div className="w-3/5 bg-gradient-to-br from-sky-600 via-indigo-600 to-violet-700 flex items-center justify-center relative overflow-hidden">
+      <div className="hidden md:flex md:w-3/5 bg-gradient-to-br from-sky-600 via-indigo-600 to-violet-700 items-center justify-center relative overflow-hidden">
         {/* Background circles */}
         <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-32 -right-20 h-80 w-80 rounded-full bg-cyan-300/10 blur-3xl" />
