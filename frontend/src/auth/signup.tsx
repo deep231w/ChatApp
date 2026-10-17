@@ -75,7 +75,7 @@ const SignUp: React.FC = () => {
       const LastName = nameParts[1] || "";
 
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/user/googlesignup`,
+        `${import.meta.env.VITE_API_URL}/api/user/googlesignup`,
         {
           firstName: FirstName,
           lastName: LastName,
