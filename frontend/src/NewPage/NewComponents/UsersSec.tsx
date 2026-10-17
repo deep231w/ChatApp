@@ -65,13 +65,13 @@ export default function UsersSec({ setSideBarOpen, setSelectedUser }: props) {
                                     <p className="truncate text-[0.97rem] font-medium text-slate-900">
                                         {u?.firstName} {u?.lastName}
                                     </p>
-                                    <span className="text-[10px] font-medium text-slate-400">2:45 PM</span>
+                                    {/* <span className="text-[10px] font-medium text-slate-400">2:45 PM</span> */}
                                 </div>
                                 <div className="mt-1 flex items-center justify-between gap-2">
-                                    <p className="truncate text-sm text-slate-500">Hey, how are you?</p>
+                                    {/* <p className="truncate text-sm text-slate-500">Hey, how are you?</p>
                                     <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#1f2937] px-1 text-[10px] font-semibold text-white">
                                         3
-                                    </span>
+                                    </span> */}
                                 </div>
                             </div>
                         </button>
