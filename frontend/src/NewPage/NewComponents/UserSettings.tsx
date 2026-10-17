@@ -1,9 +1,7 @@
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
 import { SettingsIcon } from "lucide-react";
 import { useState } from "react";
-import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountSettings from "./AccountSettings";
@@ -12,91 +10,86 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "@/context/firebase";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+export default function UserSettings() {
+    const [modalOpen, setModalOpen] = useState<boolean>(false)
+    const [menuOpen, setMenuOpen] = useState<boolean>(false)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const { currentUser, localstorageUser, setCurrentUser } = useAuth()
 
-export default function UserSettings(){
-    
-    const [modalOpen ,  setModalOpen]=useState<boolean>(false)
-    const [menuOpen, setMenuOpen]=useState<boolean>(false)
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {currentUser, localstorageUser ,setCurrentUser}= useAuth();
+    const navigate = useNavigate()
 
-    const navigate=useNavigate()
-    console.log("cr= ", currentUser , localstorageUser)
-    const handleOPenMenu=(event: React.MouseEvent<HTMLButtonElement>)=>{
-        setAnchorEl(event.currentTarget);
+    const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget)
         setMenuOpen(!menuOpen)
     }
 
-    const handleLogout =async ()=>{
-        await signOut(auth);
+    const handleLogout = async () => {
+        await signOut(auth)
 
-        localStorage.removeItem("user");
-        localStorage.removeItem('token');
-        setCurrentUser(null);
-        navigate('/signin')
+        localStorage.removeItem("user")
+        localStorage.removeItem("token")
+        setCurrentUser(null)
+        navigate("/signin")
     }
-    return (
-        <div
-            className=" 
-                h-[70px] rounded-t-xl bg-gray-400
-                flex flex-row justify-between items-center ml-3 mr-3 p-3
-            "
-        >
-            <div
-                className="flex flex-row gap-1 items-center"
-            >
-                <div
-                    className="h-[40px] w-[40px] bg-gray-300 rounded-[50%]"
-                >
 
+    return (
+        <div className="flex items-center justify-between gap-3 rounded-md border border-[#e5e7eb] bg-white px-2 py-2 shadow-sm">
+            <div className="flex min-w-0 items-center gap-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#dfe4ea] text-sm font-semibold text-slate-700">
+                    {localstorageUser?.firstName?.[0]?.toUpperCase() || "U"}
                 </div>
-                <h2>{localstorageUser?.firstName + " "+localstorageUser?.lastName}</h2>
+                <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-slate-900">
+                        {localstorageUser?.firstName + " " + localstorageUser?.lastName}
+                    </p>
+                    <p className="text-[11px] text-slate-500">online</p>
+                </div>
             </div>
 
             <Button
                 sx={{
-                    color:"black"
+                    minWidth: 0,
+                    width: 36,
+                    height: 36,
+                    borderRadius: 1,
+                    color: "#475569",
+                    backgroundColor: "#f8fafc",
+                    border: "1px solid #e2e8f0",
+                    "&:hover": {
+                        backgroundColor: "#eef2f7",
+                    },
                 }}
-                onClick={handleOPenMenu}
+                onClick={handleOpenMenu}
             >
-                <SettingsIcon/>
+                <SettingsIcon size={16} />
             </Button>
 
             <Menu
                 open={menuOpen}
                 anchorEl={anchorEl}
-                onClose={()=>setMenuOpen(false)}
+                onClose={() => setMenuOpen(false)}
             >
-                <MenuItem onClick={()=>{
-                    setModalOpen(!modalOpen) 
-                    setMenuOpen(false)}}
+                <MenuItem
+                    onClick={() => {
+                        setModalOpen(true)
+                        setMenuOpen(false)
+                    }}
+                    sx={{ fontSize: 14, paddingY: 1.1 }}
                 >
                     Account Settings
                 </MenuItem>
-
-                <MenuItem
-                    onClick={()=>handleLogout()}
-                >Log Out</MenuItem>
+                <MenuItem onClick={() => handleLogout()} sx={{ fontSize: 14, paddingY: 1.1 }}>
+                    Log Out
+                </MenuItem>
             </Menu>
-            {modalOpen && 
 
-                <Modal
-                    open={modalOpen}
-                    onClose={()=>setModalOpen(false)}
-                >
-                    <AccountSettings/>
-                </Modal>}
+            <Modal
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                keepMounted
+            >
+                <AccountSettings onClose={() => setModalOpen(false)} onLogout={handleLogout} />
+            </Modal>
         </div>
     )
 }

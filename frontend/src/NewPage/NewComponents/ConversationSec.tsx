@@ -1,178 +1,153 @@
 import { useChat } from "@/hooks/useSocketChat";
 import Modal from "@mui/material/Modal";
 import EmojiPicker from "emoji-picker-react";
-import { ArrowBigLeft, ArrowBigLeftIcon, ArrowLeftIcon, Loader2, LoaderCircle, SendIcon } from "lucide-react";
+import { ArrowLeftIcon, Loader2, SendIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FiSmile } from "react-icons/fi";
 
-type SelectedUser={
-    firebaseuid:string | null
-    firstName:string
-    id:string | number
-    lastName:string
+type SelectedUser = {
+    firebaseuid: string | null
+    firstName: string
+    id: string | number
+    lastName: string
 }
 
-type props={
-    setSideBarOpen:React.Dispatch<React.SetStateAction<boolean>>
-    selectedUser:SelectedUser
+type props = {
+    setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>
+    selectedUser: SelectedUser
 }
-export default function ConversationSec({setSideBarOpen,selectedUser}:props){
-    const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id);
-    const [inputMessage , setInputMessage]=useState("");
-    const [showPicker, setShowPicker] = useState<boolean>(false);
+
+export default function ConversationSec({ setSideBarOpen, selectedUser }: props) {
+    const { socketMessages, sendSocketMessage, loadingMessage } = useChat(selectedUser.id)
+    const [inputMessage, setInputMessage] = useState("")
+    const [showPicker, setShowPicker] = useState<boolean>(false)
 
     const [loggedInUserId] = useState(() => {
-        const user = JSON.parse(localStorage.getItem("user") || "{}");
-        return user.id;
-    });
-    const [messages, setMessages] = useState(socketMessages);
+        const user = JSON.parse(localStorage.getItem("user") || "{}")
+        return user.id
+    })
+    const [messages, setMessages] = useState(socketMessages)
 
     useEffect(() => {
-        setMessages(socketMessages);
-    }, [socketMessages]);
-
-    useEffect(()=>{
-        console.log("messages  of user= ", selectedUser , socketMessages);
-        
-    },[socketMessages ,loadingMessage])
+        setMessages(socketMessages)
+    }, [socketMessages])
 
     const sendMessageFunction = () => {
-        if(!inputMessage.trim()) return
-        sendSocketMessage(inputMessage);
-        setInputMessage("");
-    };
+        if (!inputMessage.trim()) return
+        sendSocketMessage(inputMessage)
+        setInputMessage("")
+    }
 
-    const onEmojiClick = (emojiData, event) => {
-        setInputMessage((prev) => prev + emojiData.emoji);
-    };
+    const onEmojiClick = (emojiData: any) => {
+        setInputMessage((prev) => prev + emojiData.emoji)
+    }
+
     return (
-        <div
-            className="relative flex flex-col justify-between h-screen ml-3 mr-3"
-        >
-            {/* <div
-                className="absolute h-full w-full flex flex-col justify-between"
-            > */}
-
-                {/* top bar */}
-                <div 
-                    className="bg-gray-100 h-[70px] w-full rounded-b-xl flex items-center p-2 gap-2"
+        <div className="flex h-full flex-col bg-[#f7f7f7]">
+            <header className="flex items-center gap-3 border-b border-[#e5e7eb] bg-[#fbfbfb] px-4 py-3 md:px-5">
+                <button
+                    className="flex h-9 w-9 items-center justify-center rounded-md border border-[#dfe4ea] bg-white text-slate-700 md:hidden"
+                    onClick={() => setSideBarOpen(true)}
+                    aria-label="Open sidebar"
                 >
-                    {/* back arrow button */}
-                    <button
-                        className="md:hidden"
-                        onClick={()=>setSideBarOpen(true)}
-                    >
-                        <ArrowLeftIcon/>
-                    </button>
-                    {/* avatar */}
-                    <div
-                        className="w-[40px] h-[40px] bg-gray-500 rounded-[50%]"
-                    >
+                    <ArrowLeftIcon size={18} />
+                </button>
 
-                    </div>
-                    {/* user name */}
-                    <div>
-                        <h2
-                            className="text-xl text-gray-700 text-bold"
-                        >{selectedUser.firstName} {selectedUser.lastName}</h2>
-                    </div>
-
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#dfe4ea] text-sm font-semibold text-slate-700">
+                    {selectedUser.firstName?.[0]?.toUpperCase() || "U"}
                 </div>
 
-                {/* conversation */}
+                <div className="min-w-0 flex-1">
+                    <h2 className="truncate text-[1.05rem] font-semibold text-slate-900">
+                        {selectedUser.firstName} {selectedUser.lastName}
+                    </h2>
+                    <p className="text-[11px] text-emerald-600">online</p>
+                </div>
+            </header>
 
-                {loadingMessage? 
-                <div
-                    className="flex justify-center items-center h-screen"
-                >
-                    <Loader2 className="w-12 h-12 animate-spin text-blue-800" />
-                </div>:
-                <div
-                    className="flex flex-1 flex-col p-2 gap-3 overflow-y-auto"
-                >
+            {loadingMessage ? (
+                <div className="flex flex-1 items-center justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-slate-500" />
+                </div>
+            ) : (
+                <div className="flex-1 space-y-3 overflow-y-auto px-3 py-4 md:px-5">
                     {messages.length > 0 ? (
                         messages.map((msg) => {
-                            const isSentByLoggedInUser = msg.userId === loggedInUserId;
+                            const isSentByLoggedInUser = msg.userId === loggedInUserId
 
                             return (
                                 <div
                                     key={msg.id}
-                                    className={`flex ${
-                                        isSentByLoggedInUser
-                                            ? "justify-end"
-                                            : "justify-start"
-                                    }`}
+                                    className={`flex ${isSentByLoggedInUser ? "justify-end" : "justify-start"}`}
                                 >
                                     <div
-                                        className={`border p-2 rounded-lg w-auto max-w-xl break-words ${
+                                        className={`max-w-[78%] rounded-2xl px-3.5 py-2 text-[0.97rem] leading-6 ${
                                             isSentByLoggedInUser
-                                                ? "bg-white text-gray-700"
-                                                : "bg-slate-800 text-gray-400"
+                                                ? "bg-[#1f2937] text-white"
+                                                : "border border-[#e5e7eb] bg-white text-slate-700"
                                         }`}
                                     >
                                         {msg.content}
                                     </div>
                                 </div>
-                            );
+                            )
                         })
                     ) : (
-                        <p className="text-gray-500 text-center">
-                            No messages yet...
-                        </p>
+                        <div className="flex h-full items-center justify-center">
+                            <p className="text-center text-sm text-slate-500">No messages yet. Say hello.</p>
+                        </div>
                     )}
-                </div>}
+                </div>
+            )}
 
-               if (!inputMessage.trim()) return;
- {/* Bottom bar */}
-                <div
-                    className="bg-gray-100 h-[70px] w-full rounded-t-xl flex flex-row p-3 gap-2"
-                >
-                    <input 
+            <div className="border-t border-[#e5e7eb] bg-[#fafafa] px-3 py-3 md:px-4">
+                <div className="flex items-center gap-2 rounded-md border border-[#dfe4ea] bg-white p-1.5 shadow-sm">
+                    <input
                         value={inputMessage}
-                        onKeyDown={(e)=>{
-                            if(e.key==='Enter'){
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
                                 e.preventDefault()
                                 sendMessageFunction()
                             }
                         }}
-                        onChange={(e)=>setInputMessage(e.target.value)}
-                        className="w-full rounded-xl bg-gray-300 text-black p-2 "
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        className="flex-1 border-0 bg-transparent px-2 py-2 text-sm text-slate-700 placeholder:text-slate-400 outline-none"
                         type="text"
-                        placeholder="Type Message ....." 
+                        placeholder="Type a message..."
                     />
 
                     <button
+                        type="button"
                         onClick={() => setShowPicker(!showPicker)}
-                        
-                        className="bg-yellow-300 hover:bg-yellow-200 text-gray-600 px-4 py-2 rounded-lg shadow-md"
+                        className="flex h-9 w-9 items-center justify-center rounded-md border border-[#e5e7eb] bg-[#f8fafc] text-slate-600 transition hover:bg-[#eef2f7]"
+                        aria-label="Open emoji picker"
                     >
-                        <FiSmile size={24} />
+                        <FiSmile size={18} />
                     </button>
 
                     <button
-                        onClick={()=>sendMessageFunction()}
-                        className="bg-blue-400 hover:bg-blue-300 text-gray-600 px-4 py-2 rounded-lg shadow-md"
+                        type="button"
+                        onClick={sendMessageFunction}
+                        className="flex h-9 w-9 items-center justify-center rounded-md bg-[#1f2937] text-white transition hover:bg-[#111827]"
+                        aria-label="Send message"
                     >
-                        <SendIcon/>
+                        <SendIcon size={16} />
                     </button>
                 </div>
-            {/* </div> */}
+            </div>
 
             {showPicker && (
-            <Modal
-                open={showPicker}
-                onClose={() => setShowPicker(false)}
-            >
-                <div
-                    style={{
-                    position: "absolute",
-                    bottom: "80px",
-                    right: "20px",
-                    }}
-                >
-                    <EmojiPicker onEmojiClick={onEmojiClick} />
-                </div>
-            </Modal>
+                <Modal open={showPicker} onClose={() => setShowPicker(false)}>
+                    <div
+                        style={{
+                            position: "absolute",
+                            bottom: "88px",
+                            right: "20px",
+                        }}
+                    >
+                        <EmojiPicker onEmojiClick={onEmojiClick} />
+                    </div>
+                </Modal>
             )}
         </div>
     )
