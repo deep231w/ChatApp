@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 
-export const ButtomWarning= ({label, to, buttonText})=>{
-    return <div className="py-2 text-sm flex justify-center font-sans 	font-family: ui-sans-serif ">
-    <div className="text-center text-gray-600">
-        {label}
+export const ButtomWarning = ({ label, to, buttonText }: { label: string; to: string; buttonText: string }) => {
+  return (
+    <div className="flex items-center justify-center gap-1 text-sm text-slate-500">
+      <span>{label}</span>
+      <Link to={to} className="font-semibold text-slate-900 transition hover:text-slate-700 hover:underline">
+        {buttonText}
+      </Link>
     </div>
-    <Link to={to} className="text-blue-500 cursor-pointer hover:underline" > { buttonText} </Link>
-    </div>
-}
+  );
+};
