@@ -21,9 +21,14 @@ const updateonlineUsers= ()=>{
 }
 
 export const initializeSocket = (server: HttpServer) => {
+  const CLIENT_ORIGIN =
+  process.env.NODE_ENV === "production"
+    ? "https://chat-app-delta-steel.vercel.app"
+    : "http://localhost:5173";
+
   io = new SocketServer(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: CLIENT_ORIGIN,
       methods: ["POST", "GET"], 
       credentials: true,
     },
