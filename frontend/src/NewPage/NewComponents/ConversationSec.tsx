@@ -41,7 +41,9 @@ export default function ConversationSec({ setSideBarOpen, selectedUser }: props)
     const onEmojiClick = (emojiData: any) => {
         setInputMessage((prev) => prev + emojiData.emoji)
     }
-
+    useEffect(()=>{
+        setInputMessage('')
+    },[selectedUser])
     return (
         <div className="flex h-full flex-col bg-[#f7f7f7]">
             <header className="flex items-center gap-3 border-b border-[#e5e7eb] bg-[#fbfbfb] px-4 py-3 md:px-5">
