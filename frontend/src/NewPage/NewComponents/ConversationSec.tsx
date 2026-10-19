@@ -63,7 +63,7 @@ export default function ConversationSec({ setSideBarOpen, selectedUser }: props)
                     <h2 className="truncate text-[1.05rem] font-semibold text-slate-900">
                         {selectedUser.firstName} {selectedUser.lastName}
                     </h2>
-                    <p className="text-[11px] text-emerald-600">online</p>
+                    <p className="text-[11px] text-emerald-600">offline</p>
                 </div>
             </header>
 
